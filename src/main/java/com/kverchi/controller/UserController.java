@@ -87,6 +87,7 @@ public class UserController {
 		posts = postService.showAllPosts();
 		if(posts != null) {
 			model.addAttribute("posts", posts);
+			System.out.println("You can see all posts.");
 			return "posts";
 		}
 		else
