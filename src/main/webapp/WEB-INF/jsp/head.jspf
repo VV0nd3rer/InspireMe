@@ -1,0 +1,33 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<c:url var="homeUrl" value="/main/home" />
+<c:url var="mainUrl" value="/main/main" />
+<c:url var="loginUrl" value="/main/Login" />
+<c:url var="RegUrl" value="/main/signUp"/>
+<c:url var="logoutUrl" value="/j_spring_security_logout" />
+
+<div id="header">
+</div>
+<div id="navigation">
+<ul>
+		<li id="default"><a href="${mainUrl}">Main</a></li>
+		<security:authorize access="isAuthenticated()">
+		<li><a href="${homeUrl}">Home</a></li>
+		</security:authorize>
+		<security:authorize access="isAnonymous()">
+		<li><a href="${loginUrl}">Log In</a></li>
+		<li><a href="${RegUrl}">Sign Up</a></li>
+		</security:authorize>
+		<security:authorize access="isAuthenticated()">
+		<li><a href="${logoutUrl}">Log out</a></li>
+		</security:authorize>
+</ul>
+<p>
+<security:authorize access="isAuthenticated()">
+	Hi, <security:authentication property="principal.username" />.
+</security:authorize>
+<security:authorize access="isAnonymous()">
+	Hi, guest.
+</security:authorize>
+</p>
+</div>
