@@ -19,7 +19,7 @@ public class PostDAOImpl implements PostDAO {
 	private SessionFactory sessionFactory;
 	
 	public Post getPost(int _id) {
-		// TODO Auto-generated method stub
+		System.out.println("fix me!");
 		return null;
 	}
 
