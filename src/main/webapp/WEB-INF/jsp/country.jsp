@@ -13,6 +13,7 @@
 	
 	<body>
 	 <%@ include file="head.jspf" %>
+	 <%@ include file="musicPlugin.jspf" %>
 	 <div id="content">
 	<div id="wrap">
     <div id="showcase" class="noselect">

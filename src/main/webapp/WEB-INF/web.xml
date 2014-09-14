@@ -29,6 +29,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 <url-pattern>/main/*</url-pattern>
 </servlet-mapping>
 
+<!-- Added jcaptcha module by Mykola  -->
+<servlet>
+        <servlet-name>jcaptcha</servlet-name>
+        <servlet-class>com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+        <servlet-name>jcaptcha</servlet-name>
+        <url-pattern>/jcaptcha.jpg</url-pattern>
+</servlet-mapping>
+
 <filter> 
    <filter-name>springSecurityFilterChain</filter-name> 
    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class> 
