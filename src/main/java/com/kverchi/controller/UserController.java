@@ -11,9 +11,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -24,21 +21,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.ui.Model;
 
+import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
 import com.kverchi.dao.CountriesSightsDAO;
+import com.kverchi.dao.PostDAO;
 import com.kverchi.domain.CountriesSights;
 import com.kverchi.domain.Country;
 import com.kverchi.domain.User;
 import com.kverchi.domain.Post;
 import com.kverchi.service.CountryService;
 import com.kverchi.service.UserService;
-import com.kverchi.service.PostService;
 
 @Controller
 /*@RequestMapping("user")*/
-@SessionAttributes("name")
+//@SessionAttributes("name") 
 public class UserController {
 	private static final String VN_REG_FORM = "signup";
 	private static final String VN_REG_OK = "redirect:result";
@@ -50,7 +47,7 @@ public class UserController {
 
 	@Autowired private UserService userService;
 	@Autowired private CountryService countryService;
-	@Autowired private PostService postService;
+	@Autowired private PostDAO postDAO;//PostService postService;
 	@Autowired private CountriesSightsDAO countrySightsService;
 	
 	@Autowired
@@ -60,7 +57,8 @@ public class UserController {
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.setAllowedFields(new String[] {
-				"login", "password", "confirmPassword"});
+				"login", "password", "confirmPassword", 
+				"title", "description", "text"});
 	}
 	@RequestMapping("country") 
 	public String country(@RequestParam("country_code") String code, Model model) {
@@ -81,17 +79,41 @@ public class UserController {
 			//TODO error page and denied page - it's not the same
 			return "denied";
 	}
-	@RequestMapping("posts")
-	public String posts(Model model) {
+	@RequestMapping("sightPosts")
+	public String sightPosts(@RequestParam("sightId") int id, Model model) {
 		List<Post> posts = null;
-		posts = postService.showAllPosts();
+		posts = postDAO.getSightPosts(id);
 		if(posts != null) {
 			model.addAttribute("posts", posts);
-			System.out.println("You can see all posts.");
+			System.out.println("You can see sight posts.");
 			return "posts";
 		}
 		else
 			return "denied";
+	}
+	@RequestMapping("singlePost")
+	public String singlePost(@RequestParam("postId") int id, Model model) {
+		Post singlePost = null;
+		singlePost = postDAO.getPost(id);
+		if(singlePost != null) {
+			model.addAttribute("singlePost", singlePost);
+			return "singlePost";
+		}
+		else
+			return "denied";
+	}
+	
+	@RequestMapping("newPost")
+	public String newPost(Model model) {
+		model.addAttribute("newPost", new Post());
+		//model.addAttribute("test", "labuda");
+		return "newPost";
+	}
+	@RequestMapping("createPost")
+	public String createPost(@ModelAttribute("newPost") @Valid Post post, BindingResult result) {
+		if(!result.hasErrors())
+			postDAO.addPost(post);
+		return "main";
 	}
 	@RequestMapping("home") 
 	public String home() {
@@ -107,10 +129,14 @@ public class UserController {
 		return VN_REG_FORM;
 	}
 	@RequestMapping("addUser")
-	public String addUser(@ModelAttribute("user") @Valid SignUpForm form, BindingResult result) throws SQLException {
+	public String addUser(@ModelAttribute("user") @Valid SignUpForm form, BindingResult result, HttpServletRequest request) throws SQLException {
 		convertPasswordError(result);
-		System.out.println(result.toString());
-		userService.registerAccount(toUser(form), result);
+		String userCaptchaResponse = request.getParameter("jcaptchaResponse");
+		boolean captchaPassed = SimpleImageCaptchaServlet.validateResponse(request, userCaptchaResponse);	
+		if(captchaPassed) 
+		  userService.registerAccount(toUser(form), result);
+		else
+			result.rejectValue("password", "error.captcha");
 		return (result.hasErrors() ? VN_REG_FORM : VN_REG_OK);		
 	}
 	@RequestMapping(value="validName", method=RequestMethod.GET)

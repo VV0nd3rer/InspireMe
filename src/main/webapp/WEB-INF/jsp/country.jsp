@@ -1,53 +1,39 @@
 <!doctype html>
 <html lang="en">
-	<head>
-	<%@ include file="include.jspf" %>
-	<meta charset="UTF-8">
+<head>
+  <%@ include file="include.jspf" %>
+  <meta charset="UTF-8">
   <title>Cloud 9 Carousel: JS / HTML5 / CSS3</title>
   <link rel="stylesheet" href="<%=request.getContextPath() %>/css/sights_common.css">
-  <link rel="stylesheet" href="<%=request.getContextPath() %>/css/sights_special.css">
-  
-  
-	</head>
-	
-	
-	<body>
-	 <%@ include file="head.jspf" %>
-	 <%@ include file="musicPlugin.jspf" %>
-	 <div id="content">
-	<div id="wrap">
-    <div id="showcase" class="noselect">
-           
-     <c:forEach items="${country_sigths}" var="s">
-     
-     	<div class="card">
-     	    <h2><a href="<%=request.getContextPath() %>/main/posts">${s.sight_label}</a></h2>
-     		<img src="<%=request.getContextPath() %>/countryImg/countries_sights/${s.img_url}"/>
-     		<p>${s.description}</p>
-     	</div>
-     </c:forEach>
-     
+  <link rel="stylesheet" href="<%=request.getContextPath() %>/css/sights_special.css">	
+</head>
+<body>
+	<%@ include file="head.jspf" %>
+	<%@ include file="musicPlugin.jspf" %>
+	<div id="content">
+	   <div id="wrap">
+    	  <div id="showcase" class="noselect">
+           	<c:forEach items="${country_sigths}" var="s">
+            <div class="card">
+	     	    <h2>${s.sight_label}</h2>
+	     		<img src="<%=request.getContextPath() %>/countryImg/countries_sights/${s.img_url}"/>
+	     		<p>${s.description}</p>
+	     		<p><a href="<%=request.getContextPath() %>/main/sightPosts?sightId=${s.sight_id}">Read more</a></p>
+     	    </div>
+    	 	</c:forEach>
+     	  </div>
+    	  <footer>
+      		<p id="item-title">&nbsp;</p>
+      		<div id="nav" class="noselect">
+        	 <button class="left"> < </button>
+             <button class="right"> > </button>
+      		</div>
+      		<hr>
+     	  </footer>
+  	   </div>
     </div>
-    
-    <footer>
-      <p id="item-title">&nbsp;</p>
-      <div id="nav" class="noselect">
-        <button class="left">
-         <
-        </button>
-        <button class="right">
-          >
-        </button>
-      </div>
-      
-      <hr>
-     
-    </footer>
-  </div>
- </div>
- 
- <%@ include file="footer.jspf" %> 
-   <script src="<%=request.getContextPath() %>/js/jquery.js"></script>
+  <%@ include file="footer.jspf" %> 
+  <script src="<%=request.getContextPath() %>/js/jquery.js"></script>
   <script src="<%=request.getContextPath() %>/js/jquery.reflection.js"></script>
   <script src="<%=request.getContextPath() %>/js/jquery.cloud9carousel.js"></script>
   <script>
@@ -102,6 +88,5 @@
       } )
     })
   </script>
-   		
-	</body>
+</body>
 </html>
