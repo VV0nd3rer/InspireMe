@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.ui.Model;
 
 import com.kverchi.dao.CountriesSightsDAO;
+import com.kverchi.dao.CountryDAO;
 import com.kverchi.domain.CountriesSights;
 import com.kverchi.domain.Country;
 import com.kverchi.domain.User;
@@ -49,7 +50,7 @@ public class UserController {
 	private static final String VN_DENIED = "denied";
 
 	@Autowired private UserService userService;
-	@Autowired private CountryService countryService;
+	@Autowired private CountryDAO countryService;
 	@Autowired private PostService postService;
 	@Autowired private CountriesSightsDAO countrySightsService;
 	
@@ -70,7 +71,7 @@ public class UserController {
 		sights=countrySightsService.getItemListByCode(code);
 		
 		
-		result = countryService.findCountry(code);
+		result = countryService.getCountry(code);
 		
 		if (result != null) {
 			model.addAttribute( "country", result);
@@ -94,7 +95,9 @@ public class UserController {
 			return "denied";
 	}
 	@RequestMapping("home") 
-	public String home() {
+	public String home(HttpServletRequest request, Model model) {
+		List<Country> countries = countryService.getAllCountries();
+		model.addAttribute("countriesList", countries);
 		return VN_HOME;
 	}
 	@RequestMapping("result")
@@ -144,7 +147,7 @@ public class UserController {
 		return (result.hasErrors() ? VN_LOGIN_FORM : VN_LOGIN_OK);
 	}*/
 	@RequestMapping("main")
-	public String main(HttpServletRequest req, Model model) {
+	public String main() {
 		return VN_MAIN;	
 	}
 	@RequestMapping("denied") 

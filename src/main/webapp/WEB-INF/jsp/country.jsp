@@ -3,7 +3,7 @@
 	<head>
 	<%@ include file="include.jspf" %>
 	<meta charset="UTF-8">
-  <title>Cloud 9 Carousel: JS / HTML5 / CSS3</title>
+  <title>My country</title>
   <link rel="stylesheet" href="<%=request.getContextPath() %>/css/sights_common.css">
   <link rel="stylesheet" href="<%=request.getContextPath() %>/css/sights_special.css">
   

@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <html>
 	<head>
 	<%@ include file="include.jspf" %>
@@ -20,8 +22,11 @@
 		    }
 		});
 	});
+		
+	
 	</script>
 	</head>
+	
 	<body>
 		<div id="wrapper">
 			<%@ include file="head.jspf" %>
@@ -30,20 +35,18 @@
 			
 			<div>
 			<form action="country" method="get">
-			<input type="text" list="countryList" name="country_code">
+			<input type="text" list="searchCountry" name="country_code">
 			<input type="submit" value="Go!">
 			</form>
 			</div>
-			
-			
-			
-			 <datalist id="countryList">
-			 <option value="uk" label="United Kingdom">
-			 <option value="cz" label="Czech Republic">
-			 
+
+			<datalist id="searchCountry">
+				<c:forEach items="${countriesList}" var="s">
+					<option value="${s.getCountryCode()}" label="${s.getCountryName()}"></option>
+				</c:forEach>
 			</datalist>
 
-		<div align="center" id="vmap" style="width: 680px; height: 520px;"></div>
+			<div align="center" id="vmap" style="width: 680px; height: 520px;"></div>
 			
 			</div>
 			<%@ include file="footer.jspf" %>
