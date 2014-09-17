@@ -34,14 +34,15 @@ public class PostDAOImpl implements PostDAO {
 		}
 		return post;
 	}
-	public List<Post> getSightPosts(int _sightId) {
+	public List<Post> getSightPosts(int _sightId, String _usrName) {
 		Session session = null;
 		List<Post> sightPost = null;
 		try {
 			session = sessionFactory.openSession();
-			String sQuery = "FROM Post p WHERE p.sightId = :sight_id";
+			String sQuery = "FROM Post p WHERE p.sightId = :sight_id AND p.username = :usrName";
 			Query hQuery = session.createQuery(sQuery);
 			hQuery.setParameter("sight_id", _sightId);
+			hQuery.setParameter("usrName", _usrName);
 			sightPost = hQuery.list();
 		} catch(Exception e) {
 			System.out.println("Error in PostDAOImpl->getSigthPosts: " + e);
@@ -70,21 +71,54 @@ public class PostDAOImpl implements PostDAO {
 	       }
 		return posts;
 	}
-	public void addPost(Post post) {
+	public void createPost(Post post) {
 		Session session = null;
 		Transaction tx = null;
 		try {
 			session = sessionFactory.openSession();
 			tx = session.beginTransaction();
-			//!!! Set sight id from selected sight
-			post.setSightId(2);
-			System.out.println("In addPost : " + post.getText());
+			System.out.println("In createPost : " + post.getText() + " " + post.getUsername() + " " + post.getSightId());
 			session.save(post);
 		    tx.commit();
 		} catch (Exception e) {
-			System.out.println("Error in PostDAOImpl->addPost: " + e);	
+			System.out.println("Error in PostDAOImpl->createPost: " + e);	
 			if (tx!=null) tx.rollback();
 			   e.printStackTrace(); 
+		} finally {
+			if (session != null && session.isOpen()) {
+	               session.close();
+	           }
+		}
+	}
+	public void deletePost(int _postId) {
+		Session session = null;
+		try {
+			session = sessionFactory.openSession();
+			String sQuery = "DELETE from Post WHERE postId = :postId";
+			Query hQuery = session.createQuery(sQuery);
+			hQuery.setParameter("postId", _postId);
+			int res = hQuery.executeUpdate();
+			System.out.println("PostDAOImpl->deletePost->res: " + res);
+		} catch(Exception e) {
+			System.out.println("Error in PostDAOImpl->deletePost: " + e);
+		} finally {
+			if (session != null && session.isOpen()) {
+	               session.close();
+	           }
+		}
+	}
+	public void updatePost(Post post) {
+		Session session = null;
+		Transaction tx = null;
+		try {
+			session = sessionFactory.openSession();
+			tx = session.beginTransaction();
+			session.update(post);
+			tx.commit();
+		} catch(Exception e) {
+			System.out.println("Error in PostDAOImpl->updatePost: " + e);
+			if (tx!=null) tx.rollback();
+				e.printStackTrace();
 		} finally {
 			if (session != null && session.isOpen()) {
 	               session.close();

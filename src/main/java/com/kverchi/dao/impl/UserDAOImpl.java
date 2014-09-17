@@ -88,14 +88,14 @@ public class UserDAOImpl implements UserDAO {
        return user;
  }
    
-   public User getUserByPassword(User user) {
+  /* public User getUserByPassword(User user) {
 	   User res = getUserByLogin(user.getUsername());
 	   String cr_userPass = passwordEncoder.encode(user.getPassword());
 	   System.out.println(res.getPassword() + " : " + cr_userPass);
 	   if(res.getPassword().equals(cr_userPass))
 		   return res;
 	   return null;
-   }
+   }*/
    public List<User> getAllUsers() {
        Session session = null;
        List<User> users = new ArrayList<User>();

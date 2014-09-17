@@ -19,7 +19,7 @@
 	     	    <h2>${s.sight_label}</h2>
 	     		<img src="<%=request.getContextPath() %>/countryImg/countries_sights/${s.img_url}"/>
 	     		<p>${s.description}</p>
-	     		<p><a href="<%=request.getContextPath() %>/main/sightPosts?sightId=${s.sight_id}">Read more</a></p>
+	     		<p><a href="<%=request.getContextPath() %>/main/posts/sightPosts?sightId=${s.sight_id}">Read more</a></p>
      	    </div>
     	 	</c:forEach>
      	  </div>

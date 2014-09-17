@@ -66,3 +66,36 @@ h3 {
 	padding: 20px;
 	height: 1%;
 }
+.postPreview {
+	background: -webkit-linear-gradient(left, #FDFDFD, #BCBCBC); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, #FDFDFD, #BCBCBC); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, #FDFDFD, #BCBCBC); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, #FDFDFD, #BCBCBC); /* Standard syntax (must be last) */
+}
+.postPreview a {
+	text-decoration: none;
+}
+.postPreview div {
+	float: left;
+	width: auto;
+	padding-top: 10px;
+	padding-right: 10px;
+}
+.postPreview b a:hover { background:rgba(139, 248, 252, 1); }
+.postPreview em {
+	padding-left: 5px;
+}
+.postPreview img {
+	width:32px;
+	height: 32px;
+}
+#text {
+	padding: 5px;
+}
+#singlePost h3 {
+	background: -webkit-linear-gradient(left, #9BF7B6, #DCDFDD); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, #9BF7B6, #DCDFDD); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, #9BF7B6, #DCDFDD); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, #9BF7B6, #DCDFDD); /* Standard syntax (must be last) */
+    padding: 5px;
+}
