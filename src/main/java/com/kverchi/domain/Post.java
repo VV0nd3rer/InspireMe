@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 @Table(name="posts")
 public class Post {
 	private int postId, sightId;
-	private String title, text, description;
+	private String title, text, description, username;
 	
 	@Id
 	@Column(name="post_id")
@@ -29,6 +29,13 @@ public class Post {
 	}
 	public void setSightId(int sightId) {
 		this.sightId = sightId;
+	}
+	@Column(name="username")
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	@NotNull
 	@Size(min = 5)

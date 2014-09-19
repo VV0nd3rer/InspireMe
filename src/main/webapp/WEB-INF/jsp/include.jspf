@@ -6,5 +6,6 @@
 </script>
 <script src="<%=request.getContextPath() %>/js/jquery.js"></script>
 <script src="<%=request.getContextPath() %>/js/jquery.passstrength.js"></script>
+<script src="<%=request.getContextPath() %>/js/tinymce/tinymce.min.js"></script>
 <script src="<%=request.getContextPath() %>/js/user.js"></script>
 <link href="<%=request.getContextPath() %>/css/style.css" rel="stylesheet" type="text/css"/>

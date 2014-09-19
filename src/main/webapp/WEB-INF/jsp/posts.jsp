@@ -8,17 +8,30 @@
 		  <%@ include file="head.jspf" %>
 		  <div id="content">
 			<c:forEach items="${posts}" var="post">
-				<p>
-					<b><a href="<%=request.getContextPath() %>/main/singlePost?postId=${post.postId}">
+				<div class="postPreview">
+				  <div>
+					<b><a href="<%=request.getContextPath() %>/main/posts/singlePost?postId=${post.postId}">
 						 ${post.title}.
 					   </a>
 					</b> 
-					     ${post.description} 
-					     <i><a href="#">Edit</a> <a href="#">Delete</i></a>
-				</p>
+					<em>
+					${post.description}
+					</em> 
+				  </div>
+					<a href="<%=request.getContextPath() %>/main/posts/updatePost?postId=${post.postId}">
+						<img src="<%=request.getContextPath() %>/css/icons/edit.png"/>
+					</a> 
+					<a href="<%=request.getContextPath() %>/main/posts/deletePost?postId=${post.postId}">
+						<img src="<%=request.getContextPath() %>/css/icons/delete.png"/>
+					</a>
+				</div>
 				<hr>
 			</c:forEach>
-			<a href="<%=request.getContextPath() %>/main/newPost">New post</a>
+			<p>
+				<a href="<%=request.getContextPath() %>/main/posts/newPost">
+					<img src="<%=request.getContextPath() %>/css/icons/add.png"/>
+				</a>
+			</p>
 		  </div>
 		  <%@ include file="footer.jspf" %>
 		</div>

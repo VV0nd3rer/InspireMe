@@ -1,9 +1,5 @@
 $( document ).ready(function() {
- // alert("ready");
- /* $("#login").focusout(function() {
-	  $("#info").append( "<p>Test</p>" );
-	 //alert("focus out on login"); 
-  });*/
+	tinyMCEInit();
 	$("#password").passStrengthify();
 	//$("#confirmPassword").passStrengthify();
 	$("body").on("focus", "input", function() {
@@ -18,35 +14,6 @@ $( document ).ready(function() {
 			
 		fOut($(this).attr('id'), $(this).val());
 	});
-	/*$('#default').addClass('active');
-	  
-	  $("li a").click(function(event){
-		  event.preventDefault();
-		  var url = $(this).attr('href');
-     	  document.title = $(this).text();
-     	   //alert(title);
-     	   $("#content").load(url + " #content > *", function() {
-     		   
-     	   });
-     	  $('#menu li').removeClass();
-          $(this).parent().addClass('active');   
-	  });*/
-	  
-	/*$("#login").focusout(function(){  
-		var max = 6;
-		var min = 4;
-		var text = $(this).val();
-		var chars = text.length;
-		if(chars > max || chars < min) {
-			//$("#info").empty();
-			$("#info").append("<p>Size of login must be between 4 and 6 ");
-		}
-	});
-	$("#login").focusin(function() {
-		//alert("focusin");
-		$("#info").empty();
-	});*/
-	
 });
 	/*function login() {
 
@@ -63,6 +30,25 @@ $( document ).ready(function() {
 			  });
 			alert('login');
 	}*/
+	function tinyMCEInit() {
+		tinymce.init({
+		    selector: "textarea.edit",
+		    theme: "modern",
+		    plugins: [
+		        "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+		        "searchreplace wordcount visualblocks visualchars code fullscreen",
+		        "insertdatetime media nonbreaking save table contextmenu directionality",
+		        "emoticons template paste textcolor colorpicker textpattern"
+		    ],
+		    toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+		    toolbar2: "print preview media | forecolor backcolor emoticons",
+		    image_advtab: true,
+		    templates: [
+		        {title: 'Test template 1', content: 'Test 1'},
+		        {title: 'Test template 2', content: 'Test 2'}
+		    ]
+		});
+	}
 	function validName() {
 		var login = $("#login").val();
 		$.ajax({
