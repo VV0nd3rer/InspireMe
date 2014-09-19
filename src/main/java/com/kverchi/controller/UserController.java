@@ -1,15 +1,28 @@
 package com.kverchi.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.taglibs.standard.lang.jstl.test.PageContextImpl;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -21,19 +34,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.ui.Model;
 
 import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
-import com.kverchi.dao.CountriesSightsDAO;
+import com.kverchi.dao.CountrySightDAO;
 import com.kverchi.dao.PostDAO;
 import com.kverchi.dao.CountryDAO;
-import com.kverchi.domain.CountriesSights;
+import com.kverchi.domain.CountrySight;
 import com.kverchi.domain.Country;
 import com.kverchi.domain.User;
 import com.kverchi.domain.Post;
-import com.kverchi.service.CountryService;
 import com.kverchi.service.UserService;
 
+@EnableWebMvc
 @Controller
 /*@RequestMapping("user")*/
 //@SessionAttributes("name") 
@@ -49,7 +64,7 @@ public class UserController {
 	@Autowired private UserService userService;
 	@Autowired private CountryDAO countryService;
 	@Autowired private PostDAO postDAO;//PostService postService;
-	@Autowired private CountriesSightsDAO countrySightsService;
+	@Autowired private CountrySightDAO countrySightsService;
 	
 	@Autowired
 	@Qualifier("authenticationManager")
@@ -62,11 +77,11 @@ public class UserController {
 				"title", "description", "text"});
 	}
 	@RequestMapping("country") 
-	public String country(@RequestParam("country_code") String code, Model model) {
-		List<CountriesSights>  sights = new ArrayList<CountriesSights>();
+	public String country(@RequestParam("country_code") String code, Model model)  {
+		List<CountrySight>  sights = new ArrayList<CountrySight>();
 		Country result = null;
 		
-		sights=countrySightsService.getItemListByCode(code);
+		sights=countrySightsService.getSightsListByCode(code);
 		
 		
 		result = countryService.getCountry(code);
@@ -74,6 +89,7 @@ public class UserController {
 		if (result != null) {
 			model.addAttribute( "country", result);
 			model.addAttribute( "country_sigths", sights);
+
 			return "country";
 		}
 		else
@@ -120,6 +136,7 @@ public class UserController {
 	public String home(HttpServletRequest request, Model model) {
 		List<Country> countries = countryService.getAllCountries();
 		model.addAttribute("countriesList", countries);
+		
 		return VN_HOME;
 	}
 	@RequestMapping("result")
@@ -131,6 +148,54 @@ public class UserController {
 		model.addAttribute("user", new SignUpForm());
 		return VN_REG_FORM;
 	}
+	
+	@RequestMapping("newSight")
+	public String addNewSight(@RequestParam("title") String title,
+			@RequestParam("description") String description,
+			@RequestParam("img_url") MultipartFile imgFile,
+			@RequestParam("country_code") String countryCode, 
+			HttpServletRequest request) throws IOException
+	{
+		CountrySight sight = new CountrySight();
+		sight.setDescription(description);
+		sight.setSight_label(title);
+		sight.setImg_url(imgFile.getOriginalFilename());
+		sight.setCountry_code(countryCode);
+				
+		
+       		File dir = new File("C:/Users/Giperborej/Documents/workspace-sts-3.6.0.RELEASE/fixMe/src/main/webapp/countryImg/countries_sights/");
+       		//File dir = new File(request.getContextPath()+"/countryImg/countries_sights/");
+          // System.out.println(request.getServletPath()+"/countryImg/countries_sights/");
+       		if (!dir.exists())
+            dir.mkdirs();
+		
+            imgFile.transferTo(new File(dir.getAbsolutePath()+"/"+imgFile.getOriginalFilename()));
+       /*
+         byte[] bytes = imgFile.getBytes();
+         BufferedOutputStream stream =
+        		 new BufferedOutputStream(new FileOutputStream(new File("C:/Users/Giperborej/Documents/workspace-sts-3.6.0.RELEASE/fixMe/src/main/webapp/countryImg/countries_sights/"+imgFile.getOriginalFilename())));
+                 //new BufferedOutputStream(new FileOutputStream(new File(dir.getAbsoluteFile()+File.separator+imgFile.getOriginalFilename())));
+         stream.write(bytes);
+         stream.close();*/
+        
+		countrySightsService.addSight(sight);
+		
+		return ("redirect:country?country_code="+countryCode);
+	}
+	
+	
+	@RequestMapping("getImg")
+	public byte[] loadImgOnPage(@RequestParam("imgName") String imgName,
+			HttpServletResponse response, HttpServletRequest request) throws IOException{
+		String rootPath = System.getProperty("catalina.home");
+		 File outputImg = new File(rootPath + File.separator + "tmpFiles"+File.separator+"countries_sights"+File.separator+imgName);
+		System.out.println(outputImg.getAbsolutePath());
+		 InputStream in = request.getServletContext().getResourceAsStream("file:///C:/apache-tomcat-7.0.55/tmpFiles/countries_sights/Vysehrad.jpg");
+		 //IOUtils.copy(in, response.getOutputStream());
+		 return IOUtils.toByteArray(in);
+		
+	}
+	
 	@RequestMapping("addUser")
 	public String addUser(@ModelAttribute("user") @Valid SignUpForm form, BindingResult result, HttpServletRequest request) throws SQLException {
 		convertPasswordError(result);

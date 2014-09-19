@@ -37,7 +37,7 @@
 					 <div>
 					 Enter the code
    					 <input type="text" name="jcaptchaResponse" value="" />
-   					 <img src="http://localhost:8080/InspireMe/jcaptcha.jpg" id="captchaImg">
+   					 <img src="/InspireMe/jcaptcha.jpg" id="captchaImg">
      				 <button name="RefreshButton" onclick="refresh()" type="button">Refresh</button>
    					 </div>
    					 

@@ -1,23 +1,50 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
   <%@ include file="include.jspf" %>
   <meta charset="UTF-8">
-  <title>Cloud 9 Carousel: JS / HTML5 / CSS3</title>
+  
   <title>My country</title>
   <link rel="stylesheet" href="<%=request.getContextPath() %>/css/sights_common.css">
   <link rel="stylesheet" href="<%=request.getContextPath() %>/css/sights_special.css">	
+ 
+  	<script src="../js/dialog-polyfill.js"></script>
+	<link rel="stylesheet" type="text/css" href="../css/dialog-polyfill.css">
 </head>
 <body>
 	<%@ include file="head.jspf" %>
 	<%@ include file="musicPlugin.jspf" %>
+	
+	
+	<button id="show">Add new sight!</button>
+	
+	<dialog id="dialog">
+	<p>Adding a new sight =)</p>
+	<div>
+	<form action="newSight" method="post" enctype="multipart/form-data">
+	 <input type="hidden" name="country_code" value="<%=request.getParameter("country_code")%>">
+		<input type="text" value="" name="title"  placeholder="Title">
+		<p>
+			<input type="text" value="" name="description" placeholder="Description">
+			<p>
+		<input type="file" value="" name="img_url" id="img_url">
+		<p>
+		<input type="submit" value="Add sight">
+    	<input type="button" id="close" value="Close">
+	</form>
+	</div>
+  
+		</dialog>
+
+
+
 	<div id="content">
 	   <div id="wrap">
     	  <div id="showcase" class="noselect">
            	<c:forEach items="${country_sigths}" var="s">
-            <div class="card">
+           	      <div class="card">
 	     	    <h2>${s.sight_label}</h2>
-	     		<img src="<%=request.getContextPath() %>/countryImg/countries_sights/${s.img_url}"/>
+	     	   	<img src="<%=request.getContextPath() %>/countryImg/countries_sights/${s.img_url}"/>
 	     		<p>${s.description}</p>
 	     		<p><a href="<%=request.getContextPath() %>/main/sightPosts?sightId=${s.sight_id}">Read more</a></p>
      	    </div>
@@ -39,6 +66,17 @@
   <script src="<%=request.getContextPath() %>/js/jquery.cloud9carousel.js"></script>
   <script>
     $(function() {
+    	//Modal dialog
+    	var dialog = document.querySelector('dialog');
+        document.querySelector('#show').onclick = function() {
+        	dialogPolyfill.registerDialog(dialog);
+        	dialog.showModal(); 
+          };
+        document.querySelector('#close').onclick = function() {
+          dialog.close();
+        };
+    	//------------------------------------
+    	
       var showcase = $("#showcase"), title = $('#item-title')
 
       showcase.Cloud9Carousel( {
@@ -88,6 +126,15 @@
         }
       } )
     })
+  
+    function performClick(elemId) {
+   var elem = document.getElementById(elemId);
+   if(elem && document.createEvent) { // sanity check
+      var evt = document.createEvent("MouseEvents");
+      evt.initEvent("click", true, false);
+      node.dispatchEvent(evt);
+   }
+}
   </script>
 </body>
 </html>

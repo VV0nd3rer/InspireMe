@@ -23,6 +23,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         classpath:/beans-web.xml
         </param-value>
  </init-param>
+ 
   </servlet>
 <servlet-mapping>
 <servlet-name>main</servlet-name>
