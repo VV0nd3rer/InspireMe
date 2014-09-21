@@ -13,16 +13,16 @@
 </head>
 <body>
 	<%@ include file="head.jspf" %>
-	<%@ include file="musicPlugin.jspf" %>
+		
+	<button id="showNewSightDialog">Add new sight!</button>
 	
+	<!-- Modal dialogs for adding/deleting sights -->
 	
-	<button id="show">Add new sight!</button>
-	
-	<dialog id="dialog">
-	<p>Adding a new sight =)</p>
+	<dialog id="newSightDialog">
+	<p>Adding a new sight</p>
 	<div>
-	<form action="newSight" method="post" enctype="multipart/form-data">
-	 <input type="hidden" name="country_code" value="<%=request.getParameter("country_code")%>">
+	<form action="sights/newSight" method="post" enctype="multipart/form-data">
+	 
 		<input type="text" value="" name="title"  placeholder="Title">
 		<p>
 			<input type="text" value="" name="description" placeholder="Description">
@@ -30,14 +30,23 @@
 		<input type="file" value="" name="img_url" id="img_url">
 		<p>
 		<input type="submit" value="Add sight">
-    	<input type="button" id="close" value="Close">
+    	<input type="button" id="close" value="Close" onclick="closeDialog()">
 	</form>
 	</div>
   
 		</dialog>
 
+<dialog id="removeSightDialog">
+	<p>Are you sure to delete sight?</p>
+	<p style="color:red; font-weight:bold"> All posts connected with this sight will be deleted too.</p>
+	<div>
+	    <input type="button"  id="closeAndProcess" value="Yes"  onclick="closeAndProcess()">
+    	<input type="button" id="close" value="No" autofocus="autofocus" onclick="closeDialog()">
+	
+	</div>
+</dialog>
 
-
+<!-- Content -->
 	<div id="content">
 	   <div id="wrap">
     	  <div id="showcase" class="noselect">
@@ -47,8 +56,11 @@
 	     	   	<img src="<%=request.getContextPath() %>/countryImg/countries_sights/${s.img_url}"/>
 	     		<p>${s.description}</p>
 	     		<p><a href="<%=request.getContextPath() %>/main/posts/sightPosts?sightId=${s.sight_id}">Read more</a></p>
+	     		<%-- <p><a href="sights/removeSight?sightId=${s.sight_id}&countryCode=${s.country_code}" onclick="return confirm('M, suka?')">Delete</a></p> --%>
+	     		<button type="button" value="sights/removeSight?sightId=${s.sight_id}" onclick="confirmation(this)">Delete</button>
      	    </div>
     	 	</c:forEach>
+    	 	
      	  </div>
     	  <footer>
       		<p id="item-title">&nbsp;</p>
@@ -61,20 +73,25 @@
   	   </div>
     </div>
   <%@ include file="footer.jspf" %> 
+  	
+  
   <script src="<%=request.getContextPath() %>/js/jquery.js"></script>
   <script src="<%=request.getContextPath() %>/js/jquery.reflection.js"></script>
   <script src="<%=request.getContextPath() %>/js/jquery.cloud9carousel.js"></script>
   <script>
+  var dialog;
+  var deleteLink;
     $(function() {
-    	//Modal dialog
-    	var dialog = document.querySelector('dialog');
-        document.querySelector('#show').onclick = function() {
-        	dialogPolyfill.registerDialog(dialog);
-        	dialog.showModal(); 
-          };
-        document.querySelector('#close').onclick = function() {
-          dialog.close();
-        };
+    	
+    	//Modal dialogs
+    	    	
+	   	document.querySelector('#showNewSightDialog').onclick = function() {
+	   		dialog = document.getElementById('newSightDialog');
+	          	dialogPolyfill.registerDialog(dialog);
+	          	dialog.showModal(); 
+	            };
+	               
+	    	             
     	//------------------------------------
     	
       var showcase = $("#showcase"), title = $('#item-title')
@@ -125,16 +142,28 @@
             $('#nav > .right').click()
         }
       } )
+      
+      
     })
-  
-    function performClick(elemId) {
-   var elem = document.getElementById(elemId);
-   if(elem && document.createEvent) { // sanity check
-      var evt = document.createEvent("MouseEvents");
-      evt.initEvent("click", true, false);
-      node.dispatchEvent(evt);
-   }
-}
+    
+        
+  function confirmation(objButton) {
+		         	dialog = document.getElementById('removeSightDialog');
+		                	dialogPolyfill.registerDialog(dialog);
+		                	dialog.showModal();
+		                	deleteLink=objButton.value;
+		               }
+    
+    function closeAndProcess() {
+        dialog.close();
+        window.location.href = deleteLink;
+      }
+      
+      function closeDialog() {
+          dialog.close();
+        }
+     
+   
   </script>
 </body>
 </html>
