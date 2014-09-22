@@ -16,6 +16,7 @@ public class Post {
 	private String title, text, description, username;
 	
 	@Id
+	@NotNull
 	@Column(name="post_id")
 	public int getPostId() {
 		return postId;
@@ -23,6 +24,7 @@ public class Post {
 	public void setPostId(int postId) {
 		this.postId = postId;
 	}
+	@NotNull
 	@Column(name="sight_id")
 	public int getSightId() {
 		return sightId;

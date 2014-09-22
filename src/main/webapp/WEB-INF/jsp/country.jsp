@@ -126,15 +126,6 @@
         }
       } )
     })
-  
-    function performClick(elemId) {
-   var elem = document.getElementById(elemId);
-   if(elem && document.createEvent) { // sanity check
-      var evt = document.createEvent("MouseEvents");
-      evt.initEvent("click", true, false);
-      node.dispatchEvent(evt);
-   }
-}
   </script>
 </body>
 </html>

@@ -1,0 +1,15 @@
+<a href="<%=request.getContextPath() %>/main/posts/updatePost?postId=${singlePost.postId}">
+	<img src="<%=request.getContextPath() %>/css/icons/edit.png"/>
+</a> 
+<a class="showDialog" href="<%=request.getContextPath() %>/main/posts/deletePost?postId=${singlePost.postId}&sightId=${singlePost.sightId}" onclick="return confirmDelete()">
+	<img src="<%=request.getContextPath() %>/css/icons/delete.png"/>
+</a>
+<script>
+function confirmDelete() {
+	if (confirm("Do you really want to delete this post?")) {
+		return true;
+	} else {
+		return false;
+	}
+}
+</script>

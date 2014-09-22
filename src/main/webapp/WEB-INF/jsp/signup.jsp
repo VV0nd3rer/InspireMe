@@ -4,6 +4,8 @@
 <html>
 	<head>
 	<%@ include file="include.jspf" %>
+	<script src="<%=request.getContextPath() %>/js/user.js"></script>
+	<script src="<%=request.getContextPath() %>/js/jquery.passstrength.js"></script>
 	<title>SignUp</title>
 	</head>
 	<body>

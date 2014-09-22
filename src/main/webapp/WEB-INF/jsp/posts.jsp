@@ -7,30 +7,26 @@
 		<div id="wrapper">
 		  <%@ include file="head.jspf" %>
 		  <div id="content">
-			<c:forEach items="${posts}" var="post">
+			<c:forEach items="${posts}" var="singlePost">
 				<div class="postPreview">
-				  <div>
-					<b><a href="<%=request.getContextPath() %>/main/posts/singlePost?postId=${post.postId}">
-						 ${post.title}.
+					<b><a href="<%=request.getContextPath() %>/main/posts/singlePost?postId=${singlePost.postId}">
+						 ${singlePost.title}.
 					   </a>
 					</b> 
 					<em>
-					${post.description}
-					</em> 
-				  </div>
-					<a href="<%=request.getContextPath() %>/main/posts/updatePost?postId=${post.postId}">
-						<img src="<%=request.getContextPath() %>/css/icons/edit.png"/>
-					</a> 
-					<a href="<%=request.getContextPath() %>/main/posts/deletePost?postId=${post.postId}">
-						<img src="<%=request.getContextPath() %>/css/icons/delete.png"/>
-					</a>
+						${singlePost.description}
+					</em> 	
+					<%@ include file="menuPost.jspf" %>
 				</div>
 				<hr>
 			</c:forEach>
 			<p>
-				<a href="<%=request.getContextPath() %>/main/posts/newPost">
-					<img src="<%=request.getContextPath() %>/css/icons/add.png"/>
-				</a>
+					<a href="<%=request.getContextPath() %>/main/posts/newPost?sightId=${sightId}">
+						<img src="<%=request.getContextPath() %>/css/icons/add.png"/>
+					</a>
+					<a href="<%=request.getContextPath() %>/main/country?country_code=${country_code}">
+						<img src="<%=request.getContextPath() %>/css/icons/back.png"/>
+		  			</a>
 			</p>
 		  </div>
 		  <%@ include file="footer.jspf" %>
