@@ -115,7 +115,6 @@ public class PostController {
 			post.setPostId(postId);
 			post.setSightId(sightId);
 			post.setUsername(principal.getName());
-			//System.out.println(post.getText());
 			postDAO.updatePost(post);
 			//request.setAttribute("postId", id);
 		}

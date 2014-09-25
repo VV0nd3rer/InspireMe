@@ -18,7 +18,7 @@
 	
 	<!-- Modal dialogs for adding/deleting sights -->
 	
-	<dialog id="newSightDialog">
+  <dialog id="newSightDialog">
 	<p>Adding a new sight</p>
 	<div>
 	<form action="sights/newSight" method="post" enctype="multipart/form-data">
@@ -33,18 +33,17 @@
     	<input type="button" id="close" value="Close" onclick="closeDialog()">
 	</form>
 	</div>
-  
-		</dialog>
+ </dialog>
 
-<dialog id="removeSightDialog">
+ <dialog id="removeSightDialog">
 	<p>Are you sure to delete sight?</p>
-	<p style="color:red; font-weight:bold"> All posts connected with this sight will be deleted too.</p>
+	<p class="inputError"> All posts connected with this sight will be deleted too.</p>
 	<div>
 	    <input type="button"  id="closeAndProcess" value="Yes"  onclick="closeAndProcess()">
     	<input type="button" id="close" value="No" autofocus="autofocus" onclick="closeDialog()">
 	
 	</div>
-</dialog>
+ </dialog>
 
 <!-- Content -->
 	<div id="content">
@@ -57,10 +56,9 @@
 	     		<p>${s.description}</p>
 	     		<p><a href="<%=request.getContextPath() %>/main/posts/sightPosts?sightId=${s.sight_id}">Read more</a></p>
 	     		<%-- <p><a href="sights/removeSight?sightId=${s.sight_id}&countryCode=${s.country_code}" onclick="return confirm('M, suka?')">Delete</a></p> --%>
-	     		<button type="button" value="sights/removeSight?sightId=${s.sight_id}" onclick="confirmation(this)">Delete</button>
+	     		<button type="button" value="sights/removeSight?sightId=${s.sight_id}" onclick="confirmButton(this, 'removeSightDialog')">Delete</button>
      	    </div>
     	 	</c:forEach>
-    	 	
      	  </div>
     	  <footer>
       		<p id="item-title">&nbsp;</p>
@@ -73,29 +71,14 @@
   	   </div>
     </div>
   <%@ include file="footer.jspf" %> 
-  	
   
-  <script src="<%=request.getContextPath() %>/js/jquery.js"></script>
   <script src="<%=request.getContextPath() %>/js/jquery.reflection.js"></script>
+  <script src="<%=request.getContextPath() %>/js/dialogs.js"></script>
   <script src="<%=request.getContextPath() %>/js/jquery.cloud9carousel.js"></script>
   <script>
-  var dialog;
-  var deleteLink;
     $(function() {
-    	
-    	//Modal dialogs
-    	    	
-	   	document.querySelector('#showNewSightDialog').onclick = function() {
-	   		dialog = document.getElementById('newSightDialog');
-	          	dialogPolyfill.registerDialog(dialog);
-	          	dialog.showModal(); 
-	            };
-	               
-	    	             
-    	//------------------------------------
-    	
+      //------------------------------------
       var showcase = $("#showcase"), title = $('#item-title')
-
       showcase.Cloud9Carousel( {
         yOrigin: 42,
         yRadius: 40,
@@ -110,15 +93,12 @@
           showcase.fadeIn( 1500 )
         }
       } )
-
       function rendered( carousel ) {
         title.text( carousel.nearestItem().element.getElementsByTagName( "h2" )[0].innerHTML )
-
         // Fade in based on proximity of the item
         var c = Math.cos((carousel.floatIndex() % 1) * 2 * Math.PI)
         title.css('opacity', 0.5 + (0.5 * c))
       }
-
       //
       // Simulate physical button click effect
       //
@@ -126,7 +106,6 @@
         var b = $(e.target).addClass( 'down' )
         setTimeout( function() { b.removeClass( 'down' ) }, 80 )
       } )
-
       $(document).keydown( function( e ) {
         //
         // More codes: http://www.javascripter.net/faq/keycodes.htm
@@ -136,34 +115,12 @@
           case 37:
             $('#nav > .left').click()
             break
-
           /* right arrow */
           case 39:
             $('#nav > .right').click()
         }
-      } )
-      
-      
-    })
-    
-        
-  function confirmation(objButton) {
-		         	dialog = document.getElementById('removeSightDialog');
-		                	dialogPolyfill.registerDialog(dialog);
-		                	dialog.showModal();
-		                	deleteLink=objButton.value;
-		               }
-    
-    function closeAndProcess() {
-        dialog.close();
-        window.location.href = deleteLink;
-      }
-      
-      function closeDialog() {
-          dialog.close();
-        }
-     
-   
+      }) 
+    }); 
   </script>
 </body>
 </html>

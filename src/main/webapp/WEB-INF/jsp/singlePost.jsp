@@ -3,18 +3,27 @@
 	<%@ include file="include.jspf" %>
 	<script src="<%=request.getContextPath() %>/js/editer.js"></script>
 	<script src="<%=request.getContextPath() %>/js/tinymce/tinymce.min.js"></script>
+	<script src="<%=request.getContextPath() %>/js/dialog-polyfill.js"></script>
+	<script src="<%=request.getContextPath() %>/js/dialogs.js"></script>
 	<title>Posts</title>
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/dialog-polyfill.css">
 	</head>
 	<body>
 		<div id="wrapper">
 		  <%@ include file="head.jspf" %>
-		  <div id="content">		
-				<div id="singlePost">
-					<h3>${singlePost.title}</h3>
-					<p>${singlePost.sightId}</p>
-					<div id="text">${singlePost.text}</div> 
-				</div>
+		  <div id="content">	
+		  <dialog id="removePost">
+			<p>Are you sure to <em class="inputError">delete post</em>?</p>
+			<div>
+				<input type="button"  id="closeAndProcess" value="Yes"  onclick="closeAndProcess()">
+			    <input type="button" id="close" value="No" autofocus="autofocus" onclick="closeDialog()">
+			</div>
+ 		  </dialog>	
+		  <div id="singlePost">
+			  <h3>${singlePost.title}</h3>
+			  <p>${singlePost.sightId}</p>
+			  <div id="text">${singlePost.text}</div> 
+		  </div>
 				<%@ include file="menuPost.jspf" %>
 				 <p>
 					<a href="<%=request.getContextPath() %>/main/posts/newPost?sightId=${singlePost.sightId}">

@@ -20,6 +20,7 @@ h3 {
 }
 .inputError {
 	color: red;
+	font-weight: bold;
 }
 .passStrengthify {
 	float: right;
