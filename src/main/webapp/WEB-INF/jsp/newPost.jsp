@@ -16,11 +16,11 @@
 						<div class="inputError"><spring:message code="error.post" /></div>
 				  </form:errors>
 					<p>Title</p>
-					<form:input path="title" />
+					<form:input path="title" size="50"/>
 					<p>Description</p>
-					<form:textarea path="description"/> 
+					<form:textarea path="description" rows="4" cols="50"/> 
 					<p>Text</p>
-					<form:textarea class="edit" path="text" style="width:100%" htmlEscape="false"/>  
+					<form:textarea class="edit" path="text" style="width:100%; height:800" htmlEscape="false"/>  
 					<p><input type="submit" value="Ok"></p>
 				</form:form>
 				<a href="<%=request.getContextPath() %>/main/posts/sightPosts?sightId=${newPost.sightId}">

@@ -1,4 +1,4 @@
-package com.kverchi.service;
+package com.kverchi.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -7,6 +7,7 @@ import org.springframework.validation.Errors;
 
 import com.kverchi.dao.UserDAO;
 import com.kverchi.domain.User;
+import com.kverchi.service.UserService;
 
 @Service
 @Transactional(readOnly = true)

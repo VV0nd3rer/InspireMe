@@ -6,15 +6,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.springframework.web.bind.annotation.ModelAttribute;
+import java.util.Date;
 
 @Entity
 @Table(name="posts")
 public class Post {
 	private int postId, sightId;
 	private String title, text, description, username;
-	
+	private Date stampCreated, stampUpdated;
 	@Id
 	@NotNull
 	@Column(name="post_id")
@@ -32,6 +31,20 @@ public class Post {
 	public void setSightId(int sightId) {
 		this.sightId = sightId;
 	}
+	@Column(name="stamp_created")
+	public Date getStampCreated() {
+		return stampCreated;
+	}
+	public void setStampCreated(Date stampCreated) {
+		this.stampCreated = stampCreated;
+	}
+	@Column(name="stamp_updated")
+	public Date getStampUpdated() {
+		return stampUpdated;
+	}
+	public void setStampUpdated(Date stampUpdated) {
+		this.stampUpdated = stampUpdated;
+	}
 	@Column(name="username")
 	public String getUsername() {
 		return username;
@@ -40,7 +53,7 @@ public class Post {
 		this.username = username;
 	}
 	@NotNull
-	@Size(min = 5)
+	@Size(min = 5, max = 250)
 	@Column(name="description")
 	public String getDescription() {
 		return description;
@@ -49,7 +62,7 @@ public class Post {
 		this.description = description;
 	}
 	@NotNull
-	@Size(min = 5)
+	@Size(min = 5, max = 45)
 	@Column(name="title")
 	public String getTitle() {
 		return title;

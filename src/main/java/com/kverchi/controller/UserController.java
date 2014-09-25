@@ -33,6 +33,8 @@ import com.kverchi.dao.CountryDAO;
 import com.kverchi.domain.CountrySight;
 import com.kverchi.domain.Country;
 import com.kverchi.domain.User;
+import com.kverchi.service.CountryService;
+import com.kverchi.service.SightService;
 import com.kverchi.service.UserService;
 
 @EnableWebMvc
@@ -49,8 +51,8 @@ public class UserController {
 	
 	
 	@Autowired private UserService userService;
-	@Autowired private CountryDAO countryService;
-	@Autowired private CountrySightDAO countrySightsService;
+	@Autowired private CountryService countryService;
+	@Autowired private SightService countrySightsService;
 	
 	@Autowired
 	@Qualifier("authenticationManager")
@@ -66,8 +68,8 @@ public class UserController {
 	public String country(@RequestParam("country_code") String code, Model model, Principal principal)  {
 		List<CountrySight>  sights = new ArrayList<CountrySight>();
 		Country result = null;
-		sights=countrySightsService.getSightsListByCode(code, principal);
-		result = countryService.getCountry(code);	
+		sights=countrySightsService.getAllSights(code, principal);
+		result = countryService.findCountry(code);	
 		if (result != null) {
 			model.addAttribute( "country", result);
 			model.addAttribute( "country_sigths", sights);
@@ -81,7 +83,7 @@ public class UserController {
 	
 	@RequestMapping("home") 
 	public String home(HttpServletRequest request, Model model) {
-		List<Country> countries = countryService.getAllCountries();
+		List<Country> countries = countryService.findAllCountries();
 		model.addAttribute("countriesList", countries);
 		
 		return VN_HOME;
@@ -95,17 +97,13 @@ public class UserController {
 		model.addAttribute("user", new SignUpForm());
 		return VN_REG_FORM;
 	}
-	
-			
 	@RequestMapping("addUser")
 	public String addUser(@ModelAttribute("user") @Valid SignUpForm form, BindingResult result, HttpServletRequest request) throws SQLException {
 		convertPasswordError(result);
-		String userCaptchaResponse = request.getParameter("jcaptchaResponse");
-		boolean captchaPassed = SimpleImageCaptchaServlet.validateResponse(request, userCaptchaResponse);	
-		if(captchaPassed) 
+		checkUsername(form.getLogin(), result);
+		checkCaptcha(request, request.getParameter("jcaptchaResponse"), result);
+		if(!result.hasErrors())
 		  userService.registerAccount(toUser(form), result);
-		else
-			result.rejectValue("password", "error.captcha");
 		return (result.hasErrors() ? VN_REG_FORM : VN_REG_OK);		
 	}
 	@RequestMapping(value="validName", method=RequestMethod.GET)
@@ -139,7 +137,16 @@ public class UserController {
 			}
 		}
 	}
-	//TODO
+	private void checkUsername(String login, BindingResult result) {
+		if(!userService.validateUsername(login))
+			result.rejectValue("login", "error.duplicate", new String[] {login}, null);
+	}
+	private void checkCaptcha(HttpServletRequest request, String captcha, BindingResult result) {
+		boolean captchaPassed = SimpleImageCaptchaServlet.validateResponse(request, captcha);	
+			if(!captchaPassed)
+				result.rejectValue("password", "error.captcha");
+	}
+ 	//TODO
 	private static User toUser(SignUpForm form) {
 		User user = new User();
 		user.setUsername(form.getLogin());

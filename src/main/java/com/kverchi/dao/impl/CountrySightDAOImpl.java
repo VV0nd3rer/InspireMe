@@ -39,6 +39,7 @@ public class CountrySightDAOImpl implements CountrySightDAO{
 	          
 	       } 
 	       catch (Exception e) {
+	    	   System.out.println("Error in getSightsListByCode "+e.getMessage());
 	           JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка I/O", JOptionPane.OK_OPTION);
 	       } 
 	       finally {
@@ -58,7 +59,7 @@ public class CountrySightDAOImpl implements CountrySightDAO{
 	           session.getTransaction().commit();
 	       } 
 	       catch (Exception e) {
-	    	   System.out.println("Error in addUser "+e.getMessage());
+	    	   System.out.println("Error in addSight "+e.getMessage());
 	           JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка I/O", JOptionPane.OK_OPTION);
 	       } 
 	       finally {
@@ -93,7 +94,7 @@ public class CountrySightDAOImpl implements CountrySightDAO{
 	    	   session = sessionFactory.openSession();
 	    	   sight = (CountrySight) session.get(CountrySight.class, sightId);
 	       } catch (Exception e) {
-	    	   System.out.println("Error in getUserByLogin "+e.getMessage());
+	    	   System.out.println("Error in getSightById "+e.getMessage());
 	           JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка I/O", JOptionPane.OK_OPTION);
 	       } finally {
 	           if (session != null && session.isOpen()) {

@@ -21,7 +21,7 @@
  		  </dialog>	
 		  <div id="singlePost">
 			  <h3>${singlePost.title}</h3>
-			  <p>${singlePost.sightId}</p>
+			  <p>${singlePost.stampCreated}</p>
 			  <div id="text">${singlePost.text}</div> 
 		  </div>
 				<%@ include file="menuPost.jspf" %>

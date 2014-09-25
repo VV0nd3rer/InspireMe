@@ -3,7 +3,6 @@ package com.kverchi.controller;
 import java.security.Principal;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +13,10 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kverchi.dao.PostDAO;
 import com.kverchi.domain.Post;
+import com.kverchi.service.PostService;
 
 @Controller
 @RequestMapping("posts")
@@ -32,7 +30,7 @@ public class PostController {
 	//Variable for save current selected sight
 	//private int currentSight;
 	
-	@Autowired private PostDAO postDAO;//PostService postService;
+	@Autowired private PostService postService;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -43,7 +41,7 @@ public class PostController {
 	@RequestMapping("sightPosts")
 	public String sightPosts(@RequestParam("sightId") int id, Model model, Principal principal) {
 		List<Post> posts = null;
-		posts = postDAO.getSightPosts(id, principal.getName());
+		posts = postService.showSightPosts(id, principal.getName());
 		if(posts != null) {
 			model.addAttribute("posts", posts);
 			//currentSight = id;
@@ -56,7 +54,7 @@ public class PostController {
 	@RequestMapping("singlePost")
 	public String singlePost(@RequestParam("postId") int postId, Model model) {
 		Post singlePost = null;
-		singlePost = postDAO.getPost(postId);
+		singlePost = postService.showPost(postId);
 		System.out.println("single post: " + singlePost.getSightId() + " " + singlePost.getPostId());
 		if(singlePost != null) {
 			model.addAttribute("singlePost", singlePost);
@@ -75,27 +73,27 @@ public class PostController {
 		return VN_NEW_POST;
 	}
 	@RequestMapping("createPost")
-	public String createPost(@ModelAttribute("newPost") @Valid Post post, 
+	public String createPost(@ModelAttribute("newPost") @Valid Post post, BindingResult result, 
 							 @RequestParam("sightId") int sightId,
-							 BindingResult result, Principal principal) {
+							 Principal principal) {
 		if(!result.hasErrors()) {
 			post.setSightId(sightId);
 			post.setUsername(principal.getName());
-			postDAO.createPost(post);
+			postService.createPost(post);
 		}
 		else 
 			result.reject("error.post");
-		return (result.hasErrors() ? VN_NEW_POST : VN_SIGHT+sightId);	
+		return (result.hasErrors() ? VN_NEW_POST+sightId : VN_SIGHT+sightId);	
 	}
 	@RequestMapping("deletePost")
 	public String deletePost(@RequestParam("postId") int postId, @RequestParam("sightId") int sightId) {
-		postDAO.deletePost(postId);
+		postService.deletePost(postId);
 		return VN_SIGHT+sightId;
 	}
 	@RequestMapping("updatePost")
 	public String updatePost(@RequestParam("postId") int id, Model model) {
 		Post post = null;
-		post = postDAO.getPost(id);
+		post = postService.showPost(id);
 		if(post != null) {
 			model.addAttribute("newPost", post);
 			model.addAttribute("url", "savePost?postId="+id+"&sightId="+post.getSightId());
@@ -105,17 +103,17 @@ public class PostController {
 			return VN_ERROR;
 	}
 	@RequestMapping(value="savePost")
-	public String savePost(@ModelAttribute("newPost") @Valid Post post, 
+	public String savePost(@ModelAttribute("newPost") @Valid Post post, BindingResult result,
 						   @RequestParam("postId") int postId,
 						   @RequestParam("sightId") int sightId,
-						   BindingResult result, Principal principal) {
+						   Principal principal) {
 		System.out.println("postId: " + postId);
 		System.out.println("sightId: " + sightId);
 		if(!result.hasErrors()) {
 			post.setPostId(postId);
 			post.setSightId(sightId);
 			post.setUsername(principal.getName());
-			postDAO.updatePost(post);
+			postService.updatePost(post);
 			//request.setAttribute("postId", id);
 		}
 		else {
