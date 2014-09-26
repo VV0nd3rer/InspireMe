@@ -11,8 +11,8 @@ import java.util.Date;
 @Entity
 @Table(name="posts")
 public class Post {
-	private int postId, sightId;
-	private String title, text, description, username;
+	private int postId, sightId, userId;
+	private String title, text, description;
 	private Date stampCreated, stampUpdated;
 	@Id
 	@NotNull
@@ -45,12 +45,12 @@ public class Post {
 	public void setStampUpdated(Date stampUpdated) {
 		this.stampUpdated = stampUpdated;
 	}
-	@Column(name="username")
-	public String getUsername() {
-		return username;
+	@Column(name="userId")
+	public int getUserId() {
+		return userId;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	@NotNull
 	@Size(min = 5, max = 250)

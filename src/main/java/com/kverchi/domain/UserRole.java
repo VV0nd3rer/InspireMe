@@ -1,12 +1,6 @@
-/* 
- * Copyright (c) 2013 Manning Publications Co.
- * 
- * Book: http://manning.com/wheeler/
- * Blog: http://springinpractice.com/
- * Code: https://github.com/springinpractice
- */
 package com.kverchi.domain;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,29 +10,29 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-/**
- * @author Willie Wheeler (willie.wheeler@gmail.com)
- */
+
 @Entity
+@IdClass(UserRolesId.class)
 @Table(name = "user_role")
 public class UserRole {
-	private int id;
-	private int role_id;
-	private String username;
 	
-	@Id
-	@Column(name="id")
-	public int getId() {
-		return id;
+	@Id private int userId;
+	@Id private int role_id;
+	
+	@Column(name="userId")
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
+
 	@Column(name="role_id")
 	public int getRole_id() {
 		return role_id;
@@ -48,8 +42,10 @@ public class UserRole {
 		this.role_id = role_id;
 	}
 
-	@Column(name="username")
-	public String getUserName() { return username; }
-	public void setUserName(String username) { this.username = username; }
- 
+	
+}
+
+class UserRolesId implements Serializable{
+	 int userId;
+	 int role_id;
 }

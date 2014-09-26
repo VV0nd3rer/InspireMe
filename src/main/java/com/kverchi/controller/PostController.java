@@ -41,15 +41,15 @@ public class PostController {
 	@RequestMapping("sightPosts")
 	public String sightPosts(@RequestParam("sightId") int id, Model model, Principal principal) {
 		List<Post> posts = null;
-		posts = postService.showSightPosts(id, principal.getName());
-		if(posts != null) {
+		posts = postService.showSightPosts(id, Integer.parseInt(principal.getName()));
+		//if(posts != null) {
 			model.addAttribute("posts", posts);
 			//currentSight = id;
 			model.addAttribute("sightId", id);
 			return VN_POSTS;
-		}
-		else
-			return VN_ERROR;
+		//}
+		//else
+			//return VN_ERROR;
 	}
 	@RequestMapping("singlePost")
 	public String singlePost(@RequestParam("postId") int postId, Model model) {
@@ -78,7 +78,7 @@ public class PostController {
 							 Principal principal) {
 		if(!result.hasErrors()) {
 			post.setSightId(sightId);
-			post.setUsername(principal.getName());
+			post.setUserId(Integer.parseInt(principal.getName()));
 			postService.createPost(post);
 		}
 		else 
@@ -112,7 +112,7 @@ public class PostController {
 		if(!result.hasErrors()) {
 			post.setPostId(postId);
 			post.setSightId(sightId);
-			post.setUsername(principal.getName());
+			post.setUserId(Integer.parseInt(principal.getName()));
 			postService.updatePost(post);
 			//request.setAttribute("postId", id);
 		}

@@ -29,11 +29,11 @@ public class CountrySightDAOImpl implements CountrySightDAO{
 	       try {
 	    	   session = sessionFactory.openSession();
 	    	   String query = " FROM CountrySight cs WHERE cs.country_code = :code"
-	    	   		+ " AND cs.username=:userName";
+	    	   		+ " AND cs.userId=:userId";
 	    	
 	    	   Query hQuery = session.createQuery(query);
 	    	   hQuery.setParameter("code", code);
-	    	   hQuery.setParameter("userName", principal.getName());
+	    	   hQuery.setParameter("userId", principal.getName());
 	    	   
 	           sights = hQuery.list();
 	          

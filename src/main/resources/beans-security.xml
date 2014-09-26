@@ -41,8 +41,8 @@
  		   authorities-by-username-query="
 		    SELECT users.username, role.rolename FROM users, role, user_role
 			WHERE user_role.role_id = role.role_id 
-			AND user_role.username = users.username
-			AND user_role.username = ?;"/>	
+			AND user_role.userId = users.userId
+			AND users.username = ?;"/>	
 		  <password-encoder ref="passwordEncoder">
 				<!-- <salt-source ref="saltSource" /> -->
 		  </password-encoder>

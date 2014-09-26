@@ -100,15 +100,15 @@ public class UserController {
 	@RequestMapping("addUser")
 	public String addUser(@ModelAttribute("user") @Valid SignUpForm form, BindingResult result, HttpServletRequest request) throws SQLException {
 		convertPasswordError(result);
-		checkUsername(form.getLogin(), result);
+		checkUsername(99, result);
 		checkCaptcha(request, request.getParameter("jcaptchaResponse"), result);
 		if(!result.hasErrors())
 		  userService.registerAccount(toUser(form), result);
 		return (result.hasErrors() ? VN_REG_FORM : VN_REG_OK);		
 	}
 	@RequestMapping(value="validName", method=RequestMethod.GET)
-	public @ResponseBody String validName(String login) {
-		if(userService.validateUsername(login))
+	public @ResponseBody String validName(int userId) {
+		if(userService.validateUsername(userId))
 			return "TRUE";
 		return "FALSE";
 	}
@@ -137,9 +137,11 @@ public class UserController {
 			}
 		}
 	}
-	private void checkUsername(String login, BindingResult result) {
-		if(!userService.validateUsername(login))
-			result.rejectValue("login", "error.duplicate", new String[] {login}, null);
+	private void checkUsername(int userId, BindingResult result) {
+		if(!userService.validateUsername(userId)){
+			String testPlug = userId+"";
+			result.rejectValue("login", "error.duplicate", new String[] {testPlug}, null);
+		}
 	}
 	private void checkCaptcha(HttpServletRequest request, String captcha, BindingResult result) {
 		boolean captchaPassed = SimpleImageCaptchaServlet.validateResponse(request, captcha);	

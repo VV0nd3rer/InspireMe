@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 			roles.add(roleDao.findByName("user"));*/
 			/*user.setRoles(roles);*/
 			userDAO.addUser(user);
-			userDAO.addRole(1, user.getUsername());
+			userDAO.addRole(1, user.getUserId());
 		}
 		return valid;
 	}
@@ -42,8 +42,8 @@ public class UserServiceImpl implements UserService {
 			new String[] { login }, null);
 		}
 	}*/
-	public boolean validateUsername(String login) {
-		if (userDAO.getUserByLogin(login)!= null) 
+	public boolean validateUsername(int userId) {
+		if (userDAO.getUserById(userId)!= null) 
 			return false;
 		return true;
 	}

@@ -67,8 +67,8 @@ public class UserDAOImpl implements UserDAO {
        }
  }
    
- public User getUserByLogin(String login) {
-	   System.out.println("login to getUserByLogin: " + login);
+ public User getUserById(int id) {
+	   //System.out.println("login to getUserByLogin: " + login);
        Session session = null;
        User user = null;
        try {
@@ -76,7 +76,7 @@ public class UserDAOImpl implements UserDAO {
     	   /*Query q = session.getNamedQuery("findByUsername");
     	   q.setParameter("username", login);*/
     	   //user = (User) q.uniqueResult();
-    	   user = (User) session.get(User.class, login);
+    	   user = (User) session.get(User.class, id);
        } catch (Exception e) {
     	   System.out.println("Error in getUserByLogin "+e.getMessage());
            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка I/O", JOptionPane.OK_OPTION);
@@ -130,14 +130,14 @@ public class UserDAOImpl implements UserDAO {
        }
  }
    
-   public void addRole(int role_id, String username) {
+   public void addRole(int role_id, int userId) {
 		Session session = null;
 		UserRole role = new UserRole();
 		  try {
 			  session = sessionFactory.openSession();
 	    	  role.setRole_id(role_id);
-	    	  role.setUserName(username);
-	    	  System.out.println("role_id: " + role_id + "username: " + username);
+	    	  role.setUserId(userId);
+	    	  //System.out.println("role_id: " + role_id + "username: " + username);
 	    	  session.beginTransaction();
 	          session.save(role);
 	          session.getTransaction().commit();
@@ -149,4 +149,6 @@ public class UserDAOImpl implements UserDAO {
 	           }
 		  }
 	}
+   
+     
 }

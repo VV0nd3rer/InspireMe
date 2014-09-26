@@ -34,12 +34,12 @@ public class PostDAOImpl implements PostDAO {
 		}
 		return post;
 	}
-	public List<Post> getSightPosts(int _sightId, String _usrName) {
+	public List<Post> getSightPosts(int _sightId, int _usrName) {
 		Session session = null;
 		List<Post> sightPost = null;
 		try {
 			session = sessionFactory.openSession();
-			String sQuery = "FROM Post p WHERE p.sightId = :sight_id AND p.username = :usrName";
+			String sQuery = "FROM Post p WHERE p.sightId = :sight_id AND p.userId = :usrName";
 			Query hQuery = session.createQuery(sQuery);
 			hQuery.setParameter("sight_id", _sightId);
 			hQuery.setParameter("usrName", _usrName);
@@ -77,7 +77,7 @@ public class PostDAOImpl implements PostDAO {
 		try {
 			session = sessionFactory.openSession();
 			tx = session.beginTransaction();
-			System.out.println("In createPost : " + post.getText() + " " + post.getUsername() + " " + post.getSightId());
+			//System.out.println("In createPost : " + post.getText() + " " + post.getUsername() + " " + post.getSightId());
 			session.save(post);
 		    tx.commit();
 		} catch (Exception e) {
@@ -98,9 +98,9 @@ public class PostDAOImpl implements PostDAO {
 			Query hQuery = session.createQuery(sQuery);
 			hQuery.setParameter("postId", _postId);
 			int res = hQuery.executeUpdate();
-			System.out.println("PostDAOImpl->deletePost->res: " + res);
+			//System.out.println("PostDAOImpl->deletePost->res: " + res);
 		} catch(Exception e) {
-			System.out.println("Error in PostDAOImpl->deletePost: " + e);
+			//System.out.println("Error in PostDAOImpl->deletePost: " + e);
 		} finally {
 			if (session != null && session.isOpen()) {
 	               session.close();

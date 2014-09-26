@@ -11,12 +11,20 @@ import javax.persistence.Table;
 @Entity
 @Table(name="users")
 public class User {
+	private int userId;
 	private String username;
     private String password;
     private int enabled;
     private Set<UserRole> roles = new HashSet<UserRole>();
 
 	@Id
+	@Column(name="userId")
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 	@Column(name="username")
     public String getUsername() {
 	   return username;

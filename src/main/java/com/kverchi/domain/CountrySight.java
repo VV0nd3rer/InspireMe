@@ -14,7 +14,7 @@ public class CountrySight {
 	    private String country_code;
 	    private String img_url;
 	    private String description;
-	    private String username;
+	    private String userId;
 	    
 	    
 		@Id
@@ -57,13 +57,16 @@ public class CountrySight {
 		public void setDescription(String description) {
 			this.description = description;
 		}
+		@Column(name="userId")
+		public String getUserId() {
+			return userId;
+		}
+		public void setUserId(String userId) {
+			this.userId = userId;
+		}
 		
-		@Column(name="username")
-		public String getUsername() {
-			return username;
-		}
-		public void setUsername(String username) {
-			this.username = username;
-		}
+		
+		
+		
 	    
 }

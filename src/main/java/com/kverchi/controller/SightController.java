@@ -48,7 +48,7 @@ public class SightController {
 		sight.setSight_label(title);
 		sight.setImg_url(imgFile.getOriginalFilename());
 		sight.setCountry_code(countryCode);
-		sight.setUsername(principal.getName());
+		sight.setUserId(principal.getName());
 	
        		File dir = new File(sightsImgPath);
        		if (!dir.exists())
