@@ -15,8 +15,8 @@ public class SightServiceImpl implements SightService {
 	@Autowired 
 	private CountrySightDAO sightDAO;
 
-	public List<CountrySight> getAllSights(String code, Principal principal) {
-		return sightDAO.getSightsListByCode(code, principal);
+	public List<CountrySight> getAllSights(String code, int userId) {
+		return sightDAO.getSightsListByCode(code, userId);
 	}
 
 	public void addSight(CountrySight sight) {

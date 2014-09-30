@@ -11,6 +11,6 @@ public interface UserDAO {
 	//public User getUserByPassword(User user);
 	public List<User> getAllUsers();
 	public void deleteUser(User user);
-	public void addRole(int role_id, int userId);
-	
+	//public void addRole(int role_id, int userId);
+	public User findByUsername(String username);
 }

@@ -9,7 +9,7 @@ import com.kverchi.domain.CountrySight;;
 
 @Service
 public interface SightService {
-	List<CountrySight> getAllSights(String code, Principal principal);
+	List<CountrySight> getAllSights(String code, int userId);
 	public void addSight(CountrySight sight);
 	public void removeSight(CountrySight sight);
 	public CountrySight getSight(int sightId);

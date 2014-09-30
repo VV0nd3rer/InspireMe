@@ -18,8 +18,8 @@ public class PostServiceImpl implements PostService {
 		return postDAO.getPost(_postId);
 	}
 
-	public List<Post> showSightPosts(int _sightId, int _usrName) {
-		return postDAO.getSightPosts(_sightId, _usrName);
+	public List<Post> showSightPosts(int _sightId, int _usrId) {
+		return postDAO.getSightPosts(_sightId, _usrId);
 	}
 
 	public List<Post> showAllPosts() {

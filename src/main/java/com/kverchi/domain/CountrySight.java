@@ -14,7 +14,7 @@ public class CountrySight {
 	    private String country_code;
 	    private String img_url;
 	    private String description;
-	    private String userId;
+	    private int userId;
 	    
 	    
 		@Id
@@ -58,15 +58,10 @@ public class CountrySight {
 			this.description = description;
 		}
 		@Column(name="userId")
-		public String getUserId() {
+		public int getUserId() {
 			return userId;
 		}
-		public void setUserId(String userId) {
+		public void setUserId(int userId) {
 			this.userId = userId;
 		}
-		
-		
-		
-		
-	    
 }

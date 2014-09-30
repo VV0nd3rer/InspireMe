@@ -9,7 +9,7 @@ import com.kverchi.domain.Post;
 @Service
 public interface PostService {	
 	public Post showPost(int _postId);
-	public List<Post> showSightPosts(int _sightId, int _usrName);
+	public List<Post> showSightPosts(int _sightId, int _usrId);
 	public List<Post> showAllPosts();
 	public void createPost(Post post);
 	public void deletePost(int _postId);

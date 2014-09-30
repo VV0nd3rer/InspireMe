@@ -23,18 +23,16 @@ public class CountrySightDAOImpl implements CountrySightDAO{
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	public List<CountrySight> getSightsListByCode(String code, Principal principal) {
+	public List<CountrySight> getSightsListByCode(String code, int userId) {
 	       Session session = null;
 	       List<CountrySight> sights = null;
 	       try {
 	    	   session = sessionFactory.openSession();
 	    	   String query = " FROM CountrySight cs WHERE cs.country_code = :code"
 	    	   		+ " AND cs.userId=:userId";
-	    	
 	    	   Query hQuery = session.createQuery(query);
 	    	   hQuery.setParameter("code", code);
-	    	   hQuery.setParameter("userId", principal.getName());
-	    	   
+	    	   hQuery.setParameter("userId", userId);   
 	           sights = hQuery.list();
 	          
 	       } 

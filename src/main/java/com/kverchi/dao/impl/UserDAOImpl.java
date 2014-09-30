@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,26 +15,20 @@ import org.springframework.stereotype.Repository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.kverchi.domain.User;
-import com.kverchi.domain.UserRole;
 
 @Repository	
 public class UserDAOImpl implements UserDAO {
-  
+   @Autowired
    private SessionFactory sessionFactory;
    @Autowired
    private PasswordEncoder passwordEncoder;
 
-   @Autowired
-   public void setSession(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-   }
-   
    public void addUser(User user) {
 	   Session session = null;
        try {
     	   String password = user.getPassword();
     	   user.setPassword(passwordEncoder.encode(password));
-    	   user.setEnabled(1);
+    	   user.setEnabled(true);
     	   session = sessionFactory.openSession();
     	   user.printUser();
            //session = HibernateUtil.getSessionFactory().openSession();
@@ -96,6 +91,23 @@ public class UserDAOImpl implements UserDAO {
 		   return res;
 	   return null;
    }*/
+    public User findByUsername(String username) {
+	   Session session = null;
+	   User res = null;
+	   try {
+    	   session = sessionFactory.openSession();
+    	   res = (User)session.getNamedQuery("findUserByUsername")
+			 .setParameter("username", username)
+		     .uniqueResult();
+	   } catch (Exception e) {
+    	   System.out.println("Error in UserDAOImpl -> findByUsername "+e.getMessage());
+       } finally {
+           if (session != null && session.isOpen()) {
+               session.close();
+           }
+       }
+	  return res;
+   }
    public List<User> getAllUsers() {
        Session session = null;
        List<User> users = new ArrayList<User>();
@@ -130,7 +142,7 @@ public class UserDAOImpl implements UserDAO {
        }
  }
    
-   public void addRole(int role_id, int userId) {
+  /* public void addRole(int role_id, int userId) {
 		Session session = null;
 		UserRole role = new UserRole();
 		  try {
@@ -148,7 +160,7 @@ public class UserDAOImpl implements UserDAO {
 	               session.close();
 	           }
 		  }
-	}
+	}*/
    
      
 }

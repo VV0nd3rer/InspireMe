@@ -12,6 +12,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -33,6 +34,7 @@ import com.kverchi.dao.CountryDAO;
 import com.kverchi.domain.CountrySight;
 import com.kverchi.domain.Country;
 import com.kverchi.domain.User;
+import com.kverchi.domain.UserDetailsAdapter;
 import com.kverchi.service.CountryService;
 import com.kverchi.service.SightService;
 import com.kverchi.service.UserService;
@@ -68,7 +70,9 @@ public class UserController {
 	public String country(@RequestParam("country_code") String code, Model model, Principal principal)  {
 		List<CountrySight>  sights = new ArrayList<CountrySight>();
 		Country result = null;
-		sights=countrySightsService.getAllSights(code, principal);
+		final UserDetailsAdapter currentUser = (UserDetailsAdapter) ((Authentication) principal).getPrincipal();
+		int userId = currentUser.getId();
+		sights=countrySightsService.getAllSights(code, userId);
 		result = countryService.findCountry(code);	
 		if (result != null) {
 			model.addAttribute( "country", result);
@@ -100,15 +104,15 @@ public class UserController {
 	@RequestMapping("addUser")
 	public String addUser(@ModelAttribute("user") @Valid SignUpForm form, BindingResult result, HttpServletRequest request) throws SQLException {
 		convertPasswordError(result);
-		checkUsername(99, result);
+		checkUsername(form.getLogin(), result);
 		checkCaptcha(request, request.getParameter("jcaptchaResponse"), result);
 		if(!result.hasErrors())
 		  userService.registerAccount(toUser(form), result);
 		return (result.hasErrors() ? VN_REG_FORM : VN_REG_OK);		
 	}
 	@RequestMapping(value="validName", method=RequestMethod.GET)
-	public @ResponseBody String validName(int userId) {
-		if(userService.validateUsername(userId))
+	public @ResponseBody String validName(String username) {
+		if(userService.validateUsername(username))
 			return "TRUE";
 		return "FALSE";
 	}
@@ -137,10 +141,9 @@ public class UserController {
 			}
 		}
 	}
-	private void checkUsername(int userId, BindingResult result) {
-		if(!userService.validateUsername(userId)){
-			String testPlug = userId+"";
-			result.rejectValue("login", "error.duplicate", new String[] {testPlug}, null);
+	private void checkUsername(String username, BindingResult result) {
+		if(!userService.validateUsername(username)){
+			result.rejectValue("login", "error.duplicate", new String[] {username}, null);
 		}
 	}
 	private void checkCaptcha(HttpServletRequest request, String captcha, BindingResult result) {

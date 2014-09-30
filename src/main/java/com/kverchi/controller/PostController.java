@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kverchi.domain.Post;
+import com.kverchi.domain.UserDetailsAdapter;
 import com.kverchi.service.PostService;
 
 @Controller
@@ -41,7 +43,8 @@ public class PostController {
 	@RequestMapping("sightPosts")
 	public String sightPosts(@RequestParam("sightId") int id, Model model, Principal principal) {
 		List<Post> posts = null;
-		posts = postService.showSightPosts(id, Integer.parseInt(principal.getName()));
+		final UserDetailsAdapter currentUser = (UserDetailsAdapter) ((Authentication) principal).getPrincipal();
+		posts = postService.showSightPosts(id, currentUser.getId());
 		//if(posts != null) {
 			model.addAttribute("posts", posts);
 			//currentSight = id;
@@ -77,8 +80,9 @@ public class PostController {
 							 @RequestParam("sightId") int sightId,
 							 Principal principal) {
 		if(!result.hasErrors()) {
+			final UserDetailsAdapter currentUser = (UserDetailsAdapter) ((Authentication) principal).getPrincipal();
 			post.setSightId(sightId);
-			post.setUserId(Integer.parseInt(principal.getName()));
+			post.setUserId(currentUser.getId());
 			postService.createPost(post);
 		}
 		else 
@@ -107,14 +111,12 @@ public class PostController {
 						   @RequestParam("postId") int postId,
 						   @RequestParam("sightId") int sightId,
 						   Principal principal) {
-		System.out.println("postId: " + postId);
-		System.out.println("sightId: " + sightId);
 		if(!result.hasErrors()) {
+			final UserDetailsAdapter currentUser = (UserDetailsAdapter) ((Authentication) principal).getPrincipal();
 			post.setPostId(postId);
 			post.setSightId(sightId);
-			post.setUserId(Integer.parseInt(principal.getName()));
+			post.setUserId(currentUser.getId());
 			postService.updatePost(post);
-			//request.setAttribute("postId", id);
 		}
 		else {
 			System.out.println(result.toString());

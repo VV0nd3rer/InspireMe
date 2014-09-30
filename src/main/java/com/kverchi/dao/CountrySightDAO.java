@@ -8,7 +8,7 @@ import com.kverchi.domain.User;
 
 public interface CountrySightDAO {
 
-	List<CountrySight> getSightsListByCode(String code, Principal principal);
+	List<CountrySight> getSightsListByCode(String code, int userId);
 	public void addSight(CountrySight sight);
 	public void removeSight(CountrySight sight);
 	public CountrySight getSightById(int sightId);

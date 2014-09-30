@@ -34,15 +34,15 @@ public class PostDAOImpl implements PostDAO {
 		}
 		return post;
 	}
-	public List<Post> getSightPosts(int _sightId, int _usrName) {
+	public List<Post> getSightPosts(int _sightId, int _usrId) {
 		Session session = null;
 		List<Post> sightPost = null;
 		try {
 			session = sessionFactory.openSession();
-			String sQuery = "FROM Post p WHERE p.sightId = :sight_id AND p.userId = :usrName";
+			String sQuery = "FROM Post p WHERE p.sightId = :sight_id AND p.userId = :usrId";
 			Query hQuery = session.createQuery(sQuery);
 			hQuery.setParameter("sight_id", _sightId);
-			hQuery.setParameter("usrName", _usrName);
+			hQuery.setParameter("usrId", _usrId);
 			sightPost = hQuery.list();
 		} catch(Exception e) {
 			System.out.println("Error in PostDAOImpl->getSigthPosts: " + e);

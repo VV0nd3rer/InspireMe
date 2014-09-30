@@ -8,6 +8,6 @@ import com.kverchi.domain.User;
 @Service
 public interface UserService {
 	boolean registerAccount(User user, Errors errors);
-	public boolean validateUsername(int userName);
-	//public boolean loginAccount(User user, Errors errors);
+	public boolean validateUsername(String usrName);
+	User getUserByUsername(String username);
 }
