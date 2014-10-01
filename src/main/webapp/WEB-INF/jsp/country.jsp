@@ -21,17 +21,13 @@
   <dialog id="newSightDialog">
 	<p>Adding a new sight</p>
 	<div>
-	<form action="sights/newSight" method="post" enctype="multipart/form-data">
-	 
-		<input type="text" value="" name="title"  placeholder="Title">
-		<p>
-			<input type="text" value="" name="description" placeholder="Description">
-			<p>
-		<input type="file" value="" name="img_url" id="img_url">
-		<p>
+	 <form action="sights/newSight" method="post" enctype="multipart/form-data">
+		<input type="text" value="" name="title"  placeholder="Title"/>
+		<p><input type="text" value="" name="description" placeholder="Description"/></p>
+	    <p><input type="file" value="" name="img_url" id="img_url"/></p>
 		<input type="submit" value="Add sight">
     	<input type="button" id="close" value="Close" onclick="closeDialog()">
-	</form>
+	 </form>
 	</div>
  </dialog>
 
@@ -55,7 +51,6 @@
 	     	   	<img src="<%=request.getContextPath() %>/countryImg/countries_sights/${s.img_url}"/>
 	     		<p>${s.description}</p>
 	     		<p><a href="<%=request.getContextPath() %>/main/posts/sightPosts?sightId=${s.sight_id}">Read more</a></p>
-	     		<%-- <p><a href="sights/removeSight?sightId=${s.sight_id}&countryCode=${s.country_code}" onclick="return confirm('M, suka?')">Delete</a></p> --%>
 	     		<button type="button" value="sights/removeSight?sightId=${s.sight_id}" onclick="confirmButton(this, 'removeSightDialog')">Delete</button>
      	    </div>
     	 	</c:forEach>

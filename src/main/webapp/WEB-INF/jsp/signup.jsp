@@ -17,16 +17,13 @@
 					<form:errors path="*">
 						<div><spring:message code="error.global" /></div>
 				   	</form:errors>
-				   	<div>
-						
+				   	<div>		
 							<form:input path="login"  placeholder="Login"/> 
-						
 						<p id="errorLogin" class="inputError">
 							<form:errors path="login" htmlEscape="false" />
 						</p>
 					</div>
 					<div>
-				
 						    <form:password path="password"  placeholder="Password" />
 						<p id="errorPass" class="inputError">
 							<form:errors path="password" htmlEscape="false" />
@@ -35,14 +32,12 @@
 					<div>
 						    <form:password path="confirmPassword" placeholder="Confirm password"/>
 					</div>
-					
-					 <div>
+					<div>
 					 Enter the code
    					 <input type="text" name="jcaptchaResponse" value="" />
    					 <img src="/InspireMe/jcaptcha.jpg" id="captchaImg">
      				 <button name="RefreshButton" onclick="refresh()" type="button">Refresh</button>
-   					 </div>
-   					 
+   				    </div>
 				<p><input type="submit" value="Register"></input></p>
 				</form:form>
 			</div>

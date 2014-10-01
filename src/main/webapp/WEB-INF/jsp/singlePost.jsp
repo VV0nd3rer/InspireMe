@@ -20,7 +20,7 @@
 			</div>
  		  </dialog>	
 		  <div id="singlePost">
-			  <h3>${singlePost.title}</h3>
+			  <h3 id="title">${singlePost.title}</h3>
 			  <p>${singlePost.stampCreated}</p>
 			  <div id="text">${singlePost.text}</div> 
 		  </div>

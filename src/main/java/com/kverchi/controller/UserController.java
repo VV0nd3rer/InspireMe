@@ -43,13 +43,12 @@ import com.kverchi.service.UserService;
 @Controller
 @SessionAttributes("country_code") 
 public class UserController {
-	private static final String VN_REG_FORM = "signup";
-	private static final String VN_REG_OK = "redirect:result";
-	private static final String VN_LOGIN_FORM = "login";
-	//private static final String VN_LOGIN_OK = "redirect:main";
-	private static final String VN_MAIN = "main";
-	private static final String VN_HOME = "home";
-	private static final String VN_ERROR = "error";
+	private static final String P_REG_FORM = "signup";
+	private static final String P_REG_OK = "redirect:result";
+	private static final String P_LOGIN_FORM = "login";
+	private static final String P_MAIN = "main";
+	private static final String P_HOME = "home";
+	private static final String P_ERROR = "error";
 	
 	
 	@Autowired private UserService userService;
@@ -63,16 +62,15 @@ public class UserController {
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.setAllowedFields(new String[] {
-				"login", "password", "confirmPassword", 
-				/*"title", "description", "text"*/});
+				"login", "password", "confirmPassword"
+				});
 	}
 	@RequestMapping("country") 
 	public String country(@RequestParam("country_code") String code, Model model, Principal principal)  {
 		List<CountrySight>  sights = new ArrayList<CountrySight>();
 		Country result = null;
 		final UserDetailsAdapter currentUser = (UserDetailsAdapter) ((Authentication) principal).getPrincipal();
-		int userId = currentUser.getId();
-		sights=countrySightsService.getAllSights(code, userId);
+		sights=countrySightsService.getAllSights(code, currentUser.getId());
 		result = countryService.findCountry(code);	
 		if (result != null) {
 			model.addAttribute( "country", result);
@@ -82,15 +80,14 @@ public class UserController {
 		}
 		else
 			//TODO error page and denied page - it's not the same
-			return VN_ERROR;
+			return P_ERROR;
 	}
 	
 	@RequestMapping("home") 
 	public String home(HttpServletRequest request, Model model) {
 		List<Country> countries = countryService.findAllCountries();
 		model.addAttribute("countriesList", countries);
-		
-		return VN_HOME;
+		return P_HOME;
 	}
 	@RequestMapping("result")
 	public String result() {
@@ -99,7 +96,7 @@ public class UserController {
 	@RequestMapping("signUp")
 	public String singUp(Model model) {
 		model.addAttribute("user", new SignUpForm());
-		return VN_REG_FORM;
+		return P_REG_FORM;
 	}
 	@RequestMapping("addUser")
 	public String addUser(@ModelAttribute("user") @Valid SignUpForm form, BindingResult result, HttpServletRequest request) throws SQLException {
@@ -108,27 +105,27 @@ public class UserController {
 		checkCaptcha(request, request.getParameter("jcaptchaResponse"), result);
 		if(!result.hasErrors())
 		  userService.registerAccount(toUser(form), result);
-		return (result.hasErrors() ? VN_REG_FORM : VN_REG_OK);		
+		return (result.hasErrors() ? P_REG_FORM : P_REG_OK);		
 	}
 	@RequestMapping(value="validName", method=RequestMethod.GET)
-	public @ResponseBody String validName(String username) {
-		if(userService.validateUsername(username))
+	public @ResponseBody String validName(String login) {
+		if(userService.validateUsername(login))
 			return "TRUE";
 		return "FALSE";
 	}
 
 	@RequestMapping("Login")
 	public String Login() {
-		return VN_LOGIN_FORM;
+		return P_LOGIN_FORM;
 	}
 	
 	@RequestMapping("main")
 	public String main() {
-		return VN_MAIN;	
+		return P_MAIN;	
 	}
 	@RequestMapping("error") 
 	public String error() {
-		return VN_ERROR;
+		return P_ERROR;
 	}
 	
 	private static void convertPasswordError(BindingResult result) {

@@ -77,7 +77,6 @@ public class PostDAOImpl implements PostDAO {
 		try {
 			session = sessionFactory.openSession();
 			tx = session.beginTransaction();
-			//System.out.println("In createPost : " + post.getText() + " " + post.getUsername() + " " + post.getSightId());
 			session.save(post);
 		    tx.commit();
 		} catch (Exception e) {
@@ -98,13 +97,12 @@ public class PostDAOImpl implements PostDAO {
 			Query hQuery = session.createQuery(sQuery);
 			hQuery.setParameter("postId", _postId);
 			int res = hQuery.executeUpdate();
-			//System.out.println("PostDAOImpl->deletePost->res: " + res);
 		} catch(Exception e) {
-			//System.out.println("Error in PostDAOImpl->deletePost: " + e);
+			System.out.println("Error in PostDAOImpl->deletePost: " + e);
 		} finally {
 			if (session != null && session.isOpen()) {
 	               session.close();
-	           }
+	        }
 		}
 	}
 	public void updatePost(Post post) {
