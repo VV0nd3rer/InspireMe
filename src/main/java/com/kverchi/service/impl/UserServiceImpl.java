@@ -1,6 +1,7 @@
 package com.kverchi.service.impl;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Hibernate;
@@ -62,5 +63,9 @@ public class UserServiceImpl implements UserService {
 		User user =  userDAO.findByUsername(username);
 		//if (user != null) { Hibernate.initialize(user.getRoles()); }
 		return user;
+	}
+	public List<User> getAllUsers() {
+		List<User> users =  userDAO.getAllUsers();
+		return users;
 	}
 }

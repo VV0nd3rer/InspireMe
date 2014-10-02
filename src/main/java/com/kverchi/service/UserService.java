@@ -1,5 +1,7 @@
 package com.kverchi.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
@@ -9,5 +11,6 @@ import com.kverchi.domain.User;
 public interface UserService {
 	boolean registerAccount(User user, Errors errors);
 	public boolean validateUsername(String usrName);
-	User getUserByUsername(String username);
+	public User getUserByUsername(String username);
+	public List<User> getAllUsers();
 }

@@ -8,8 +8,8 @@
   <link rel="stylesheet" href="<%=request.getContextPath() %>/css/sights_common.css">
   <link rel="stylesheet" href="<%=request.getContextPath() %>/css/sights_special.css">	
  
-  	<script src="../js/dialog-polyfill.js"></script>
-	<link rel="stylesheet" type="text/css" href="../css/dialog-polyfill.css">
+  	<script src="<%=request.getContextPath() %>/js/dialog-polyfill.js"></script>
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/dialog-polyfill.css">
 </head>
 <body>
 	<%@ include file="head.jspf" %>

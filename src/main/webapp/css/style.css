@@ -57,6 +57,14 @@ h3 {
 	border-right: 1px solid#fff;
 }
 #navigation li a:hover { background:#383; }
+#leftBar {
+
+        background-color:white;
+        width:150px;
+        height:100%;
+        float:left;
+    }
+    
 #content {
 	clear: left;
 	padding: 20px;

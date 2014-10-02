@@ -63,14 +63,11 @@ public class UserDAOImpl implements UserDAO {
  }
    
  public User getUserById(int id) {
-	   //System.out.println("login to getUserByLogin: " + login);
+	   
        Session session = null;
        User user = null;
        try {
     	   session = sessionFactory.openSession();
-    	   /*Query q = session.getNamedQuery("findByUsername");
-    	   q.setParameter("username", login);*/
-    	   //user = (User) q.uniqueResult();
     	   user = (User) session.get(User.class, id);
        } catch (Exception e) {
     	   System.out.println("Error in getUserByLogin "+e.getMessage());
@@ -83,14 +80,7 @@ public class UserDAOImpl implements UserDAO {
        return user;
  }
    
-  /* public User getUserByPassword(User user) {
-	   User res = getUserByLogin(user.getUsername());
-	   String cr_userPass = passwordEncoder.encode(user.getPassword());
-	   System.out.println(res.getPassword() + " : " + cr_userPass);
-	   if(res.getPassword().equals(cr_userPass))
-		   return res;
-	   return null;
-   }*/
+ 
     public User findByUsername(String username) {
 	   Session session = null;
 	   User res = null;

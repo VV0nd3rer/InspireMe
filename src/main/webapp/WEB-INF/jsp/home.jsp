@@ -18,7 +18,7 @@
 		    showTooltip: true,
 		    onRegionClick: function(element, code, region){
 		    	//window.location.href = "http://stackoverflow.com";	
-		    	window.location.replace("country?country_code="+code);
+		    	window.location.replace("../main/sights/country?country_code="+code);
 		    }
 		});
 	});
@@ -34,7 +34,7 @@
 				<p>It is a secret page. It's shown only for authorization users.</p>
 			
 			<div>
-			<form action="country" method="get">
+			<form action="../main/sights/country" method="get">
 			<input type="text" list="searchCountry" name="country_code">
 			<input type="submit" value="Go!">
 			</form>

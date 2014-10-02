@@ -4,12 +4,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Adding a new sight.</title>
+<%@ include file="include.jspf" %>
+<title>My cabinet</title>
 </head>
 <body>
-
-<div style="width: 680px; height: 520px; border:1px">
-Hello!
-</div>
-</body>
+		<div id="wrapper">
+			<%@ include file="head.jspf" %>
+			<div id="content">
+				<%@ include file="userCabinetMenu.jspf" %>
+			</div>
+			<%@ include file="footer.jspf" %>
+		</div>
+	</body>
 </html>

@@ -72,7 +72,7 @@ CREATE TABLE `posts` (
   KEY `sight_id` (`sight_id`),
   CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`),
   CONSTRAINT `sight_id` FOREIGN KEY (`sight_id`) REFERENCES `countries_sights` (`sight_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 /*Data for the table `posts` */
 
@@ -108,7 +108,7 @@ CREATE TABLE `user_role` (
 
 /*Data for the table `user_role` */
 
-insert  into `user_role`(`userId`,`role_id`) values (6,1);
+insert  into `user_role`(`userId`,`role_id`) values (6,1),(7,1),(8,1),(9,1);
 
 /*Table structure for table `users` */
 
@@ -121,11 +121,29 @@ CREATE TABLE `users` (
   `enabled` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`userId`),
   KEY `userId` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 /*Data for the table `users` */
 
-insert  into `users`(`userId`,`username`,`password`,`enabled`) values (6,'FlyinGMind','$2a$10$oeW5cEUtxdvCWMaj0nVJ.uUh1Vjn/v0QJMH599Zfy/tQx4gB1Fn9.',1);
+insert  into `users`(`userId`,`username`,`password`,`enabled`) values (6,'FlyinGMind','$2a$10$oeW5cEUtxdvCWMaj0nVJ.uUh1Vjn/v0QJMH599Zfy/tQx4gB1Fn9.',1),(7,'Vasya','$2a$10$W.6EDTwrMp4n97F/pHkzRuFN8y7cKDok.lg4yiIdX6NMGWFZm6vHC',1),(8,'Petya','$2a$10$Adkflw72.4jueJqRFo9vi.bzH/yMfQ8R05tiDbxPXi5ePdV459X4m',1),(9,'Olechka','$2a$10$kdxADPcs3zMmukd.dmbXQ.hZgFr.2IVt4jJxy.DOf15h2U2CLEl7u',1);
+
+/*Table structure for table `users_friends` */
+
+DROP TABLE IF EXISTS `users_friends`;
+
+CREATE TABLE `users_friends` (
+  `friendOneId` int(11) NOT NULL,
+  `friendTwoId` int(11) NOT NULL,
+  `status` int(11) DEFAULT '0',
+  PRIMARY KEY (`friendOneId`,`friendTwoId`),
+  KEY `friendTwo` (`friendTwoId`),
+  CONSTRAINT `users_friends_ibfk_1` FOREIGN KEY (`friendOneId`) REFERENCES `users` (`userId`),
+  CONSTRAINT `users_friends_ibfk_2` FOREIGN KEY (`friendTwoId`) REFERENCES `users` (`userId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `users_friends` */
+
+insert  into `users_friends`(`friendOneId`,`friendTwoId`,`status`) values (6,7,1);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

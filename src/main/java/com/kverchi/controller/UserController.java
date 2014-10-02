@@ -36,6 +36,7 @@ import com.kverchi.domain.Country;
 import com.kverchi.domain.User;
 import com.kverchi.domain.UserDetailsAdapter;
 import com.kverchi.service.CountryService;
+import com.kverchi.service.FriendService;
 import com.kverchi.service.SightService;
 import com.kverchi.service.UserService;
 
@@ -46,7 +47,6 @@ public class UserController {
 	private static final String VN_REG_FORM = "signup";
 	private static final String VN_REG_OK = "redirect:result";
 	private static final String VN_LOGIN_FORM = "login";
-	//private static final String VN_LOGIN_OK = "redirect:main";
 	private static final String VN_MAIN = "main";
 	private static final String VN_HOME = "home";
 	private static final String VN_ERROR = "error";
@@ -55,6 +55,7 @@ public class UserController {
 	@Autowired private UserService userService;
 	@Autowired private CountryService countryService;
 	@Autowired private SightService countrySightsService;
+	@Autowired private FriendService friendService;
 	
 	@Autowired
 	@Qualifier("authenticationManager")
@@ -66,25 +67,7 @@ public class UserController {
 				"login", "password", "confirmPassword", 
 				/*"title", "description", "text"*/});
 	}
-	@RequestMapping("country") 
-	public String country(@RequestParam("country_code") String code, Model model, Principal principal)  {
-		List<CountrySight>  sights = new ArrayList<CountrySight>();
-		Country result = null;
-		final UserDetailsAdapter currentUser = (UserDetailsAdapter) ((Authentication) principal).getPrincipal();
-		int userId = currentUser.getId();
-		sights=countrySightsService.getAllSights(code, userId);
-		result = countryService.findCountry(code);	
-		if (result != null) {
-			model.addAttribute( "country", result);
-			model.addAttribute( "country_sigths", sights);
-			model.addAttribute( "country_code", code);
-			return "country";
-		}
-		else
-			//TODO error page and denied page - it's not the same
-			return VN_ERROR;
-	}
-	
+		
 	@RequestMapping("home") 
 	public String home(HttpServletRequest request, Model model) {
 		List<Country> countries = countryService.findAllCountries();
@@ -92,15 +75,79 @@ public class UserController {
 		
 		return VN_HOME;
 	}
+	
+	@RequestMapping("cabinet")
+	public String showCabinet() {
+		return "userCabinet";
+	}
+	@RequestMapping("profile")
+	public String showProfile() {
+		return "profile";
+	}
+	@RequestMapping("friends")
+	public String showFriends(Model model,  Principal principal) {
+		UserDetailsAdapter currentUser = loadUserDetails(principal);
+		int userId = currentUser.getId();
+		List<User> friendList = friendService.getUserFriends(userId, 1);
+		model.addAttribute("friendList", friendList);
+		return "friends";
+	}
+	
+	@RequestMapping("requests")
+	public String showRequests(Model model,  Principal principal) {
+		UserDetailsAdapter currentUser = loadUserDetails(principal);
+		int userId = currentUser.getId();
+		List<User> requestList = friendService.getUserFriends(userId, 0);
+		model.addAttribute("requestsList", requestList);
+		return "friendRequests";
+	}
+	
+	@RequestMapping(value="addFriendPage")
+	public String addFriendPage(Model model) {
+		List <User> users = userService.getAllUsers();
+		model.addAttribute("users", users);
+		return "newFriendPage";
+	}
+	
+	@RequestMapping(value="addFriend", method=RequestMethod.GET)
+	public String addFriendConfirm(@RequestParam("id") int friendId, Principal principal) {
+		UserDetailsAdapter currentUser = loadUserDetails(principal);
+		int userId = currentUser.getId();
+		friendService.addFriend(userId, friendId);
+		return "redirect:addFriendPage";
+	}
+	
+	@RequestMapping(value="removeFriend", method=RequestMethod.GET)
+	public String removeFriend(@RequestParam("id") int friendId, Principal principal,
+			HttpServletRequest request) {
+		UserDetailsAdapter currentUser = loadUserDetails(principal);
+		int userId = currentUser.getId();
+		String referer = request.getHeader("Referer");
+		friendService.removeFriend(userId, friendId, referer);
+		return "redirect:"+referer;
+	}
+	
+	@RequestMapping(value="acceptFriend", method=RequestMethod.GET)
+	public String acceptFriend(@RequestParam("id") int friendId, Principal principal,
+			HttpServletRequest request) {
+		UserDetailsAdapter currentUser = loadUserDetails(principal);
+		int userId = currentUser.getId();
+		String referer = request.getHeader("Referer");
+		friendService.acceptFriend(userId, friendId);
+		return "redirect:"+referer;
+	}
+	
 	@RequestMapping("result")
 	public String result() {
 		return "result";
 	}
+	
 	@RequestMapping("signUp")
 	public String singUp(Model model) {
 		model.addAttribute("user", new SignUpForm());
 		return VN_REG_FORM;
 	}
+	
 	@RequestMapping("addUser")
 	public String addUser(@ModelAttribute("user") @Valid SignUpForm form, BindingResult result, HttpServletRequest request) throws SQLException {
 		convertPasswordError(result);
@@ -157,5 +204,10 @@ public class UserController {
 		user.setUsername(form.getLogin());
 		user.setPassword(form.getPassword());
 		return user;
+	}
+	
+	private UserDetailsAdapter loadUserDetails(Principal principal) {
+		UserDetailsAdapter currentUser = (UserDetailsAdapter) ((Authentication) principal).getPrincipal();
+	    return currentUser;
 	}
 }

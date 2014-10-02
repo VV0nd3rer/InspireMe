@@ -24,6 +24,11 @@
 </ul>
 <p>
 <security:authorize access="isAuthenticated()">
+    
+    
+	<a href="cabinet" style="color:white">My cabinet</a>
+	
+	
 	Hi, <security:authentication property="principal.username" />.
 </security:authorize>
 <security:authorize access="isAnonymous()">
