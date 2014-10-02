@@ -45,23 +45,16 @@ public class PostController {
 		List<Post> posts = null;
 		final UserDetailsAdapter currentUser = (UserDetailsAdapter) ((Authentication) principal).getPrincipal();
 		posts = postService.showSightPosts(id, currentUser.getId());
-		//if(posts != null) {
-			model.addAttribute("posts", posts);
-			//currentSight = id;
-			model.addAttribute("sightId", id);
-			return VN_POSTS;
-		//}
-		//else
-			//return VN_ERROR;
+	    model.addAttribute("posts", posts);
+		model.addAttribute("sightId", id);
+		return VN_POSTS;
 	}
 	@RequestMapping("singlePost")
 	public String singlePost(@RequestParam("postId") int postId, Model model) {
 		Post singlePost = null;
 		singlePost = postService.showPost(postId);
-		System.out.println("single post: " + singlePost.getSightId() + " " + singlePost.getPostId());
 		if(singlePost != null) {
 			model.addAttribute("singlePost", singlePost);
-			//model.addAttribute("sightId", singlePost.getSightId());
 			return VN_SINGLE_POST;
 		}
 		else
@@ -119,7 +112,6 @@ public class PostController {
 			postService.updatePost(post);
 		}
 		else {
-			System.out.println(result.toString());
 			result.reject("error.post");
 		}
 		return (result.hasErrors() ? VN_NEW_POST : VN_SIGHT+sightId);	 
