@@ -39,7 +39,7 @@ import com.kverchi.tools.Pair;
 @RequestMapping("sights")
 @SessionAttributes("country_code") 
 public class SightController {
-	private final static String IMG_PATH="E:/Java/spring-tool-suite-3.6.0.RELEASE-e4.4-win32/workspace/InspireMe/src/main/webapp/countryImg/countries_sights/";
+	private final static String IMG_PATH="C:/Users/Giperborej/Documents/workspace-sts-3.6.0.RELEASE/fixMe/src/main/webapp/countryImg/countries_sights/";
 	private final static String P_COUNTRY = "redirect:/main/sights/country";
 	private static final String P_ERROR = "error";
 	private final int IMAGE_MAX_SIZE = 100000;
