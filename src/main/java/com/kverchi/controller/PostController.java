@@ -80,7 +80,7 @@ public class PostController {
 		}
 		else 
 			result.reject("error.post");
-		return (result.hasErrors() ? VN_NEW_POST+sightId : VN_SIGHT+sightId);	
+		return (result.hasErrors() ? VN_NEW_POST : VN_SIGHT+sightId);	
 	}
 	@RequestMapping("deletePost")
 	public String deletePost(@RequestParam("postId") int postId, @RequestParam("sightId") int sightId) {

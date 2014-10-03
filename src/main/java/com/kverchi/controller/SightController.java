@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kverchi.service.CountryService;
@@ -36,9 +37,10 @@ import com.kverchi.tools.Pair;
 
 @Controller
 @RequestMapping("sights")
+@SessionAttributes("country_code") 
 public class SightController {
 	private final static String IMG_PATH="E:/Java/spring-tool-suite-3.6.0.RELEASE-e4.4-win32/workspace/InspireMe/src/main/webapp/countryImg/countries_sights/";
-	private final static String P_COUNTY = "redirect:/main/country?country_code=";
+	private final static String P_COUNTRY = "redirect:/main/sights/country";
 	private static final String P_ERROR = "error";
 	private final int IMAGE_MAX_SIZE = 100000;
 	private final int SIZE_A = 350;
@@ -77,9 +79,15 @@ public class SightController {
 		delFile.delete();
 		sightsService.removeSight(sight);
 				
-		return (P_COUNTY+countryCode);
+		return (P_COUNTRY);
 	}
-	@RequestMapping("newSight")
+	@RequestMapping(value = "newSight", method = RequestMethod.POST)
+	public @ResponseBody String newSight(Model model, HttpServletRequest request) {
+		model.addAttribute("sight", new AddSightForm());
+		String countryCode = request.getSession().getAttribute("country_code").toString();
+		return (P_COUNTRY); 
+	}
+	@RequestMapping("addSight")
 	public String addNewSight(@RequestParam("title") String title,
 			@RequestParam("description") String description,
 			@RequestParam("img_url") MultipartFile imgFile,
@@ -96,13 +104,13 @@ public class SightController {
 				{
 	    			System.out.println("Need to show error of wrong extensions");
 	    			//Need to show error of wrong extensions
-					return (P_COUNTY+countryCode); 
+					return (P_COUNTRY+countryCode); 
 				}
 	    		if (imgFile.getSize() > IMAGE_MAX_SIZE)
 				{
 	    			System.out.println("Need to show error of big size");
 	    			//Need to show error of big size
-					return (P_COUNTY+countryCode); 
+					return (P_COUNTRY+countryCode); 
 				}
 		    	BufferedImage image = ResizeImg(ImageIO.read(inputStream), true);
 		 		CountrySight sight = new CountrySight(); 		
@@ -119,16 +127,16 @@ public class SightController {
 	       		//imgFile.transferTo(new File(dir.getAbsolutePath()+"/"+imgFile.getOriginalFilename()));
 	       		sightsService.addSight(sight);
 				inputStream.close();
-				return (P_COUNTY+countryCode);
+				return (P_COUNTRY+countryCode);
 	    	 }
 	    	 else {
 	    		 System.out.println("Need to show error of empty path");
 	    		 //Need to show error of empty path
-	    		 return (P_COUNTY+countryCode); 
+	    		 return (P_COUNTRY); 
 	    	 }
 	    } catch (IOException e) {
 	    	System.out.println("Error in SightController->newSight: "+e);
-	    	return (P_COUNTY+countryCode);
+	    	return (P_COUNTRY+countryCode);
 	    } 			
 	}
 	private void setAllowedImgExtn() {

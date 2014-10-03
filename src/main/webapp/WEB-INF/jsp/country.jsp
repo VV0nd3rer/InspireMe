@@ -21,7 +21,7 @@
   <dialog id="newSightDialog">
 	<p>Adding a new sight</p>
 	<div>
-	 <form action="sights/newSight" method="post" enctype="multipart/form-data">
+	 <form action="addSight" method="post" enctype="multipart/form-data">
 		<input type="text" value="" name="title"  placeholder="Title"/>
 		<p><input type="text" value="" name="description" placeholder="Description"/></p>
 	    <p><input type="file" value="" name="img_url" id="img_url"/></p>
@@ -51,7 +51,7 @@
 	     	   	<img src="<%=request.getContextPath() %>/countryImg/countries_sights/${s.img_url}"/>
 	     		<p>${s.description}</p>
 	     		<p><a href="<%=request.getContextPath() %>/main/posts/sightPosts?sightId=${s.sight_id}">Read more</a></p>
-	     		<button type="button" value="sights/removeSight?sightId=${s.sight_id}" onclick="confirmButton(this, 'removeSightDialog')">Delete</button>
+	     		<button type="button" value="removeSight?sightId=${s.sight_id}" onclick="confirmButton(this, 'removeSightDialog')">Delete</button>
      	    </div>
     	 	</c:forEach>
      	  </div>

@@ -2,17 +2,36 @@ var deleteLink;
 var dialog;
 $(function() {
 	//Modal dialogs
-   	document.querySelector('#showNewSightDialog').onclick = function() {
+	$("#showNewSightDialog").click(function() {
+		addNewSight();
+	});
+   	/*document.querySelector('#showNewSightDialog').onclick = function() {
    		dialog = document.getElementById('newSightDialog');
           	dialogPolyfill.registerDialog(dialog);
           	dialog.showModal(); 
-    };          
+    }; */         
 	$(".delPost").click(function(event) {
 		event.preventDefault();
 		var href = $(this).attr('href');
 		confirmHref(href, 'removePost');
 	})
 });
+function addNewSight() {
+	$.ajax({
+		type: "POST",  
+	    url: contexPath + "/main/sights/newSight",  
+	    success: function(response){
+	    	alert(response);
+	    	
+	    	dialog = document.getElementById('newSightDialog');
+          	dialogPolyfill.registerDialog(dialog);
+          	dialog.showModal(); 
+	    },
+		error: function(error) {
+			alert("In valid name error: " + error);
+		}
+	});
+}
 function confirmHref(objHref, id) {
 	deleteLink=objHref;
 	confirmDialog(id);

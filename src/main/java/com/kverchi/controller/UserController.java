@@ -42,7 +42,6 @@ import com.kverchi.service.UserService;
 
 @EnableWebMvc
 @Controller
-@SessionAttributes("country_code") 
 public class UserController {
 	private static final String P_REG_FORM = "signup";
 	private static final String P_REG_OK = "redirect:result";
@@ -66,11 +65,7 @@ public class UserController {
 		binder.setAllowedFields(new String[] {
 				"login", "password", "confirmPassword"
 				});
-	}
-		
-
-
-
+	}		
 	@RequestMapping("home") 
 	public String home(HttpServletRequest request, Model model) {
 		List<Country> countries = countryService.findAllCountries();

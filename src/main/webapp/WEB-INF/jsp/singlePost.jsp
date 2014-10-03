@@ -20,9 +20,9 @@
 			</div>
  		  </dialog>	
 		  <div id="singlePost">
-			  <h3 id="title">${singlePost.title}</h3>
+			  <h3 class="title">${singlePost.title}</h3>
 			  <p>${singlePost.stampCreated}</p>
-			  <div id="text">${singlePost.text}</div> 
+			  <div class="text">${singlePost.text}</div> 
 		  </div>
 				<%@ include file="menuPost.jspf" %>
 				 <p>

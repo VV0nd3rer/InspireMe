@@ -98,11 +98,11 @@ h3 {
 	width:32px;
 	height: 32px;
 }
-#text {
+#singlePost .text {
 	padding: 5px;
 }
 
-#title {
+#singlePost .title {
 	background: -webkit-linear-gradient(left, #9BF7B6, #DCDFDD); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(right, #9BF7B6, #DCDFDD); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(right, #9BF7B6, #DCDFDD); /* For Firefox 3.6 to 15 */
