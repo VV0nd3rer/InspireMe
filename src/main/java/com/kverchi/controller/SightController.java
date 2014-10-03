@@ -39,12 +39,14 @@ import com.kverchi.tools.Pair;
 public class SightController {
 	private final static String IMG_PATH="E:/Java/spring-tool-suite-3.6.0.RELEASE-e4.4-win32/workspace/InspireMe/src/main/webapp/countryImg/countries_sights/";
 	private final static String P_COUNTY = "redirect:/main/country?country_code=";
+	private static final String P_ERROR = "error";
 	private final int IMAGE_MAX_SIZE = 100000;
 	private final int SIZE_A = 350;
 	private final int SIZE_B = 300;
 	private final int SIZE_C = 250;
 	private Set<String> allowedImageExtensions;
-	@Autowired private SightService countrySightsService;
+	@Autowired private SightService sightsService;
+	@Autowired private CountryService countryService; 
 	@Autowired private Pair<Integer, Integer> resSize;
 
 	@RequestMapping("country") 
@@ -53,7 +55,7 @@ public class SightController {
 		Country result = null;
 		final UserDetailsAdapter currentUser = (UserDetailsAdapter) ((Authentication) principal).getPrincipal();
 		int userId = currentUser.getId();
-		sights=countrySightsService.getAllSights(code, userId);
+		sights = sightsService.getAllSights(code, userId);
 		result = countryService.findCountry(code);	
 		if (result != null) {
 			model.addAttribute( "country", result);
@@ -63,17 +65,17 @@ public class SightController {
 		}
 		else
 			//TODO error page and denied page - it's not the same
-			return VN_ERROR;
+			return P_ERROR;
 	}
 	
 	@RequestMapping("removeSight")
 	public String singUp(@RequestParam("sightId") int sightId,
 			HttpServletRequest request) {
 		String countryCode = request.getSession().getAttribute("country_code").toString();
-		CountrySight sight = countrySightsService.getSight(sightId);
+		CountrySight sight = sightsService.getSight(sightId);
 		File delFile = new File(IMG_PATH+sight.getImg_url());
 		delFile.delete();
-		countrySightsService.removeSight(sight);
+		sightsService.removeSight(sight);
 				
 		return (P_COUNTY+countryCode);
 	}
@@ -115,7 +117,7 @@ public class SightController {
 	       			dir.mkdirs();
 	       		ImageIO.write(image, "jpg", new File(dir.getAbsolutePath()+"/"+imgFile.getOriginalFilename()));
 	       		//imgFile.transferTo(new File(dir.getAbsolutePath()+"/"+imgFile.getOriginalFilename()));
-	       		countrySightsService.addSight(sight);
+	       		sightsService.addSight(sight);
 				inputStream.close();
 				return (P_COUNTY+countryCode);
 	    	 }
