@@ -15,7 +15,7 @@
 				<div id="cabinetMenu">
 				<%@ include file="userCabinetMenu.jspf" %>
 				</div>
-				<a href="addFriendPage">Add a new friend!</a>
+				
 					<c:forEach items="${requestsList}" var="r">
 		           	   <div class="user">
 				     	    <h3>${r.username}</h3>

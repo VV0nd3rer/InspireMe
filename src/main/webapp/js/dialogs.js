@@ -2,11 +2,12 @@ var deleteLink;
 var dialog;
 $(function() {
 	//Modal dialogs
-   	document.querySelector('#showNewSightDialog').onclick = function() {
+	$("#showNewSightDialog").click(function() {
    		dialog = document.getElementById('newSightDialog');
           	dialogPolyfill.registerDialog(dialog);
           	dialog.showModal(); 
-    };          
+	})
+       
 	$(".delPost").click(function(event) {
 		event.preventDefault();
 		var href = $(this).attr('href');

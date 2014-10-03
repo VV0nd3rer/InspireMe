@@ -2,7 +2,6 @@ package com.kverchi.controller;
 
 import java.security.Principal;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,15 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.ui.Model;
 
 import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
-import com.kverchi.dao.CountrySightDAO;
-import com.kverchi.dao.CountryDAO;
-import com.kverchi.domain.CountrySight;
 import com.kverchi.domain.Country;
 import com.kverchi.domain.User;
 import com.kverchi.domain.UserDetailsAdapter;
@@ -42,7 +36,6 @@ import com.kverchi.service.UserService;
 
 @EnableWebMvc
 @Controller
-@SessionAttributes("country_code") 
 public class UserController {
 	private static final String P_REG_FORM = "signup";
 	private static final String P_REG_OK = "redirect:result";

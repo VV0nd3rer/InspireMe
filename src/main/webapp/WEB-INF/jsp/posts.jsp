@@ -35,7 +35,7 @@
 					<a href="<%=request.getContextPath() %>/main/posts/newPost?sightId=${sightId}">
 						<img src="<%=request.getContextPath() %>/css/icons/add.png"/>
 					</a>
-					<a href="<%=request.getContextPath() %>/main/country?country_code=${country_code}">
+					<a href="<%=request.getContextPath() %>/main/sights/country?country_code=${country_code}">
 						<img src="<%=request.getContextPath() %>/css/icons/back.png"/>
 		  			</a>
 			</p>
