@@ -21,13 +21,14 @@
   <dialog id="newSightDialog">
 	<p>Adding a new sight</p>
 	<div>
-	 <form action="addSight" method="post" enctype="multipart/form-data">
-		<input type="text" value="" name="title"  placeholder="Title"/>
-		<p><input type="text" value="" name="description" placeholder="Description"/></p>
-	    <p><input type="file" value="" name="img_url" id="img_url"/></p>
-		<input type="submit" value="Add sight">
+	 <form:form modelAttribute="sight" method="post" enctype="multipart/form-data">
+		<div class="inputError"></div>
+		<form:input path="title" placeholder="Title"/>
+		<p><form:input path="description" placeholder="Description"/></p>
+	    <p><form:input path="img_url" type="file" /></p>
+		<input type="submit" value="Add sight" id="addSight">
     	<input type="button" id="close" value="Close" onclick="closeDialog()">
-	 </form>
+	 </form:form>
 	</div>
  </dialog>
 
