@@ -6,11 +6,12 @@ import com.kverchi.domain.User;
 
 
 
-public interface FriendDAO {
-	public void addFriend(Friend friend);
+public interface FriendDAO extends GenericDAO<Friend>{
+	
 	public List<Integer> getFriendsId(int userId, int status);
-	public void removeFriend(Friend friend);
-	public void acceptFriend(Friend friend);
-	public boolean isExisted(int userId, int friendId);
+	public List<User> getPeople(int userId);
+	public List<User> getPeople(int userId, String fragment);
+	
+	
 	
 }

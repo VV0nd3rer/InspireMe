@@ -15,7 +15,7 @@ public class PostServiceImpl implements PostService {
 	private PostDAO postDAO;
 
 	public Post showPost(int _postId) {
-		return postDAO.getPost(_postId);
+		return postDAO.getById(_postId);
 	}
 
 	public List<Post> showSightPosts(int _sightId, int _usrId) {
@@ -23,18 +23,18 @@ public class PostServiceImpl implements PostService {
 	}
 
 	public List<Post> showAllPosts() {
-		return postDAO.getAllPosts();
+		return postDAO.getAllRecords();
 	}
 
 	public void createPost(Post post) {
-		postDAO.createPost(post);
+		postDAO.create(post);
 	}
 
 	public void deletePost(int _postId) {
-		postDAO.deletePost(_postId);
+		postDAO.delete(postDAO.getById(_postId));
 	}
 
 	public void updatePost(Post post) {
-		postDAO.updatePost(post);
+		postDAO.update(post);
 	}
 }

@@ -5,25 +5,25 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope("prototype")
-public class Pair <width, height> {
-    private width Widht;
-    private height Height;
-    public Pair(width W, height H){
-        this.Widht = W;
-        this.Height = H;
+public class Pair <First, Second> {
+    private First first;
+    private Second second;
+    public Pair(First first, Second second){
+        this.first = first;
+        this.second = second;
     }
     public Pair() { }
-	public width getWidht() {
-		return Widht;
+	public First getFirst() {
+		return this.first;
 	}
-	public void setWidht(width _widht) {
-		Widht = _widht;
+	public void setFirst(First first) {
+		this.first = first;
 	}
-	public height getHeight() {
-		return Height;
+	public Second getSecond() {
+		return this.second;
 	}
-	public void setHeight(height _height) {
-		Height = _height;
+	public void setSecond(Second second) {
+		this.second = second;
 	}
     
 }

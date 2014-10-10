@@ -18,10 +18,7 @@ import com.kverchi.domain.User;
 
 
 @Service
-public class CountrySightDAOImpl implements CountrySightDAO{
-	
-	@Autowired
-	private SessionFactory sessionFactory;
+public class CountrySightDAOImpl extends GenericDAOImpl<CountrySight> implements CountrySightDAO{
 	
 	public List<CountrySight> getSightsListByCode(String code, int userId) {
 	       Session session = null;
@@ -48,59 +45,7 @@ public class CountrySightDAOImpl implements CountrySightDAO{
 	       return sights;
 	 }
 	
-	 public void addSight(CountrySight sight) {
-		   Session session = null;
-	       try {
-	    	   session = sessionFactory.openSession();
-	    	   session.beginTransaction();
-	           session.save(sight);
-	           session.getTransaction().commit();
-	       } 
-	       catch (Exception e) {
-	    	   System.out.println("Error in addSight "+e.getMessage());
-	           JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка I/O", JOptionPane.OK_OPTION);
-	       } 
-	       finally {
-	           if (session != null && session.isOpen()) {
-	               session.close();
-	           }
-	       }
-	   }
-	 
-	 public void removeSight(CountrySight sight) {
-		 Session session = null;
-	       try {
-	    	   session = sessionFactory.openSession();
-	           
-	           session.beginTransaction();
-	           session.delete(sight);
-	           session.getTransaction().commit();
-	       } catch (Exception e) {
-	           JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка I/O", JOptionPane.OK_OPTION);
-	       } finally {
-	           if (session != null && session.isOpen()) {
-	               session.close();
-	           }
-	       }
-	 }
-	 
-	 public CountrySight getSightById(int sightId) {
-		   
-	       Session session = null;
-	       CountrySight sight = null;
-	       try {
-	    	   session = sessionFactory.openSession();
-	    	   sight = (CountrySight) session.get(CountrySight.class, sightId);
-	       } catch (Exception e) {
-	    	   System.out.println("Error in getSightById "+e.getMessage());
-	           JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка I/O", JOptionPane.OK_OPTION);
-	       } finally {
-	           if (session != null && session.isOpen()) {
-	               session.close();
-	           }
-	       }
-	       return sight;
-	 }
+	
 	   
 	
 }

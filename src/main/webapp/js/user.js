@@ -29,7 +29,27 @@ $( document ).ready(function() {
 			}
 		});
 	}
-	function fIn(field) {
+	
+	function userSearch() {
+		var login = $("#searchUserField").val();
+		$.ajax({
+			type: "POST",  
+		    url: contexPath + "/main/peopleSearch",  
+		    data: "fragment=" + login,
+		    success: function(response){
+		    	$("div.users").empty();
+		    	for(var r in response){
+		    		$("div.users").append("<div class='user'>"+response[r].first.username+"</div>");
+		    	}
+		    			    	
+		    },
+			error: function(error) {
+				alert("In valid name error: " + error);
+			}
+		});
+	}
+	
+		function fIn(field) {
 		var errField ;
 		switch(field) {
 		case 'login':

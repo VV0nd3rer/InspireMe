@@ -16,12 +16,12 @@ public class CountryServiceImpl implements CountryService {
 	
 	public Country findCountry(String code) {
 		Country country = null;
-		country = countryDAO.getCountry(code);
+		country = countryDAO.getById(code);
 		return country;
 	}
 	public List<Country> findAllCountries() {
 		List<Country> countries = null;
-		countries = countryDAO.getAllCountries();
+		countries = countryDAO.getAllRecords();
 		return countries;
 	}
 }

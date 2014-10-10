@@ -2,7 +2,10 @@ package com.kverchi.controller;
 
 import java.security.Principal;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -28,11 +31,14 @@ import org.springframework.ui.Model;
 import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
 import com.kverchi.domain.Country;
 import com.kverchi.domain.User;
+import com.kverchi.domain.UserData;
 import com.kverchi.domain.UserDetailsAdapter;
 import com.kverchi.service.CountryService;
 import com.kverchi.service.FriendService;
 import com.kverchi.service.SightService;
+import com.kverchi.service.UserDataService;
 import com.kverchi.service.UserService;
+import com.kverchi.tools.Pair;
 
 @EnableWebMvc
 @Controller
@@ -49,17 +55,18 @@ public class UserController {
 	@Autowired private CountryService countryService;
 	@Autowired private SightService countrySightsService;
 	@Autowired private FriendService friendService;
+	@Autowired private UserDataService userDataService;
 	
 	@Autowired
 	@Qualifier("authenticationManager")
 	private AuthenticationManager authMgr;
 	
-	@InitBinder
+	/*@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.setAllowedFields(new String[] {
 				"login", "password", "confirmPassword"
 				});
-	}		
+	}*/		
 	@RequestMapping("home") 
 	public String home(HttpServletRequest request, Model model) {
 		List<Country> countries = countryService.findAllCountries();
@@ -72,9 +79,28 @@ public class UserController {
 		return "userCabinet";
 	}
 	@RequestMapping("profile")
-	public String showProfile() {
+	public String showProfile(Model model,  Principal principal) {
+		UserDetailsAdapter thisUser = loadUserDetails(principal);
+		UserData curUserData = userDataService.getUserData(thisUser.getId());
+		model.addAttribute("curUserData", curUserData);
 		return "profile";
 	}
+	@RequestMapping("editProfilePage")
+	public String showEditProfilePage(Model model,  Principal principal) {
+	List<Country> countries = countryService.findAllCountries();
+	UserDetailsAdapter thisUser = loadUserDetails(principal);
+	UserData userData = userDataService.getUserData(thisUser.getId());
+	model.addAttribute("countryList", countries);
+	model.addAttribute("userData", userData);
+	return "profileEdit";
+	}
+	
+	@RequestMapping("editData")
+	public String editProfile(@ModelAttribute("userData") UserData userData, BindingResult result) {
+	  userDataService.updateUserData(userData);
+	return "redirect:profile";
+	}
+	
 	@RequestMapping("friends")
 	public String showFriends(Model model,  Principal principal) {
 		UserDetailsAdapter currentUser = loadUserDetails(principal);
@@ -89,14 +115,19 @@ public class UserController {
 		UserDetailsAdapter currentUser = loadUserDetails(principal);
 		int userId = currentUser.getId();
 		List<User> requestList = friendService.getUserFriends(userId, 0);
-		model.addAttribute("requestsList", requestList);
+		List<User> userRequests = friendService.sortRequests(requestList,userId, 0);
+		List<User> peopleRequests = friendService.sortRequests(requestList,userId, 1);
+		model.addAttribute("userRequests", userRequests);
+		model.addAttribute("peopleRequests", peopleRequests);
 		return "friendRequests";
 	}
 	
 	@RequestMapping(value="addFriendPage")
-	public String addFriendPage(Model model) {
-		List <User> users = userService.getAllUsers();
-		model.addAttribute("users", users);
+	public String addFriendPage(Model model, Principal principal) {
+		UserDetailsAdapter currentUser = loadUserDetails(principal);
+		int userId = currentUser.getId();
+		List<Pair<User, Integer>> peopleList = friendService.getPeopleList(userId);
+		model.addAttribute("users", peopleList);
 		return "newFriendPage";
 	}
 	
@@ -126,6 +157,15 @@ public class UserController {
 		String referer = request.getHeader("Referer");
 		friendService.acceptFriend(userId, friendId);
 		return "redirect:"+referer;
+	}
+	
+	@RequestMapping(value="peopleSearch", method=RequestMethod.POST)
+	public @ResponseBody List<Pair<User, Integer>> acceptFriend(@RequestParam("fragment") String fragment, Principal principal,
+			HttpServletRequest request) {
+		UserDetailsAdapter currentUser = loadUserDetails(principal);
+		int userId = currentUser.getId();
+		List<Pair<User, Integer>> resultList = friendService.getPeopleList(userId, fragment);		
+		return resultList;
 	}
 	
 	@RequestMapping("result")

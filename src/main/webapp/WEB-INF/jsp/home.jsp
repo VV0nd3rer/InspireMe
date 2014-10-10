@@ -35,14 +35,14 @@
 			
 			<div>
 			<form action="../main/sights/country" method="get">
-			<input type="text" list="searchCountry" name="country_code">
+			<input type="text" list="searchCountry" name="country_code" autocomplete="off" placeholder="Double click to show list">
 			<input type="submit" value="Go!">
 			</form>
 			</div>
 
 			<datalist id="searchCountry">
 				<c:forEach items="${countriesList}" var="s">
-					<option value="${s.getCountryCode()}" label="${s.getCountryName()}"></option>
+					<option value="${s.getCountryCode()}" >${s.getCountryName()}</option>
 				</c:forEach>
 			</datalist>
 

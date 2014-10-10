@@ -4,11 +4,9 @@ import java.util.List;
 
 import com.kverchi.domain.Post;
 
-public interface PostDAO {
-	public Post getPost(int _postId);
+public interface PostDAO extends GenericDAO<Post>{
+	
 	public List<Post> getSightPosts(int _sightId, int _usrId);
-	public List<Post> getAllPosts();
-	public void createPost(Post post);
-	public void deletePost(int _postId);
-	public void updatePost(Post post);
+	
+	
 }

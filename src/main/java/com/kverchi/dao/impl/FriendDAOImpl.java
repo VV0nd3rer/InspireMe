@@ -12,30 +12,11 @@ import org.springframework.stereotype.Repository;
 
 import com.kverchi.dao.FriendDAO;
 import com.kverchi.domain.Friend;
+import com.kverchi.domain.User;
 
 @Repository
-public class FriendDAOImpl implements FriendDAO {
-	@Autowired
-	   private SessionFactory sessionFactory;
+public class FriendDAOImpl extends GenericDAOImpl<Friend> implements FriendDAO {
 	
-	@Override
-	public void addFriend(Friend friend) {
-		Session session = null;
-		 try {
-	    	   session = sessionFactory.openSession();
-	    	   session.beginTransaction();
-	           session.save(friend);
-	           session.getTransaction().commit();
-	       } catch (Exception e) {
-	    	    JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-	       } finally {
-	           if (session != null && session.isOpen()) {
-	               session.close();
-	           }
-	       }
-
-	}
-
 	@Override
 	public List<Integer> getFriendsId(int userId, int status) {
 		Session session = null;
@@ -69,59 +50,18 @@ public class FriendDAOImpl implements FriendDAO {
 		 return friendsIdResult;
 
 	}
-
-	@Override
-	public void removeFriend(Friend friend) {
-		Session session = null;
-	       try {
-	    	   session = sessionFactory.openSession();
-	           session.beginTransaction();
-	           session.delete(friend);
-	           session.getTransaction().commit();
-	       } catch (Exception e) {
-	           JOptionPane.showMessageDialog(null, e.getMessage(), "I/O Exception", JOptionPane.OK_OPTION);
-	       } finally {
-	           if (session != null && session.isOpen()) {
-	               session.close();
-	           }
-	       }
-
-	}
 	
 	@Override
-	public void acceptFriend(Friend friend) {
+	public List<User> getPeople(int userId) {
 		Session session = null;
+		List<User> people = null;
 	       try {
 	    	   session = sessionFactory.openSession();
 	           session.beginTransaction();
-	           session.update(friend);
-	           session.getTransaction().commit();
-	       } catch (Exception e) {
-	           JOptionPane.showMessageDialog(null, e.getMessage(), "I/O Exception", JOptionPane.OK_OPTION);
-	       } finally {
-	           if (session != null && session.isOpen()) {
-	               session.close();
-	           }
-	       }
-
-	}
-	
-	@Override
-	public boolean isExisted(int userId, int friendId) {
-		Session session = null;
-		boolean check = false;
-	       try {
-	    	   session = sessionFactory.openSession();
-	           session.beginTransaction();
-	           String query = "FROM Friend F WHERE F.friendOneId =:userId AND F.friendTwoId =:friendId";
+	           String query = "FROM User U WHERE U.userId <>:userId";
 	           Query hQuery = session.createQuery(query);
 	    	   hQuery.setParameter("userId", userId);
-	    	   hQuery.setParameter("friendId", friendId);
-	    	   
-	    	   if(hQuery.list()!=null){
-	    		   check = true;
-	    		   }
-	    	   
+	    	   people = hQuery.list();
 	           session.getTransaction().commit();
 	       } catch (Exception e) {
 	           JOptionPane.showMessageDialog(null, e.getMessage(), "I/O Exception", JOptionPane.OK_OPTION);
@@ -129,8 +69,32 @@ public class FriendDAOImpl implements FriendDAO {
 	           if (session != null && session.isOpen()) {
 	               session.close();
 	           }
-	      }
-	       return check;
+	       }
+	       return people;
+	}
+	
+	@Override
+	public List<User> getPeople(int userId, String fragment) {
+		Session session = null;
+		List<User> people = null;
+	       try {
+	    	   session = sessionFactory.openSession();
+	           session.beginTransaction();
+	           String query = "FROM User U WHERE U.userId <>:userId AND U.username like :fragment";
+	           Query hQuery = session.createQuery(query);
+	    	   hQuery.setParameter("userId", userId);
+	    	   hQuery.setParameter("fragment", "%"+fragment+"%");
+	    	   people = hQuery.list();
+	           session.getTransaction().commit();
+	       } catch (Exception e) {
+	           JOptionPane.showMessageDialog(null, e.getMessage(), "I/O Exception", JOptionPane.OK_OPTION);
+	       } finally {
+	           if (session != null && session.isOpen()) {
+	               session.close();
+	           }
+	       }
+	       return people;
 	}
 
+	
 }

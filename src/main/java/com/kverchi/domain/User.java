@@ -25,11 +25,12 @@ public class User {
 	private String username;
     private String password;
     private boolean enabled;
+   
     private Collection<Role> roles = new HashSet<Role>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="userId")
+	@Column(name="user_id")
 	public int getUserId() {
 		return userId;
 	}
@@ -51,15 +52,16 @@ public class User {
 		this.password = password;
 	}
 	@Column(name="enabled")
-	public boolean isEnabled() { return enabled; }
-	
-	public void setEnabled(boolean enabled) {
+	public boolean isEnabled() { return enabled; 
+	}
+		public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 		name = "user_role",
-		joinColumns = { @JoinColumn(name = "userId", referencedColumnName = "userId") },
+		joinColumns = { @JoinColumn(name = "userId", referencedColumnName = "user_id") },
 		inverseJoinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "role_id") })
 	public Collection<Role> getRoles() { return roles; }
 	

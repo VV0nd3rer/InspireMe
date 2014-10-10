@@ -7,10 +7,12 @@
 
 </head>
 <body>
+		<div class="menu"> 
 			<ul>
 				<li><a href="profile">My profile</a></li>
 				<li><a href="friends">My friends</a></li>
 				<li><a href="requests">Friend requests</a></li>
 			</ul>
+	</div>
 </body>
 </html>

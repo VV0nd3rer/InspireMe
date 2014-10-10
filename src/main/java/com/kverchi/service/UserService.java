@@ -12,5 +12,6 @@ public interface UserService {
 	boolean registerAccount(User user, Errors errors);
 	public boolean validateUsername(String usrName);
 	public User getUserByUsername(String username);
+	public User getUserById(int userId);
 	public List<User> getAllUsers();
 }

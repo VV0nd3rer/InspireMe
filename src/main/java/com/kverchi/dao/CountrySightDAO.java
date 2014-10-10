@@ -6,10 +6,8 @@ import java.util.List;
 import com.kverchi.domain.CountrySight;
 import com.kverchi.domain.User;
 
-public interface CountrySightDAO {
+public interface CountrySightDAO extends GenericDAO<CountrySight>{
 
 	List<CountrySight> getSightsListByCode(String code, int userId);
-	public void addSight(CountrySight sight);
-	public void removeSight(CountrySight sight);
-	public CountrySight getSightById(int sightId);
+	
 }

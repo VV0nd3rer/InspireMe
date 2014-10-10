@@ -15,12 +15,19 @@
 				<div id="cabinetMenu">
 				<%@ include file="userCabinetMenu.jspf" %>
 				</div>
-				
-					<c:forEach items="${requestsList}" var="r">
+				 <h2>My requests</h2>
+					<c:forEach items="${userRequests}" var="u">
 		           	   <div class="user">
-				     	    <h3>${r.username}</h3>
-				     	    <a href="acceptFriend?id=${r.userId}">Accept</a>	 
-							<a href="removeFriend?id=${r.userId}">Decline</a>
+				     	    <h3>${u.username}</h3>
+				     	      <a href="removeFriend?id=${u.userId}">Delete</a>
+						</div>
+    	 			</c:forEach>
+    	 		 <h2>Requests from other people</h2>	
+    	 			<c:forEach items="${peopleRequests}" var="p">
+		           	   <div class="user">
+				     	    <h3>${p.username}</h3>
+				     	    <a href="acceptFriend?id=${p.userId}">Accept</a>	 
+							<a href="removeFriend?id=${p.userId}">Decline</a>
 						</div>
     	 			</c:forEach>
     	 	

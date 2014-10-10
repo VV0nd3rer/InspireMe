@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.kverchi.domain.Country;
 
-public interface CountryDAO {
-	public Country getCountry(String code);
-	public List<Country> getAllCountries();
+public interface CountryDAO extends GenericDAO<Country>{
+		
 }

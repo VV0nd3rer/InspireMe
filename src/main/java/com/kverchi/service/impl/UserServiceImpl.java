@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
@@ -21,6 +22,8 @@ public class UserServiceImpl implements UserService {
 	private UserDAO userDAO;
 	@Autowired 
 	RoleDAO roleDAO;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Transactional(readOnly = false)
 	public boolean registerAccount(User user, Errors errors) {
@@ -29,7 +32,10 @@ public class UserServiceImpl implements UserService {
 			Set<Role> roles = new HashSet<Role>();
 			roles.add(roleDAO.findByName("user"));
 			user.setRoles(roles);
-			userDAO.addUser(user);
+			String password = user.getPassword();
+	    	   user.setPassword(passwordEncoder.encode(password));
+	    	   user.setEnabled(true);
+			userDAO.create(user);
 		}
 		return valid;
 	}
@@ -41,11 +47,14 @@ public class UserServiceImpl implements UserService {
 	}
 	public User getUserByUsername(String username) {
 		User user =  userDAO.findByUsername(username);
-		//if (user != null) { Hibernate.initialize(user.getRoles()); }
 		return user;
 	}
 	public List<User> getAllUsers() {
-		List<User> users =  userDAO.getAllUsers();
+		List<User> users =  userDAO.getAllRecords();
 		return users;
+	}
+	public User getUserById(int userId) {
+		User user =  userDAO.getById(userId);
+		return user;
 	}
 }

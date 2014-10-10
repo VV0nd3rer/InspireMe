@@ -150,11 +150,11 @@ public class SightController {
 		int originalWidth = originalImg.getWidth(null);
 		int originalHeight = originalImg.getHeight(null);
 		resSize = setImgSize(originalWidth, originalHeight);
-		BufferedImage scaledImg = new BufferedImage(resSize.getWidht(), resSize.getHeight(), imgType);
+		BufferedImage scaledImg = new BufferedImage(resSize.getFirst(), resSize.getSecond(), imgType);
 		Graphics2D g = scaledImg.createGraphics();
 		if(alpha) 
 			g.setComposite(AlphaComposite.Src);
-		g.drawImage(originalImg, 0, 0, resSize.getWidht(), resSize.getHeight(), null);
+		g.drawImage(originalImg, 0, 0, resSize.getFirst(), resSize.getSecond(), null);
 		g.dispose();
 		return scaledImg;
 	}
@@ -173,8 +173,8 @@ public class SightController {
 			_scaleW = SIZE_B;
 			_scaleH = SIZE_B;
 		}
-		resSize.setWidht(_scaleW);
-		resSize.setHeight(_scaleH);
+		resSize.setFirst(_scaleW);
+		resSize.setSecond(_scaleH);
 		return resSize;
 	}
 }

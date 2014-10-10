@@ -20,14 +20,14 @@ public class SightServiceImpl implements SightService {
 	}
 
 	public void addSight(CountrySight sight) {
-		sightDAO.addSight(sight);
+		sightDAO.create(sight);
 	}
 
 	public void removeSight(CountrySight sight) {
-		sightDAO.removeSight(sight);
+		sightDAO.delete(sight);
 	}
 
 	public CountrySight getSight(int sightId) {
-		return sightDAO.getSightById(sightId);
+		return sightDAO.getById(sightId);
 	}
 }

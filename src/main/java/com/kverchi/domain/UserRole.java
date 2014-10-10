@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@IdClass(UserRolesId.class)
+@IdClass(UserRoleId.class)
 @Table(name = "user_role")
 public class UserRole {
 	
@@ -45,7 +45,3 @@ public class UserRole {
 	
 }
 
-class UserRolesId implements Serializable{
-	 int userId;
-	 int role_id;
-}

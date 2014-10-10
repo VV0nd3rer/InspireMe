@@ -1,7 +1,5 @@
 package com.kverchi.domain;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -43,7 +41,3 @@ public class Friend {
 
 }
 
-class FriendId implements Serializable{
-	 int friendOneId;
-	 int friendTwoId;
-}
