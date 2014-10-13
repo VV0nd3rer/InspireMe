@@ -10,27 +10,27 @@ import javax.persistence.Table;
 @IdClass(FriendId.class)
 @Table(name = "users_friends")
 public class Friend {
-	@Id private int friendOneId;
-	@Id private int friendTwoId;
+	@Id private int friend_one_id;
+	@Id private int friend_two_id;
+	
+	
+	@Column(name="friend_one_id")
+		public int getFriend_one_id() {
+		return friend_one_id;
+	}
+	public void setFriend_one_id(int friend_one_id) {
+		this.friend_one_id = friend_one_id;
+	}
+	@Column(name="friend_two_id")
+	public int getFriend_two_id() {
+		return friend_two_id;
+	}
+	public void setFriend_two_id(int friend_two_id) {
+		this.friend_two_id = friend_two_id;
+	}
 		private int status;
 	
-	@Column(name="friendOneId")
-	public int getFriendOneId() {
-		return friendOneId;
-	}
-	public void setFriendOneId(int friendOneId) {
-		this.friendOneId = friendOneId;
-	}
-	
-	@Column(name="friendTwoId")
-	public int getFriendTwoId() {
-		return friendTwoId;
-	}
-	public void setFriendTwoId(int friendTwoId) {
-		this.friendTwoId = friendTwoId;
-	}
-	
-	@Column(name="status")
+		@Column(name="status")
 	public int getStatus() {
 		return status;
 	}

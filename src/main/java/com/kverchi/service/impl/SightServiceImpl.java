@@ -1,17 +1,16 @@
 package com.kverchi.service.impl;
 
-import java.security.Principal;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.kverchi.dao.CountrySightDAO;
 import com.kverchi.domain.CountrySight;
 import com.kverchi.service.SightService;
 
 @Repository
 public class SightServiceImpl implements SightService {
+	
+	
 	@Autowired 
 	private CountrySightDAO sightDAO;
 
@@ -30,4 +29,6 @@ public class SightServiceImpl implements SightService {
 	public CountrySight getSight(int sightId) {
 		return sightDAO.getById(sightId);
 	}
+	
+	
 }

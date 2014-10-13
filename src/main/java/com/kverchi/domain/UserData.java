@@ -8,7 +8,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="users_data")
 public class UserData {
-	 	private int userId;
+	
+		private int userId;
 	 	private String firstName;
 	    private String lastName;
 	    private String e_mail;
@@ -17,7 +18,7 @@ public class UserData {
 	    private String country;
 	    
 	    @Id
-	    @Column(name="user_id")
+		@Column(name = "user_id")
 	    public int getUserId() {
 			return userId;
 		}
@@ -66,4 +67,6 @@ public class UserData {
 		public void setCountry(String country) {
 			this.country = country;
 		}
+		
+		
 }

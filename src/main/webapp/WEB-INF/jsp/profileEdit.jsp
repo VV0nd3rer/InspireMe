@@ -16,12 +16,21 @@
 				<%@ include file="userCabinetMenu.jspf" %>
 				
 				<div id="infoContent">
-				<h3>Edition of profile.</h3>
-				<img src="<%=request.getContextPath()%>/usersAvatars/${userData.avatarUrl}"><br/><br/>
+				<h3>Editing of profile.</h3>
+				<c:set var="imgName" scope="session" value="${userData.avatarUrl}"/>
+				<c:set var="noAvatar" scope="session" value="noavatar.jpg"/>
 				
-				<form:form action="editData" modelAttribute="userData" method="POST">
-				<form:hidden path="userId" value="${userData.userId}" />
-				<form:hidden path="avatarUrl" value="mPylypets.jpg" />
+					<c:if test="${imgName==noAvatar}">
+					<img src="<%=request.getContextPath()%>/usersAvatars/noavatar.jpg"><br/><br/>
+					</c:if>
+					<c:if test="${imgName!=noAvatar}">
+					<img src="<%=request.getContextPath()%>/usersAvatars/${userData.avatarUrl}"><br/><br/>
+					</c:if>
+				
+				<form:form action="editData" modelAttribute="userData" method="POST" enctype="multipart/form-data">
+					<form:hidden path="userId" value="${userData.userId}" />
+					<form:hidden path="avatarUrl" value="${userData.avatarUrl}" />
+				    Choose new avatar: <input type="file" name="usrAvatar"><p>
 					First Name: <form:input path="firstName" value="${userData.firstName}" /><p>
 					Last name: <form:input path="lastName" value="${userData.lastName}"/><p>
 					E-mail: <form:input path="e_mail" value="${userData.e_mail}"/><p>

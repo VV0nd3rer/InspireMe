@@ -23,7 +23,7 @@ $(function() {
 	})
 });
 function addNewSight() {
-  	   dialog = document.getElementById('newSightDialog');
+  	   dialog = document.getElementById("newSightDialog");
        dialogPolyfill.registerDialog(dialog);
        dialog.showModal(); 
 }
@@ -95,6 +95,7 @@ function confirmDialog(id) {
 function closeAndProcess() {
     dialog.close();
     window.location.href = deleteLink;
+    
 }
 function closeDialog() {
     dialog.close();

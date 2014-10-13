@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.ui.Model;
 
@@ -96,8 +97,9 @@ public class UserController {
 	}
 	
 	@RequestMapping("editData")
-	public String editProfile(@ModelAttribute("userData") UserData userData, BindingResult result) {
-	  userDataService.updateUserData(userData);
+	public String editProfile(@ModelAttribute("userData") UserData userData, BindingResult result,
+			@RequestParam("usrAvatar") MultipartFile avatarImg) {
+	  userDataService.updateUserData(userData, avatarImg);
 	return "redirect:profile";
 	}
 	
@@ -185,7 +187,15 @@ public class UserController {
 		checkUsername(form.getLogin(), result);
 		checkCaptcha(request, request.getParameter("jcaptchaResponse"), result);
 		if(!result.hasErrors())
+		{
 		  userService.registerAccount(toUser(form), result);
+		  int newUserId = userService.getUserByUsername(form.getLogin()).getUserId();
+		  UserData newUserData = new UserData();
+			newUserData = new UserData();
+			newUserData.setUserId(newUserId);
+			newUserData.setAvatarUrl("noavatar.jpg");
+			userDataService.createUserData(newUserData);
+		  }
 		return (result.hasErrors() ? P_REG_FORM : P_REG_OK);		
 	}
 	@RequestMapping(value="validName", method=RequestMethod.GET)

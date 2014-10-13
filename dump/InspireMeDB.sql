@@ -46,13 +46,13 @@ CREATE TABLE `countries_sights` (
   PRIMARY KEY (`sight_id`),
   KEY `country_code` (`country_code`),
   KEY `userId` (`userId`),
-  CONSTRAINT `countries_sights_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`),
-  CONSTRAINT `countries_sights_ibfk_1` FOREIGN KEY (`country_code`) REFERENCES `countries` (`country_code`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+  CONSTRAINT `countries_sights_ibfk_1` FOREIGN KEY (`country_code`) REFERENCES `countries` (`country_code`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `countries_sights_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `users` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 
 /*Data for the table `countries_sights` */
 
-insert  into `countries_sights`(`sight_id`,`sight_label`,`country_code`,`img_url`,`description`,`userId`) values (17,'Orloy','cz','Orloy.jpg','Orloy',6);
+insert  into `countries_sights`(`sight_id`,`sight_label`,`country_code`,`img_url`,`description`,`userId`) values (50,'sdsds','cz','Macro-Leaf-Orange-Autumn.jpg','dsdd',6),(51,'Test sight','cz','mountains.jpg','test',6);
 
 /*Table structure for table `posts` */
 
@@ -70,13 +70,11 @@ CREATE TABLE `posts` (
   PRIMARY KEY (`post_id`),
   KEY `username` (`userId`),
   KEY `sight_id` (`sight_id`),
-  CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`),
+  CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`user_id`),
   CONSTRAINT `sight_id` FOREIGN KEY (`sight_id`) REFERENCES `countries_sights` (`sight_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `posts` */
-
-insert  into `posts`(`post_id`,`title`,`text`,`sight_id`,`description`,`userId`,`stamp_created`,`stamp_updated`) values (2,'Autumn in Prague','<p><span style=\"color: #333399;\">The city begins to shed the frenetic attitude resulting from the multitude of international tourists that pack its main thoroughfare that make any visit to major sights a significant time investment. The fall-weather nip starts to be felt in the air, creating the perfect excuse to warm up with a glass of Czech beer or a hearty meal in one of the city\'s restaurants. Even if you\'ve traveled to Prague before during another time of year, consider visiting in the autumn; it may very well become your favorite season to enjoy the City of a Thousand Spires. </span></p>\r\n<p><span style=\"color: #333399;\"><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"http://0.tqn.com/y/goeasteurope/1/L/H/W/-/-/Rust-Colored-Leaves-Prague.jpg\" alt=\"\" width=\"300\" height=\"400\" /></span></p>\r\n<h3><span style=\"color: #ff9900;\">Fall Activities</span></h3>\r\n<p><span style=\"color: #008000;\">Travel to Prague in autumn is a relaxed affair. Fewer lines at major attractions such as St. Vitus Cathedral makes taking in the city enjoyable, so be sure to hit <span style=\"color: #ff6600;\"><a style=\"color: #ff6600;\" href=\"http://goeasteurope.about.com/od/czechrepublic/tp/praguesights.htm\" data-component=\"link\" data-source=\"inlineLink\" data-type=\"internalLink\" data-ordinal=\"3\">Prague\'s must-see sights</a></span> or any other sights that you have missed on previous trips to the Czech capital.</span></p>\r\n<p><span style=\"color: #008000;\">Tuck into some hearty Czech fare, which may be too heavy for summer weather, while you\'re in Prague during fall. Meat dishes are most often accompanied by potato or <span style=\"color: #ff6600;\"><a style=\"color: #ff6600;\" href=\"http://easteuropeanfood.about.com/od/bohemianczechdumplings/r/breaddumplings.htm\" data-component=\"link\" data-source=\"inlineLink\" data-type=\"internalLink\" data-ordinal=\"4\">bread dumplings</a></span>. You\'ll also find warming soups and stews on Czech restaurant menus. Prague\'s restaurants will keep their patios open as long as weather permits&mdash;outdoor heaters will keep you cozy and allow you to watch evening fall as you enjoy your meal.</span></p>\r\n<p><span style=\"color: #008000;\">Consider participating in one of Prague\'s seasonal events or checking museums for special exhibitions. When the weather gets too cold for outdoor sightseeing, head indoors to any one of <span style=\"color: #ff6600;\"><a style=\"color: #ff6600;\" href=\"http://goeasteurope.about.com/od/praguetravel/tp/praguemuseums.htm\" data-component=\"link\" data-source=\"inlineLink\" data-type=\"internalLink\" data-ordinal=\"5\">Prague\'s museums</a></span></span></p>\r\n<p><span style=\"color: #008000;\"><span style=\"color: #ff6600;\"><iframe style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"//www.youtube.com/embed/xTkkkgfAdO4\" width=\"425\" height=\"350\"></iframe></span></span></p>',17,'Autumn is a great time to travel to Prague',6,NULL,NULL);
 
 /*Table structure for table `role` */
 
@@ -97,53 +95,75 @@ insert  into `role`(`role_id`,`rolename`) values (1,'user'),(2,'admin');
 DROP TABLE IF EXISTS `user_role`;
 
 CREATE TABLE `user_role` (
-  `userId` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
-  PRIMARY KEY (`userId`,`role_id`),
-  UNIQUE KEY `user_role_idx_1` (`userId`),
+  PRIMARY KEY (`user_id`,`role_id`),
+  UNIQUE KEY `user_role_idx_1` (`user_id`),
   KEY `role_id` (`role_id`),
-  CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`),
+  CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
   CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `user_role` */
 
-insert  into `user_role`(`userId`,`role_id`) values (6,1),(7,1),(8,1),(9,1);
+insert  into `user_role`(`user_id`,`role_id`) values (6,1),(7,1),(8,1),(9,1);
 
 /*Table structure for table `users` */
 
 DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
-  `userId` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `password` varchar(64) NOT NULL,
-  `enabled` tinyint(1) DEFAULT '1',
-  PRIMARY KEY (`userId`),
-  KEY `userId` (`userId`)
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`user_id`),
+  KEY `userId` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 /*Data for the table `users` */
 
-insert  into `users`(`userId`,`username`,`password`,`enabled`) values (6,'FlyinGMind','$2a$10$oeW5cEUtxdvCWMaj0nVJ.uUh1Vjn/v0QJMH599Zfy/tQx4gB1Fn9.',1),(7,'Vasya','$2a$10$W.6EDTwrMp4n97F/pHkzRuFN8y7cKDok.lg4yiIdX6NMGWFZm6vHC',1),(8,'Petya','$2a$10$Adkflw72.4jueJqRFo9vi.bzH/yMfQ8R05tiDbxPXi5ePdV459X4m',1),(9,'Olechka','$2a$10$kdxADPcs3zMmukd.dmbXQ.hZgFr.2IVt4jJxy.DOf15h2U2CLEl7u',1);
+insert  into `users`(`user_id`,`username`,`password`,`enabled`) values (6,'FlyinGMind','$2a$10$oeW5cEUtxdvCWMaj0nVJ.uUh1Vjn/v0QJMH599Zfy/tQx4gB1Fn9.',1),(7,'Vasya','$2a$10$W.6EDTwrMp4n97F/pHkzRuFN8y7cKDok.lg4yiIdX6NMGWFZm6vHC',1),(8,'Petya','$2a$10$Adkflw72.4jueJqRFo9vi.bzH/yMfQ8R05tiDbxPXi5ePdV459X4m',1),(9,'Olechka','$2a$10$kdxADPcs3zMmukd.dmbXQ.hZgFr.2IVt4jJxy.DOf15h2U2CLEl7u',1);
+
+/*Table structure for table `users_data` */
+
+DROP TABLE IF EXISTS `users_data`;
+
+CREATE TABLE `users_data` (
+  `user_id` int(11) NOT NULL,
+  `first_name` varchar(50) DEFAULT NULL,
+  `last_name` varchar(50) DEFAULT NULL,
+  `e_mail` varchar(60) DEFAULT NULL,
+  `avatar_url` varchar(250) DEFAULT 'noavatar.jpg',
+  `about` text,
+  `country_code` varchar(2) DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  KEY `country_code` (`country_code`),
+  CONSTRAINT `users_data_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `users_data_ibfk_2` FOREIGN KEY (`country_code`) REFERENCES `countries` (`country_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `users_data` */
+
+insert  into `users_data`(`user_id`,`first_name`,`last_name`,`e_mail`,`avatar_url`,`about`,`country_code`) values (6,'Kolya','Pylypets','giperborej1992@gmail.com','Macro-Leaf-Orange-Autumn.jpg','Good guy.','cz'),(7,'&#1057;&#1072;&#1096;&#1072;','&#1043;&#1086;&#1083;&#1099;&#1081;','','GOLOSKOKOV.jpg','','ua'),(8,NULL,NULL,NULL,'noavatar.jpg',NULL,NULL),(9,NULL,NULL,NULL,'noavatar.jpg',NULL,NULL);
 
 /*Table structure for table `users_friends` */
 
 DROP TABLE IF EXISTS `users_friends`;
 
 CREATE TABLE `users_friends` (
-  `friendOneId` int(11) NOT NULL,
-  `friendTwoId` int(11) NOT NULL,
+  `friend_one_id` int(11) NOT NULL,
+  `friend_two_id` int(11) NOT NULL,
   `status` int(11) DEFAULT '0',
-  PRIMARY KEY (`friendOneId`,`friendTwoId`),
-  KEY `friendTwo` (`friendTwoId`),
-  CONSTRAINT `users_friends_ibfk_1` FOREIGN KEY (`friendOneId`) REFERENCES `users` (`userId`),
-  CONSTRAINT `users_friends_ibfk_2` FOREIGN KEY (`friendTwoId`) REFERENCES `users` (`userId`)
+  PRIMARY KEY (`friend_one_id`,`friend_two_id`),
+  KEY `friend_two_id` (`friend_two_id`),
+  CONSTRAINT `users_friends_ibfk_3` FOREIGN KEY (`friend_one_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `users_friends_ibfk_4` FOREIGN KEY (`friend_two_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `users_friends` */
 
-insert  into `users_friends`(`friendOneId`,`friendTwoId`,`status`) values (6,7,1);
+insert  into `users_friends`(`friend_one_id`,`friend_two_id`,`status`) values (6,7,0),(6,8,0),(9,6,0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

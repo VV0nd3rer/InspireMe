@@ -1,5 +1,6 @@
 package com.kverchi.dao.impl;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -26,8 +27,8 @@ public class FriendDAOImpl extends GenericDAOImpl<Friend> implements FriendDAO {
 	    	   session = sessionFactory.openSession();
 	    	   session.beginTransaction();
 	    	  
-	    	   String query1 = "SELECT F.friendOneId FROM Friend F WHERE F.friendTwoId =:userId AND F.status =:status";
-	    	   String query2 = "SELECT F.friendTwoId FROM Friend F WHERE F.friendOneId =:userId AND F.status =:status";
+	    	   String query1 = "SELECT F.friend_one_id FROM Friend F WHERE F.friend_two_id =:userId AND F.status =:status";
+	    	   String query2 = "SELECT F.friend_two_id FROM Friend F WHERE F.friend_one_id =:userId AND F.status =:status";
 	    	   Query hQuery1 = session.createQuery(query1);
 	    	   hQuery1.setParameter("userId", userId);
 	    	   hQuery1.setParameter("status", status);
@@ -95,6 +96,31 @@ public class FriendDAOImpl extends GenericDAOImpl<Friend> implements FriendDAO {
 	       }
 	       return people;
 	}
-
+	
+	public List<User> getFriends(int userId, int status) {
+		Session session = null;
+		List<User> friendsResult=null;
+		
+		 try {
+	    	   session = sessionFactory.openSession();
+	    	   session.beginTransaction();
+	    String query = "SELECT users.user_id, users.username, users.password, users.enabled FROM users, users_friends"+
+" WHERE  ((users.user_id = users_friends.friend_two_id AND users_friends.friend_one_id=:curUsrId)"+
+" OR (users.user_id = users_friends.friend_one_id AND users_friends.friend_two_id=:curUsrId))"+
+" AND users_friends.status=:status";
+	    	  Query hQuery = session.createSQLQuery(query).addEntity(User.class)
+	    			   .setParameter("curUsrId", userId).setParameter("status", status);
+	    	  
+	    	  friendsResult = hQuery.list();
+	    	  session.getTransaction().commit();	           
+	       } catch (Exception e) {
+	    	    JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+	       } finally {
+	           if (session != null && session.isOpen()) {
+	               session.close();
+	           }
+	       }
+		 return friendsResult;
+	}
 	
 }

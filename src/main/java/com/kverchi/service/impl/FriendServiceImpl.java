@@ -12,6 +12,7 @@ import com.kverchi.dao.UserDAO;
 import com.kverchi.domain.Friend;
 import com.kverchi.domain.FriendId;
 import com.kverchi.domain.User;
+import com.kverchi.domain.UserData;
 import com.kverchi.service.FriendService;
 import com.kverchi.tools.Pair;
 
@@ -21,19 +22,16 @@ public class FriendServiceImpl implements FriendService {
 	private FriendDAO friendDAO;
 	@Autowired 
 	private UserDAO userDAO;
-	@Autowired 
-	private GenericDAO<Friend> gDAO;
-	
+		
 	@Override
 	public void addFriend(int userId, int friendId) {
 		Friend friend = new Friend();
-		friend.setFriendOneId(userId);
-		friend.setFriendTwoId(friendId);
+		friend.setFriend_one_id(userId);
+		friend.setFriend_two_id(friendId);
 		friendDAO.create(friend);
 	}
 	
 	public List<Pair<User, Integer>> getPeopleList(int userId){
-		
 		List<Pair<User, Integer>> peopleList = new ArrayList<Pair<User, Integer>>();
 		
 		List<Integer> temp = friendDAO.getFriendsId(userId, 0);
@@ -77,25 +75,29 @@ public List<Pair<User, Integer>> getPeopleList(int userId, String fragment){
 	}
 	
 	public List<User> getUserFriends(int userId, int status){
+		List<User> userFriends = friendDAO.getFriends(userId, status);
+		/*for(User usr: u){
+			System.out.println(usr.getUserData().getAvatarUrl());
+		}
 		List<Integer> userFriendsID = friendDAO.getFriendsId(userId, status);
 		List<User> userFriends = new ArrayList<User>();
 		for(int id: userFriendsID){
 			userFriends.add(userDAO.getById(id));
-		}
+		}*/
 		return userFriends;
 	}
 	
 	public void removeFriend(int userId, int friendId, String referer) {
 		Friend friend = new Friend();
 		Friend friendCheck = friendDAO.getById(new FriendId(userId, friendId));
-		//boolean check = friendCheck.
+		
 		if(friendCheck!=null){
-			friend.setFriendOneId(userId);
-			friend.setFriendTwoId(friendId);
+			friend.setFriend_one_id(userId);
+			friend.setFriend_two_id(friendId);
 			
 		}else{
-			friend.setFriendOneId(friendId);
-			friend.setFriendTwoId(userId);
+			friend.setFriend_one_id(friendId);
+			friend.setFriend_two_id(userId);
 		}
 		if(referer.equals("friends")){
 			friend.setStatus(1);
@@ -111,12 +113,12 @@ public List<Pair<User, Integer>> getPeopleList(int userId, String fragment){
 		Friend friendCheck = friendDAO.getById(new FriendId(userId, friendId));
 		
 		if(friendCheck!=null){
-			friend.setFriendOneId(userId);
-			friend.setFriendTwoId(friendId);
+			friend.setFriend_one_id(userId);
+			friend.setFriend_two_id(friendId);
 			
 		}else{
-			friend.setFriendOneId(friendId);
-			friend.setFriendTwoId(userId);
+			friend.setFriend_one_id(friendId);
+			friend.setFriend_two_id(userId);
 		}
 		friend.setStatus(1);
 	
@@ -135,7 +137,6 @@ public List<Pair<User, Integer>> getPeopleList(int userId, String fragment){
 			else if(friendCheck==null && sortParam==1){
 				sortedList.add(user);
 			}
-			
 		}
 		return sortedList;
 	}

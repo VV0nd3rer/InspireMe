@@ -12,8 +12,8 @@ import javax.persistence.Table;
 @Table(name = "role")
 @NamedQuery(name = "findRoleByName", query = "from Role where rolename= :rolename")
 public class Role {
-	int roleId;
-	String rolename;
+	private int roleId;
+	private String rolename;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

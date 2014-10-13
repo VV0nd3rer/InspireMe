@@ -3,33 +3,34 @@ package com.kverchi.domain;
 import java.util.Collection;
 import java.util.HashSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 
 @NamedQuery(
 		name = "findUserByUsername",
-		query = "from User where username = :username")
+		query = "from User where username =:username")
 @Entity
 @Table(name="users")
-public class User {
+public class User{
+		
 	private int userId;
 	private String username;
     private String password;
     private boolean enabled;
-   
     private Collection<Role> roles = new HashSet<Role>();
-
+    private UserData userData;
+   
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="user_id")
 	public int getUserId() {
 		return userId;
@@ -57,16 +58,25 @@ public class User {
 		public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	
+			
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 		name = "user_role",
-		joinColumns = { @JoinColumn(name = "userId", referencedColumnName = "user_id") },
+		joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "user_id") },
 		inverseJoinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "role_id") })
 	public Collection<Role> getRoles() { return roles; }
 	
 	public void setRoles(Collection<Role> roles) { this.roles = roles; }
 	
+	@OneToOne(cascade=CascadeType.ALL , fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id")
+public UserData getUserData(){
+	return userData;
+}	
+		
+public void setUserData(UserData userData) {
+		this.userData = userData;
+	}
 	public void printUser() {
 		System.out.println(username + " : " + password);
 	}

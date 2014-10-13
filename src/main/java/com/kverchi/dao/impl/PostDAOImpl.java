@@ -23,7 +23,7 @@ public class PostDAOImpl extends GenericDAOImpl<Post> implements PostDAO {
 		List<Post> sightPost = null;
 		try {
 			session = sessionFactory.openSession();
-			String sQuery = "FROM Post p WHERE p.sightId = :sight_id AND p.userId = :usrId";
+			String sQuery = "FROM Post p WHERE p.sightId =:sight_id AND p.userId =:usrId";
 			Query hQuery = session.createQuery(sQuery);
 			hQuery.setParameter("sight_id", _sightId);
 			hQuery.setParameter("usrId", _usrId);
