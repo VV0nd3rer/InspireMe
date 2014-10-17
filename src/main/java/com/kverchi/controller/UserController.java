@@ -188,14 +188,8 @@ public class UserController {
 		checkCaptcha(request, request.getParameter("jcaptchaResponse"), result);
 		if(!result.hasErrors())
 		{
-		  userService.registerAccount(toUser(form), result);
-		  int newUserId = userService.getUserByUsername(form.getLogin()).getUserId();
-		  UserData newUserData = new UserData();
-			newUserData = new UserData();
-			newUserData.setUserId(newUserId);
-			newUserData.setAvatarUrl("noavatar.jpg");
-			userDataService.createUserData(newUserData);
-		  }
+		 userService.registerAccount(toUser(form), result); 
+		}
 		return (result.hasErrors() ? P_REG_FORM : P_REG_OK);		
 	}
 	@RequestMapping(value="validName", method=RequestMethod.GET)

@@ -8,11 +8,14 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 
@@ -31,6 +34,7 @@ public class User{
     private UserData userData;
    
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="user_id")
 	public int getUserId() {
 		return userId;
@@ -68,9 +72,9 @@ public class User{
 	
 	public void setRoles(Collection<Role> roles) { this.roles = roles; }
 	
-	@OneToOne(cascade=CascadeType.ALL , fetch = FetchType.EAGER)
-    @JoinColumn(name="user_id")
-public UserData getUserData(){
+	@OneToOne(cascade=CascadeType.ALL)
+   	@PrimaryKeyJoinColumn
+	public UserData getUserData(){
 	return userData;
 }	
 		

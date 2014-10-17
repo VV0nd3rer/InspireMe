@@ -14,6 +14,7 @@ import com.kverchi.dao.RoleDAO;
 import com.kverchi.dao.UserDAO;
 import com.kverchi.domain.Role;
 import com.kverchi.domain.User;
+import com.kverchi.domain.UserData;
 import com.kverchi.service.UserService;
 
 @Service
@@ -24,6 +25,7 @@ public class UserServiceImpl implements UserService {
 	RoleDAO roleDAO;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	private  static final String noAvatarImgName = "noavatar.jpg";
 	
 	@Transactional(readOnly = false)
 	public boolean registerAccount(User user, Errors errors) {
@@ -35,6 +37,12 @@ public class UserServiceImpl implements UserService {
 			String password = user.getPassword();
 	    	   user.setPassword(passwordEncoder.encode(password));
 	    	   user.setEnabled(true);
+	    	   
+			UserData newUserData = new UserData();
+			newUserData.setAvatarUrl(noAvatarImgName);
+			
+			user.setUserData(newUserData);
+			newUserData.setUser(user);
 			userDAO.create(user);
 		}
 		return valid;

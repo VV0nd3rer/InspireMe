@@ -21,16 +21,16 @@ import javax.persistence.Table;
 @Table(name = "user_role")
 public class UserRole {
 	
-	@Id private int userId;
+	@Id private int user_id;
 	@Id private int role_id;
 	
-	@Column(name="userId")
-	public int getUserId() {
-		return userId;
+	@Column(name="user_id")
+	public int getUser_id() {
+		return user_id;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUser_id(int userId) {
+		this.user_id = userId;
 	}
 
 	@Column(name="role_id")
