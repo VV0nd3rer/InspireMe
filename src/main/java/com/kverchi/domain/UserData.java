@@ -12,7 +12,6 @@ public class UserData {
 		private int userId;
 	 	private String firstName;
 	    private String lastName;
-	    private String e_mail;
 	    private String avatarUrl;
 	    private String about;
 	    private String country;
@@ -38,13 +37,6 @@ public class UserData {
 		}
 		public void setLastName(String lastName) {
 			this.lastName = lastName;
-		}
-		@Column(name="e_mail")
-		public String getE_mail() {
-			return e_mail;
-		}
-		public void setE_mail(String e_mail) {
-			this.e_mail = e_mail;
 		}
 		@Column(name="avatar_url")
 		public String getAvatarUrl() {

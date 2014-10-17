@@ -244,6 +244,7 @@ public class UserController {
 		User user = new User();
 		user.setUsername(form.getLogin());
 		user.setPassword(form.getPassword());
+		user.setEmail(form.getEmail());
 		return user;
 	}
 	

@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService {
 			roles.add(roleDAO.findByName("user"));
 			user.setRoles(roles);
 			String password = user.getPassword();
-	    	   user.setPassword(passwordEncoder.encode(password));
-	    	   user.setEnabled(true);
+	    	user.setPassword(passwordEncoder.encode(password));
+	    	user.setEnabled(true);
 			userDAO.create(user);
 		}
 		return valid;

@@ -58,6 +58,9 @@ $( document ).ready(function() {
 		case 'password':
 			errField = $("#errorPass");
 			break;
+		case 'email':
+			errField = $("#errorEmail");
+			break;
 		}
 		if(!$.isEmptyObject(errField)) 
 			errField.empty();
@@ -69,21 +72,24 @@ $( document ).ready(function() {
 		var errField;
 		switch (field) {
 		case 'login':
-			max = 10;
-			min = 5;
-			errField = $("#errorLogin");
+			minMax(5, 50, chars, $("#errorLogin"));
 			break;
 		case 'password':
-			max = 15;
-			min = 8;
-			errField = $("#errorPass");
+			minMax(6, 64, chars, $("#errorPass"));
+			break;
+		case 'email':
+			validEmail(text, $("#errorEmail"));
 			break;
 		}
-		minMax(min, max, chars, errField);
 	}
 	function minMax(_min, _max, _length, _errField) {
 		if(_length > _max || _length < _min) {
 			_errField.append("<p>Size of login must be between " + _min + " and " + _max + "</p>");
 		}
+	}
+	function validEmail(_text, _errField) {
+		var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		if (!regex.test(_text))
+			_errField.append("<p>Incorrect email.</p>");
 	}
 	

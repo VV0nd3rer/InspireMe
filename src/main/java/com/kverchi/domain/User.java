@@ -27,6 +27,7 @@ public class User{
 	private String username;
     private String password;
     private boolean enabled;
+    private String email;
     private Collection<Role> roles = new HashSet<Role>();
     private UserData userData;
    
@@ -58,7 +59,13 @@ public class User{
 		public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-			
+	@Column(name="email")
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 		name = "user_role",
