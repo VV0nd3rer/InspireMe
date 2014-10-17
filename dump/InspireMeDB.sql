@@ -1,6 +1,6 @@
 /*
-SQLyog Community v12.01 (64 bit)
-MySQL - 5.6.16 : Database - inspireme
+SQLyog Ultimate v11.52 (64 bit)
+MySQL - 5.6.21-log : Database - inspireme
 *********************************************************************
 */
 
@@ -48,11 +48,11 @@ CREATE TABLE `countries_sights` (
   KEY `userId` (`userId`),
   CONSTRAINT `countries_sights_ibfk_1` FOREIGN KEY (`country_code`) REFERENCES `countries` (`country_code`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `countries_sights_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 
 /*Data for the table `countries_sights` */
 
-insert  into `countries_sights`(`sight_id`,`sight_label`,`country_code`,`img_url`,`description`,`userId`) values (50,'sdsds','cz','Macro-Leaf-Orange-Autumn.jpg','dsdd',6),(51,'Test sight','cz','mountains.jpg','test',6);
+insert  into `countries_sights`(`sight_id`,`sight_label`,`country_code`,`img_url`,`description`,`userId`) values (50,'sdsds','cz','Macro-Leaf-Orange-Autumn.jpg','dsdd',6),(51,'Test sight','cz','mountains.jpg','test',6),(52,'Nice place','ua','IMG_5431.JPG','In Ukr',7);
 
 /*Table structure for table `posts` */
 
@@ -117,13 +117,14 @@ CREATE TABLE `users` (
   `username` varchar(50) NOT NULL,
   `password` varchar(64) NOT NULL,
   `enabled` tinyint(1) NOT NULL DEFAULT '1',
+  `email` varchar(60) NOT NULL,
   PRIMARY KEY (`user_id`),
   KEY `userId` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 /*Data for the table `users` */
 
-insert  into `users`(`user_id`,`username`,`password`,`enabled`) values (6,'FlyinGMind','$2a$10$oeW5cEUtxdvCWMaj0nVJ.uUh1Vjn/v0QJMH599Zfy/tQx4gB1Fn9.',1),(7,'Vasya','$2a$10$W.6EDTwrMp4n97F/pHkzRuFN8y7cKDok.lg4yiIdX6NMGWFZm6vHC',1),(8,'Petya','$2a$10$Adkflw72.4jueJqRFo9vi.bzH/yMfQ8R05tiDbxPXi5ePdV459X4m',1),(9,'Olechka','$2a$10$kdxADPcs3zMmukd.dmbXQ.hZgFr.2IVt4jJxy.DOf15h2U2CLEl7u',1);
+insert  into `users`(`user_id`,`username`,`password`,`enabled`,`email`) values (6,'FlyinGMind','$2a$10$oeW5cEUtxdvCWMaj0nVJ.uUh1Vjn/v0QJMH599Zfy/tQx4gB1Fn9.',1,''),(7,'Vasya','$2a$10$W.6EDTwrMp4n97F/pHkzRuFN8y7cKDok.lg4yiIdX6NMGWFZm6vHC',1,''),(8,'Petya','$2a$10$Adkflw72.4jueJqRFo9vi.bzH/yMfQ8R05tiDbxPXi5ePdV459X4m',1,''),(9,'Olechka','$2a$10$kdxADPcs3zMmukd.dmbXQ.hZgFr.2IVt4jJxy.DOf15h2U2CLEl7u',1,'');
 
 /*Table structure for table `users_data` */
 
@@ -133,7 +134,6 @@ CREATE TABLE `users_data` (
   `user_id` int(11) NOT NULL,
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
-  `e_mail` varchar(60) DEFAULT NULL,
   `avatar_url` varchar(250) DEFAULT 'noavatar.jpg',
   `about` text,
   `country_code` varchar(2) DEFAULT NULL,
@@ -145,7 +145,7 @@ CREATE TABLE `users_data` (
 
 /*Data for the table `users_data` */
 
-insert  into `users_data`(`user_id`,`first_name`,`last_name`,`e_mail`,`avatar_url`,`about`,`country_code`) values (6,'Kolya','Pylypets','giperborej1992@gmail.com','Macro-Leaf-Orange-Autumn.jpg','Good guy.','cz'),(7,'&#1057;&#1072;&#1096;&#1072;','&#1043;&#1086;&#1083;&#1099;&#1081;','','GOLOSKOKOV.jpg','','ua'),(8,NULL,NULL,NULL,'noavatar.jpg',NULL,NULL),(9,NULL,NULL,NULL,'noavatar.jpg',NULL,NULL);
+insert  into `users_data`(`user_id`,`first_name`,`last_name`,`avatar_url`,`about`,`country_code`) values (6,'Kolya','Pylypets','Macro-Leaf-Orange-Autumn.jpg','Good guy.','uk'),(7,'&#1057;&#1072;&#1096;&#1072;','&#1043;&#1086;&#1083;&#1099;&#1081;','GOLOSKOKOV.jpg','&#1040; &#1089;&#1077;&#1081;&#1095;&#1072;&#1089; &#1079;&#1072;&#1087;&#1080;&#1096;&#1077;&#1084; &#1072;&#1087;&#1087;&#1088;&#1086;&#1082;&#1089;&#1080;&#1084;&#1072;&#1094;&#1080;&#1102;...','ua'),(8,NULL,NULL,'noavatar.jpg',NULL,NULL),(9,NULL,NULL,'noavatar.jpg',NULL,NULL);
 
 /*Table structure for table `users_friends` */
 
@@ -163,7 +163,7 @@ CREATE TABLE `users_friends` (
 
 /*Data for the table `users_friends` */
 
-insert  into `users_friends`(`friend_one_id`,`friend_two_id`,`status`) values (6,7,0),(6,8,0),(9,6,0);
+insert  into `users_friends`(`friend_one_id`,`friend_two_id`,`status`) values (6,7,1),(6,8,0),(9,6,1);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

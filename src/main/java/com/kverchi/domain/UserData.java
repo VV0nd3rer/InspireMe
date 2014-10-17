@@ -1,9 +1,16 @@
 package com.kverchi.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 @Entity
 @Table(name="users_data")
@@ -15,9 +22,13 @@ public class UserData {
 	    private String avatarUrl;
 	    private String about;
 	    private String country;
+	    private User user;
 	    
 	    @Id
-		@Column(name = "user_id")
+	    @GeneratedValue(generator = "gen")
+	    @GenericGenerator(name = "gen", strategy = "foreign",
+	    parameters = @Parameter(name = "property", value = "user"))
+		@Column(name = "user_id" , unique = true, nullable = false)
 	    public int getUserId() {
 			return userId;
 		}
@@ -59,6 +70,14 @@ public class UserData {
 		public void setCountry(String country) {
 			this.country = country;
 		}
+		@OneToOne(mappedBy = "userData", cascade = CascadeType.ALL)
+		public User getUser() {
+			return user;
+		}
+		public void setUser(User user) {
+			this.user = user;
+		}
+		
 		
 		
 }

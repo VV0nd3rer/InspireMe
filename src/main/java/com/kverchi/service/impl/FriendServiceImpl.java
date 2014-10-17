@@ -76,14 +76,6 @@ public List<Pair<User, Integer>> getPeopleList(int userId, String fragment){
 	
 	public List<User> getUserFriends(int userId, int status){
 		List<User> userFriends = friendDAO.getFriends(userId, status);
-		/*for(User usr: u){
-			System.out.println(usr.getUserData().getAvatarUrl());
-		}
-		List<Integer> userFriendsID = friendDAO.getFriendsId(userId, status);
-		List<User> userFriends = new ArrayList<User>();
-		for(int id: userFriendsID){
-			userFriends.add(userDAO.getById(id));
-		}*/
 		return userFriends;
 	}
 	
@@ -121,7 +113,6 @@ public List<Pair<User, Integer>> getPeopleList(int userId, String fragment){
 			friend.setFriend_two_id(userId);
 		}
 		friend.setStatus(1);
-	
 		friendDAO.update(friend);
 	}
 	

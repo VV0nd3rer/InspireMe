@@ -1,14 +1,11 @@
 package com.kverchi.dao.impl;
 
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kverchi.dao.FriendDAO;
@@ -108,10 +105,10 @@ public class FriendDAOImpl extends GenericDAOImpl<Friend> implements FriendDAO {
 " WHERE  ((users.user_id = users_friends.friend_two_id AND users_friends.friend_one_id=:curUsrId)"+
 " OR (users.user_id = users_friends.friend_one_id AND users_friends.friend_two_id=:curUsrId))"+
 " AND users_friends.status=:status";
-	    	  Query hQuery = session.createSQLQuery(query).addEntity(User.class)
+	    	  Query querySQL = session.createSQLQuery(query).addEntity(User.class)
 	    			   .setParameter("curUsrId", userId).setParameter("status", status);
 	    	  
-	    	  friendsResult = hQuery.list();
+	    	  friendsResult = querySQL.list();
 	    	  session.getTransaction().commit();	           
 	       } catch (Exception e) {
 	    	    JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
