@@ -9,12 +9,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
-
 import com.kverchi.dao.RoleDAO;
 import com.kverchi.dao.UserDAO;
 import com.kverchi.domain.Role;
 import com.kverchi.domain.User;
 import com.kverchi.domain.UserData;
+import com.kverchi.service.EmailService;
 import com.kverchi.service.UserService;
 
 @Service
@@ -26,6 +26,10 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	private  static final String noAvatarImgName = "noavatar.jpg";
+	@Autowired
+	private EmailService emailService;
+	
+	private static final String CONFIRM_REGISTRATION = "registerConfirm.vm";
 	
 	@Transactional(readOnly = false)
 	public boolean registerAccount(User user, Errors errors) {
@@ -37,7 +41,7 @@ public class UserServiceImpl implements UserService {
 			String password = user.getPassword();
 	    	
 	    	user.setPassword(passwordEncoder.encode(password));
-	    	user.setEnabled(true);
+	    	user.setEnabled(false);
 	    	   
 			UserData newUserData = new UserData();
 			newUserData.setAvatarUrl(noAvatarImgName);
@@ -45,8 +49,13 @@ public class UserServiceImpl implements UserService {
 			user.setUserData(newUserData);
 			newUserData.setUser(user);
 			userDAO.create(user);
+			confirmEmail(user);
 		}
 		return valid;
+	}
+	private void confirmEmail(User user) {
+		emailService.sendEmail(user, CONFIRM_REGISTRATION, "Registration",
+											  user.getEmail(), "admin@mail.com", "admin");
 	}
 	public boolean validateUsername(String usrName) {
 		if (userDAO.findByUsername(usrName) != null) 
@@ -65,5 +74,14 @@ public class UserServiceImpl implements UserService {
 	public User getUserById(int userId) {
 		User user =  userDAO.getById(userId);
 		return user;
+	}
+	public boolean setEnabled(User user) {
+		if(user != null && !user.isEnabled()) {
+			user.setEnabled(true);
+			userDAO.update(user);
+			return true;
+		}
+		else 
+			return false;
 	}
 }

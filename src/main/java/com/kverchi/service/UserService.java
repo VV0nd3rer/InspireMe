@@ -14,4 +14,5 @@ public interface UserService {
 	public User getUserByUsername(String username);
 	public User getUserById(int userId);
 	public List<User> getAllUsers();
+	public boolean setEnabled(User user);
 }

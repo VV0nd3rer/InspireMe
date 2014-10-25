@@ -19,7 +19,7 @@
 				<img src="<%=request.getContextPath()%>/usersAvatars/${curUserData.avatarUrl}">
 				
 					<p>${curUserData.firstName} ${curUserData.lastName}</p>
-					<p>e-mail: ${curUserData.e_mail}</p>
+					<%-- <p>e-mail: ${curUserData.e_mail}</p> --%>
 					<p>Country: ${curUserData.country}</p>
 						<div id="about">
 						<p>About me:</p>
