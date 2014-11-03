@@ -31,11 +31,13 @@ import org.springframework.ui.Model;
 
 import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
 import com.kverchi.domain.Country;
+import com.kverchi.domain.Message;
 import com.kverchi.domain.User;
 import com.kverchi.domain.UserData;
 import com.kverchi.domain.UserDetailsAdapter;
 import com.kverchi.service.CountryService;
 import com.kverchi.service.FriendService;
+import com.kverchi.service.MessageService;
 import com.kverchi.service.SightService;
 import com.kverchi.service.UserDataService;
 import com.kverchi.service.UserService;
@@ -57,6 +59,7 @@ public class UserController {
 	@Autowired private SightService countrySightsService;
 	@Autowired private FriendService friendService;
 	@Autowired private UserDataService userDataService;
+	@Autowired private MessageService messageService;
 	
 	@Autowired
 	@Qualifier("authenticationManager")
@@ -156,9 +159,8 @@ public class UserController {
 			HttpServletRequest request) {
 		UserDetailsAdapter currentUser = loadUserDetails(principal);
 		int userId = currentUser.getId();
-		String referer = request.getHeader("Referer");
 		friendService.acceptFriend(userId, friendId);
-		return "redirect:"+referer;
+		return "redirect:requests";
 	}
 	
 	@RequestMapping(value="peopleSearch", method=RequestMethod.POST)
@@ -168,6 +170,71 @@ public class UserController {
 		int userId = currentUser.getId();
 		List<Pair<User, Integer>> resultList = friendService.getPeopleList(userId, fragment);		
 		return resultList;
+	}
+	
+	@RequestMapping(value="messages")
+	public String showMessages(Principal principal, Model model,
+			HttpServletRequest request) {
+		String referer = "messages";
+		model.addAttribute("referer",referer);
+		model.addAttribute("messageHeaderList",messageService.getHeaders(loadUserDetails(principal).getId(), "inbox"));
+		return "messages";
+	}
+	
+	@RequestMapping(value="sent")
+	public String showSent(Principal principal, Model model,
+			HttpServletRequest request) {
+		String referer = "sent";
+		model.addAttribute("referer",referer);
+		model.addAttribute("messageHeaderList",messageService.getHeaders(loadUserDetails(principal).getId(), "sent"));
+		return "messages";
+	}
+	
+	@RequestMapping(value="outbox")
+	public String showOutbox(Principal principal, Model model,
+			HttpServletRequest request) {
+		String referer = "outbox";
+		model.addAttribute("referer",referer);
+		model.addAttribute("messageHeaderList",messageService.getHeaders(loadUserDetails(principal).getId(), "outbox"));
+		return "messages";
+	}
+	
+	@RequestMapping(value="deleteMessage")
+	public String deleteMessage(@RequestParam("id") int messageId, Principal principal) {
+		messageService.deleteMessage(loadUserDetails(principal).getId(), messageId);
+		return "redirect:messages";
+	}
+	
+	@RequestMapping(value="singleMessage")
+	public String showSingleMessage(@RequestParam("id") int messageId, @RequestParam("sender") String sender,
+			Principal principal, Model model, HttpServletRequest request) {
+		int curUserId = loadUserDetails(principal).getId();
+		Message message = messageService.getMessageById(curUserId, messageId);
+		Message replyMessage = new Message();
+		replyMessage.setRemoved_by(0);
+		if(message.getStatus()==0 && message.getTo_id()==curUserId){
+			messageService.markAsRead(message);
+		}
+		model.addAttribute("sender", sender);
+		model.addAttribute("message", message);
+		if(message.getTo_id()==curUserId){
+		model.addAttribute("message", replyMessage);
+		}
+		return "message";
+	}
+		
+	@RequestMapping(value="sendMessage")
+	public String sendMessage(@ModelAttribute("message") Message messageToSend) {
+		messageService.sendMessage(messageToSend);
+		return "redirect:messages";
+	}
+	
+	@RequestMapping(value="newMessage")
+	public String createNewMessage(Model model, Principal principal) {
+		Message newMessage = new Message();
+		newMessage.setFrom_id(loadUserDetails(principal).getId());
+		model.addAttribute("message", newMessage);
+		return "newMessage";
 	}
 	
 	@RequestMapping("result")

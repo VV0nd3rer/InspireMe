@@ -4,16 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
+<title>Insert title here</title>
 </head>
 <body>
-		<div class="menu"> 
-			<ul>
-				<li><a href="profile">My profile</a></li>
-				<li><a href="friends">My friends</a></li>
-				<li><a href="requests">Friend requests</a></li>
-				<li><a href="messages">Messages</a></li>
-			</ul>
-	</div>
+		<a href="messages">Inbox</a>
+		<a href="sent">Sent</a>
+		<a href="outbox">Outbox</a>
+		<a href="newMessage">New message</a>
 </body>
 </html>

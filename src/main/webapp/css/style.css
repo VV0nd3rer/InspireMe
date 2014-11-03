@@ -57,14 +57,23 @@ h3 {
 	border-right: 1px solid#fff;
 }
 #navigation li a:hover { background:#383; }
-	
+
 		    .menu {
 		    float:left;
 		    }
 		    #infoContent {
 		float:right;
 		    }
-    
+.unread{
+	font-weight:bold;
+	}
+.unread a{
+	text-decoration: none;	
+	font-weight:bold;
+	}
+.messageHeader a{
+	text-decoration: none;
+	}
 #content {
 	clear: left;
 	padding: 20px;

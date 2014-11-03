@@ -22,7 +22,7 @@ $( document ).ready(function() {
 		    data: "login=" + login,
 		    success: function(response){
 		    	if(response == "FALSE")
-		    		$("#errorLogin").append("<p>This name is beasy. </p>");
+		    		$("#errorLogin").append("<p>This name is busy. </p>");
 		    },
 			error: function(error) {
 				alert("In valid name error: " + error);

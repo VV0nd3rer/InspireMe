@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -79,6 +80,7 @@ public class UserData {
 			this.country = country;
 		}
 		@OneToOne(mappedBy = "userData", cascade = CascadeType.ALL)
+		@JsonIgnore
 		public User getUser() {
 			return user;
 		}
