@@ -33,7 +33,7 @@
 				    Choose new avatar: <input type="file" name="usrAvatar"><p>
 					First Name: <form:input path="firstName" value="${userData.firstName}" /><p>
 					Last name: <form:input path="lastName" value="${userData.lastName}"/><p>
-					E-mail: <form:input path="e_mail" value="${userData.e_mail}"/><p>
+					<%-- E-mail: <form:input path="e_mail" value="${userData.e_mail}"/><p> --%>
 					Country: <form:select path="country" value="${userData.country}"> 
 					<c:set var="code" scope="session" value="${userData.country}"/>
 							<c:forEach items="${countryList}" var="s">

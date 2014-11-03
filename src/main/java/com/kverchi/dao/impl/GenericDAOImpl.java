@@ -39,7 +39,7 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
 			session.save(t);
 		    tx.commit();
 		} catch (Exception e) {
-			System.out.println("Error in PostDAOImpl->createPost: " + e);	
+			System.out.println("Error in GenericDAOImpl->create: " + e);	
 			if (tx!=null) tx.rollback();
 			   e.printStackTrace(); 
 		} finally {

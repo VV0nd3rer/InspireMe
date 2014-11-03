@@ -18,13 +18,19 @@
 						<div><spring:message code="error.global" /></div>
 				   	</form:errors>
 				   	<div>		
-							<form:input path="login"  placeholder="Login"/> 
+						<form:input path="login"/> 
 						<p id="errorLogin" class="inputError">
 							<form:errors path="login" htmlEscape="false" />
 						</p>
 					</div>
+					<div>		
+						<form:input path="email"  placeholder="Email"/> 
+						<p id="errorEmail" class="inputError">
+							<form:errors path="email" htmlEscape="false" />
+						</p>
+					</div>
 					<div>
-						    <form:password path="password"  placeholder="Password" />
+						<form:password path="password"  placeholder="Password" />
 						<p id="errorPass" class="inputError">
 							<form:errors path="password" htmlEscape="false" />
 						</p>

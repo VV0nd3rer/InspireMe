@@ -1,0 +1,5 @@
+<b>[This e-mail was automatically generated. Please do not reply.]</b>
+Thank you for registration.
+Your login: ${user.username}
+To confirm registration, please, click on
+<a href="https://localhost:8443/InspireMe/main/confirm?id=${user.userId}">this link</a>

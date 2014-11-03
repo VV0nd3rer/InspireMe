@@ -259,6 +259,16 @@ public class UserController {
 		}
 		return (result.hasErrors() ? P_REG_FORM : P_REG_OK);		
 	}
+	@RequestMapping("confirm")
+	public String confirmUser(@RequestParam("id") int userId) {
+		User user = new User();
+		user = userService.getUserById(userId);
+		boolean res = userService.setEnabled(user);
+		if (res)
+			return "login";
+		else 
+			return "error";
+	}
 	@RequestMapping(value="validName", method=RequestMethod.GET)
 	public @ResponseBody String validName(String login) {
 		if(userService.validateUsername(login))
@@ -305,6 +315,7 @@ public class UserController {
 		User user = new User();
 		user.setUsername(form.getLogin());
 		user.setPassword(form.getPassword());
+		user.setEmail(form.getEmail());
 		return user;
 	}
 	
