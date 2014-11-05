@@ -13,7 +13,7 @@
 			<%@ include file="head.jspf" %>
 			<div id="content">
 				<h2>Sign Up</h2>
-				<form:form action="addUser" modelAttribute="user">
+				<form:form action="${url}" modelAttribute="user">
 					<form:errors path="*">
 						<div><spring:message code="error.global" /></div>
 				   	</form:errors>

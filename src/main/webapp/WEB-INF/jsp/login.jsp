@@ -20,6 +20,7 @@
 					<p><input type="checkbox" name="_spring_security_remember_me" />
 					Remember me</p>
 					<input type="submit" value="Log in" /></p>
+					<a href="recoverPasswordPage">Forgot password?</a>
 				</form>
 			</div>
 			<%@ include file="footer.jspf" %>

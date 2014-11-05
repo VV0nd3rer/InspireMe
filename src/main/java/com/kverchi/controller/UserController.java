@@ -30,14 +30,17 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.ui.Model;
 
 import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
+import com.kverchi.dao.UserDAO;
 import com.kverchi.domain.Country;
 import com.kverchi.domain.Message;
+import com.kverchi.domain.ResetPassword;
 import com.kverchi.domain.User;
 import com.kverchi.domain.UserData;
 import com.kverchi.domain.UserDetailsAdapter;
 import com.kverchi.service.CountryService;
 import com.kverchi.service.FriendService;
 import com.kverchi.service.MessageService;
+import com.kverchi.service.ResetPasswordService;
 import com.kverchi.service.SightService;
 import com.kverchi.service.UserDataService;
 import com.kverchi.service.UserService;
@@ -49,6 +52,7 @@ public class UserController {
 	private static final String P_REG_FORM = "signup";
 	private static final String P_REG_OK = "redirect:result";
 	private static final String P_LOGIN_FORM = "login";
+	private static final String P_REG_USER = "addUser";
 	private static final String P_MAIN = "main";
 	private static final String P_HOME = "home";
 	private static final String P_ERROR = "error";
@@ -60,7 +64,7 @@ public class UserController {
 	@Autowired private FriendService friendService;
 	@Autowired private UserDataService userDataService;
 	@Autowired private MessageService messageService;
-	
+	@Autowired private ResetPasswordService resetPasswordService;
 	@Autowired
 	@Qualifier("authenticationManager")
 	private AuthenticationManager authMgr;
@@ -245,6 +249,7 @@ public class UserController {
 	@RequestMapping("signUp")
 	public String singUp(Model model) {
 		model.addAttribute("user", new SignUpForm());
+		model.addAttribute("url", P_REG_USER);
 		return P_REG_FORM;
 	}
 	
@@ -255,7 +260,8 @@ public class UserController {
 		checkCaptcha(request, request.getParameter("jcaptchaResponse"), result);
 		if(!result.hasErrors())
 		{
-		 userService.registerAccount(toUser(form), result); 
+		 if(!userService.registerAccount(toUser(form)))
+			 result.reject("Error with sending email."); 
 		}
 		return (result.hasErrors() ? P_REG_FORM : P_REG_OK);		
 	}
@@ -268,6 +274,45 @@ public class UserController {
 			return "login";
 		else 
 			return "error";
+	}
+	@RequestMapping(value="recoverPasswordPage")
+	public String recoverPasswordPage(Model model) {
+		model.addAttribute("parameters", new RecoverPasswordForm());
+		return "recoverPasswordPage";
+	}
+	@RequestMapping(value="recoverPassword")
+	public String recoverPassword(@ModelAttribute("parameters") @Valid RecoverPasswordForm form, BindingResult result, HttpServletRequest request) {
+		checkCaptcha(request, request.getParameter("jcaptchaResponse"), result);
+		if(!result.hasErrors()) 
+			if(userService.sendResetLink(form.getEmail()))
+				return P_REG_OK;
+		return (result.hasErrors() ? "recoverPasswordPage" : P_REG_OK);
+	}
+	@RequestMapping(value="resetPasswordPage")
+	public String resetPasswordPage(Model model, @RequestParam("id") String token) {
+		User remissUser = null;
+		int userId = resetPasswordService.getUserIdByToken(token);
+		resetPasswordService.deleteToken(token);
+		if(userId == 0)
+			return P_ERROR;
+		remissUser = userService.getUserById(userId);
+		if (remissUser != null) {
+			ResetPasswordForm user = new ResetPasswordForm();
+			model.addAttribute("user", user);
+			//name of controller method
+			model.addAttribute("url", "resetPassword");
+			//name of view
+			return "resetPasswordPage";
+		}
+		else 
+			return P_ERROR;
+	}
+	@RequestMapping(value="resetPassword")
+	public String resetPassword(@ModelAttribute("user") @Valid ResetPasswordForm form, BindingResult result) {
+		convertPasswordError(result);
+		if(!result.hasErrors())
+			userService.resetPassword(toUser(form));
+		return (result.hasErrors() ? "resetPasswordPage" : P_REG_OK); 
 	}
 	@RequestMapping(value="validName", method=RequestMethod.GET)
 	public @ResponseBody String validName(String login) {
@@ -308,7 +353,7 @@ public class UserController {
 	private void checkCaptcha(HttpServletRequest request, String captcha, BindingResult result) {
 		boolean captchaPassed = SimpleImageCaptchaServlet.validateResponse(request, captcha);	
 			if(!captchaPassed)
-				result.rejectValue("password", "error.captcha");
+				result.reject("error.captcha");
 	}
  	//TODO
 	private static User toUser(SignUpForm form) {
@@ -318,7 +363,12 @@ public class UserController {
 		user.setEmail(form.getEmail());
 		return user;
 	}
-	
+	private static User toUser(ResetPasswordForm form) {
+		User user = new User();
+		user.setEmail(form.getEmail());
+		user.setPassword(form.getPassword());
+		return user;
+	}
 	private UserDetailsAdapter loadUserDetails(Principal principal) {
 		UserDetailsAdapter currentUser = (UserDetailsAdapter) ((Authentication) principal).getPrincipal();
 	    return currentUser;
