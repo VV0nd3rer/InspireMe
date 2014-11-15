@@ -13,7 +13,7 @@
 		<div id="wrapper">
 			<%@ include file="head.jspf" %>
 			<div id="content">
-				<p>This is the main page. It's for all travelers of the web.</p> 
+				<p>${content['allUsersMessage']}</p> 
 			</div>
 			<%@ include file="footer.jspf" %>
 		</div>

@@ -57,8 +57,8 @@
 				<div id="infoContent">
 				<%@ include file="messagesMenu.jspf" %><br><br>
 				To:<input id="toLogin" type="text" oninput="userSearch()"></input>
-				   	<form:form id="newMessageForm" action="sendMessage" modelAttribute="message" method="POST">
-			     	<form:hidden path="from_id" value="${message.from_id}"/>
+				   	<form:form id="newMessageForm" action="sendMessage" modelAttribute="messageToSend" method="POST">
+			     	<form:hidden path="from_id" value="${messageToSend.from_id}"/>
 			     	<form:hidden id="toId" path="to_id" />
 							<p>
 						Subject:<form:input path="subject"/>

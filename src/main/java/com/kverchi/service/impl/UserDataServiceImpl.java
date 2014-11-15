@@ -18,7 +18,7 @@ public class UserDataServiceImpl implements UserDataService {
 
 	@Autowired private UserDataDAO userDataDAO;
 	@Autowired private ImageService imageService;
-	private final static String IMG_PATH="E:/Java/sts-3.6.1.RELEASE/workspace/InspireMe/src/main/webapp/countryImg/countries_sights";
+	private final static String IMG_PATH="C:/Users/Giperborej/Documents/workspace-sts-3.6.0.RELEASE/fixMe/src/main/webapp/usersAvatars";
 	
 	@Override
 	public UserData getUserData(int userId) {

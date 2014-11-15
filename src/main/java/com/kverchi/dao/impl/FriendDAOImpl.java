@@ -101,7 +101,7 @@ public class FriendDAOImpl extends GenericDAOImpl<Friend> implements FriendDAO {
 		 try {
 	    	   session = sessionFactory.openSession();
 	    	   session.beginTransaction();
-	    String query = "SELECT users.user_id, users.username, users.password, users.enabled FROM users, users_friends"+
+	    String query = "SELECT users.user_id, users.username, users.email, users.password, users.enabled FROM users, users_friends"+
 " WHERE  ((users.user_id = users_friends.friend_two_id AND users_friends.friend_one_id=:curUsrId)"+
 " OR (users.user_id = users_friends.friend_one_id AND users_friends.friend_two_id=:curUsrId))"+
 " AND users_friends.status=:status";

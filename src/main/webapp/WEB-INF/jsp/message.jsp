@@ -22,7 +22,7 @@
 				<%@ include file="messagesMenu.jspf" %>
 				
 				<p>Subject: ${message.subject}</p>
-				<c:set var="test" scope="session" value="${replyMessage.removed_by}"/>
+				<c:set var="test" scope="session" value="${messageToSend.removed_by}"/>
 				<c:if test="${test==0}"> 
 		     	   		From: 
 		     	   		</c:if>
@@ -41,7 +41,7 @@
 	            ${message.text}
 	            </div>
 	            <c:if test="${test==0}"> 
-			     	<form:form id="replyForm" action="sendMessage" modelAttribute="message" method="POST">
+			     	<form:form id="replyForm" action="sendMessage" modelAttribute="messageToSend" method="POST">
 			            <form:textarea id="replyText" class="edit" path="text" style="width:100%; height:800" htmlEscape="false"/>
 						<form:hidden path="from_id" value="${message.to_id}"/>
 						<form:hidden path="to_id" value="${message.from_id}"/>

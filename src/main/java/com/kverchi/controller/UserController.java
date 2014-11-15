@@ -2,10 +2,13 @@ package com.kverchi.controller;
 
 import java.security.Principal;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.ui.Model;
@@ -38,6 +42,7 @@ import com.kverchi.domain.UserDetailsAdapter;
 import com.kverchi.service.CountryService;
 import com.kverchi.service.FriendService;
 import com.kverchi.service.MessageService;
+import com.kverchi.service.PageContentService;
 import com.kverchi.service.SightService;
 import com.kverchi.service.UserDataService;
 import com.kverchi.service.UserService;
@@ -45,6 +50,7 @@ import com.kverchi.tools.Pair;
 
 @EnableWebMvc
 @Controller
+@SessionAttributes("content")
 public class UserController {
 	private static final String P_REG_FORM = "signup";
 	private static final String P_REG_OK = "redirect:result";
@@ -52,7 +58,9 @@ public class UserController {
 	private static final String P_MAIN = "main";
 	private static final String P_HOME = "home";
 	private static final String P_ERROR = "error";
-	
+	private Map<String,String> content = new HashMap<String,String>();;
+	private List<String> visitedPages = new ArrayList<String>();
+	private String lang;
 	
 	@Autowired private UserService userService;
 	@Autowired private CountryService countryService;
@@ -60,6 +68,7 @@ public class UserController {
 	@Autowired private FriendService friendService;
 	@Autowired private UserDataService userDataService;
 	@Autowired private MessageService messageService;
+	@Autowired private PageContentService pageContentService;
 	
 	@Autowired
 	@Qualifier("authenticationManager")
@@ -218,22 +227,22 @@ public class UserController {
 		model.addAttribute("sender", sender);
 		model.addAttribute("message", message);
 		if(message.getTo_id()==curUserId){
-		model.addAttribute("message", replyMessage);
+		model.addAttribute("messageToSend", replyMessage);
 		}
 		return "message";
 	}
 		
 	@RequestMapping(value="sendMessage")
-	public String sendMessage(@ModelAttribute("message") Message messageToSend) {
+	public String sendMessage(@ModelAttribute("messageToSend") Message messageToSend) {
 		messageService.sendMessage(messageToSend);
 		return "redirect:messages";
 	}
-	
+			
 	@RequestMapping(value="newMessage")
 	public String createNewMessage(Model model, Principal principal) {
 		Message newMessage = new Message();
 		newMessage.setFrom_id(loadUserDetails(principal).getId());
-		model.addAttribute("message", newMessage);
+		model.addAttribute("messageToSend", newMessage);
 		return "newMessage";
 	}
 	
@@ -277,13 +286,48 @@ public class UserController {
 	}
 
 	@RequestMapping("Login")
-	public String Login() {
+	public String Login(Model model, HttpServletRequest request) {
+		if(lang==null)
+		{
+			lang="en";
+		}
+		if(!visitedPages.contains("Login")){
+			content.putAll(pageContentService.loadPageContentDB("Login", lang));
+			model.addAttribute("content",content);
+			visitedPages.add("Login");
+			}
 		return P_LOGIN_FORM;
 	}
 	
 	@RequestMapping("main")
-	public String main() {
+	public String main(Model model,HttpServletRequest request) {
+		
+		if(lang==null)
+		{
+			lang="en";
+		}
+		if(!visitedPages.contains("main")){
+		content.putAll(pageContentService.loadPageContentDB("main", lang));
+		model.addAttribute("content",content);
+		visitedPages.add("main");
+		}
 		return P_MAIN;	
+	}
+	
+	@RequestMapping("setLanguage")
+	public String showSetLangPage(@RequestParam("lang") String langParam, Model model,
+			HttpServletRequest request) {
+		String pageToReload = request.getHeader("Referer");
+		if(!lang.equals(langParam)){
+			content = new HashMap<String,String>();
+			content.putAll(pageContentService.loadPageContentDB("main", langParam));
+			visitedPages.clear();
+			//System.out.println(pageToReload);
+			request.removeAttribute("content");
+			model.addAttribute("content", content);
+			lang = langParam;
+		}
+		return "redirect:"+pageToReload;	
 	}
 	@RequestMapping("error") 
 	public String error() {

@@ -10,29 +10,29 @@
 </div>
 <div id="navigation">
 <ul>
-		<li id="default"><a href="${mainUrl}">Main</a></li>
+		<li id="default"><a href="${mainUrl}">${content['header.mainLabel']}</a></li>
 		<security:authorize access="isAuthenticated()">
-		<li><a href="${homeUrl}">Home</a></li>
+		<li><a href="${homeUrl}">${content['header.homeLabel']}</a></li>
 		</security:authorize>
 		<security:authorize access="isAnonymous()">
-		<li><a href="${loginUrl}">Log In</a></li>
-		<li><a href="${RegUrl}">Sign Up</a></li>
+		<li><a href="${loginUrl}">${content['header.loginLabel']}</a></li>
+		<li><a href="${RegUrl}">${content['header.signupLabel']}</a></li>
 		</security:authorize>
 		<security:authorize access="isAuthenticated()">
-		<li><a href="${logoutUrl}">Log out</a></li>
+		<li><a href="${logoutUrl}">${content['header.logoutLabel']}</a></li>
 		</security:authorize>
 </ul>
 <p>
+<a href="<%=request.getContextPath() %>/main/setLanguage?lang=en" style="color:yellow">ENG</a>
+<a href="<%=request.getContextPath() %>/main/setLanguage?lang=uk" style="color:yellow">UKR</a>
 <security:authorize access="isAuthenticated()">
-    
-    
-	<a href="<%=request.getContextPath() %>/main/cabinet" style="color:white">My cabinet</a>
-	
-	
-	Hi, <security:authentication property="principal.username" />.
+ 
+	<a href="<%=request.getContextPath() %>/main/cabinet" style="color:white">${content['header.cabinetLink']}</a>
+		
+	${content['header.hiWord']} <security:authentication property="principal.username" />.
 </security:authorize>
 <security:authorize access="isAnonymous()">
-	Hi, guest.
+	${content['header.hiWord']} guest.
 </security:authorize>
 </p>
 </div>

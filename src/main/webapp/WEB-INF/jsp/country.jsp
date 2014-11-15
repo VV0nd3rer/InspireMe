@@ -10,6 +10,10 @@
  
   	<script src="<%=request.getContextPath() %>/js/dialog-polyfill.js"></script>
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/dialog-polyfill.css">
+	<script type="text/javascript">
+	 
+
+	</script>
 </head>
 <body>
 	<%@ include file="head.jspf" %>
@@ -44,12 +48,13 @@
 
 <!-- Content -->
 	<div id="content">
+	<input id="contextPath" type="hidden" value="<%=request.getContextPath() %>"/>
 	   <div id="wrap">
     	  <div id="showcase" class="noselect">
            	<c:forEach items="${country_sigths}" var="s">
            	      <div class="card">
 	     	    <h2>${s.sight_label}</h2>
-	     	   	<img src="<%=request.getContextPath() %>/countryImg/countries_sights/${s.img_url}"/>
+	     	   	<img src="<%=request.getContextPath() %>/countryImg/countries_sights/${s.img_url}" onerror="imgError(this)"/>
 	     		<p>${s.description}</p>
 	     		<p><a href="<%=request.getContextPath() %>/main/posts/sightPosts?sightId=${s.sight_id}">Read more</a></p>
 	     		<button type="button" value="removeSight?sightId=${s.sight_id}" onclick="confirmButton(this, 'removeSightDialog')">Delete</button>
@@ -72,7 +77,35 @@
   <script src="<%=request.getContextPath() %>/js/dialogs.js"></script>
   <script src="<%=request.getContextPath() %>/js/jquery.cloud9carousel.js"></script>
   <script>
-    $(function() {
+  var imgUrl;
+  var check = 0;
+  function pause(ms) {
+	  ms += new Date().getTime();
+	  while (new Date() < ms){}
+	  }
+  
+  function imgError(image) {
+	  if(check == 0){
+	  imgUrl = image.src;
+	  var contextPath = document.getElementById("contextPath").value;
+	  image.style="background-image:url('"+contextPath+"/countryImg/countries_sights/loading.gif'); width:217px; height:153px;";
+	  }
+	  image.onerror="";
+	  check = 1;
+	  setTimeout(refreshImage, 3500, image);
+	   
+	  return true;
+	}
+  
+  function refreshImage(image){
+	  image.onerror="imgError(this)";
+	  image.style="";
+	  check = 0;
+      image.src = imgUrl+"?rand="+new Date().getTime();
+	  return true;
+  }
+  
+     $(function() {
       //------------------------------------
       var showcase = $("#showcase"), title = $('#item-title')
       showcase.Cloud9Carousel( {
@@ -116,7 +149,7 @@
             $('#nav > .right').click()
         }
       }) 
-    }); 
+      }); 
   </script>
 </body>
 </html>

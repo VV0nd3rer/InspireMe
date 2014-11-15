@@ -21,10 +21,10 @@ public class MessageDAOImplTest {
 	@Autowired 
 	private MessageDAO messageDAO;
 	
-	@Test
+	/*@Test
 	public void getMessagesHeadersTest(){
 		assertEquals("Vasya", messageDAO.getMessagesHeaders(6, "inbox").get(0).getFrom());
-	}
+	}*/
 	
 	/*@Test
 	public void delMessageByIdTest(){
@@ -32,7 +32,7 @@ public class MessageDAOImplTest {
 	}*/
 	@Test
 	public void getMessageTest(){
-		assertEquals("qq", messageDAO.getMessage(6, 6).getText());
+		assertEquals("qwerty", messageDAO.getMessage(6, 7).getText());
 	}
 
 }
