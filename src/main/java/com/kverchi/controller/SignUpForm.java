@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.ScriptAssert;
 		script = "_this.confirmPassword.equals(_this.password)",
 		message = "user.password.mismatch.message")
 public class SignUpForm {
-	private String login, password, confirmPassword, email;
+	private String login, password, confirmPassword, email, captcha;
 
 	@NotEmpty
 	@Size(min = 5, max = 50)
@@ -47,6 +47,14 @@ public class SignUpForm {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getCaptcha() {
+		return captcha;
+	}
+
+	public void setCaptcha(String captcha) {
+		this.captcha = captcha;
 	}
 	
 }

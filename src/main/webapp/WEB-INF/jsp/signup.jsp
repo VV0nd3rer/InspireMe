@@ -17,44 +17,49 @@
 					<form:errors path="*">
 						<div><spring:message code="error.global" /></div>
 				   	</form:errors>
-				   	<div>		
+				   	<div id="loginGroup">		
 						<form:input path="login"/> 
-						<p id="errorLogin" class="inputError">
+						<p id="loginError" class="inputError">
 							<form:errors path="login" htmlEscape="false" />
 						</p>
 					</div>
-					<div>		
+					<div id="emailGroup">		
 						<form:input path="email"  placeholder="Email"/> 
-						<p id="errorEmail" class="inputError">
+						<p id="emailError" class="inputError">
 							<form:errors path="email" htmlEscape="false" />
 						</p>
 					</div>
-					<div>
+					<div id="passwordGroup">
 						<form:password path="password"  placeholder="Password" />
-						<p id="errorPass" class="inputError">
+						<p id="passwordError" class="inputError">
 							<form:errors path="password" htmlEscape="false" />
 						</p>
 					</div>
 					<div>
-						    <form:password path="confirmPassword" placeholder="Confirm password"/>
+						<form:password path="confirmPassword" placeholder="Confirm password"/>
+						<p id="confirmPasswordError" class="inputError">
+							<form:errors path="confirmPassword" />
+						</p>
 					</div>
-					<div>
-					 Enter the code
-   					 <input type="text" name="jcaptchaResponse" value="" />
-   					 <img src="/InspireMe/jcaptcha.jpg" id="captchaImg">
-     				 <button name="RefreshButton" onclick="refresh()" type="button">Refresh</button>
-   				    </div>
-				<p><input type="submit" value="Register"></input></p>
+				
+				 <div>
+				    <form:input path="captcha" placeholder="Enter the code"/>
+				    <p class="inputError">
+				           <form:errors path="captcha" />
+				    </p>
+					<img src="/InspireMe/jcaptcha.jpg" id="captchaImg">
+					<button name="RefreshButton" onclick="refresh()" type="button">Refresh</button>
+				 </div>
+				<p><input type="submit" id="register" value="Register"></input></p>
 				</form:form>
 			</div>
 			<%@ include file="footer.jspf" %>
 		</div>
-		<script type="text/javascript">
-			function refresh() 
-			{
-			var image=document.getElementById("captchaImg");
-			image.src="<%=request.getContextPath()%>/jcaptcha.jpg?"+Math.floor(Math.random()*100)           
-			}
-</script>
+	 <script type="text/javascript">
+		function refresh() {
+			var image = document.getElementById("captchaImg");
+		    image.src = "<%=request.getContextPath()%>/jcaptcha.jpg?"+Math.floor(Math.random()*100)           
+		}
+	</script>
 	</body>
 </html>

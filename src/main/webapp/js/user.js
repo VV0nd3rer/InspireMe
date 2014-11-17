@@ -1,7 +1,18 @@
-$( document ).ready(function() {
+$(function() {
 	$("#password").passStrengthify();
-	//$("#confirmPassword").passStrengthify();
-	$("body").on("focus", "input", function() {
+	$("body").on("focus", "#login", function() {
+		if(!$.isEmptyObject($("#loginError"))) 
+			$("#loginError").empty()
+	});
+	$("body").on("blur", "#login", function() {
+		validName();
+	});
+	$("#register").click(function(event) {
+
+		event.preventDefault();
+		addUser();
+	});
+	/*$("body").on("focus", "input", function() {
 		fIn($(this).attr('id'), $(this).val());
 	});
 	$("body").on("blur", "input", function() {
@@ -12,8 +23,41 @@ $( document ).ready(function() {
 			}
 			
 		fOut($(this).attr('id'), $(this).val());
-	});
+	});*/
 });
+function addUser() {
+	//var errorField = $(".inputError");
+	var formData = new FormData(document.getElementById("user"));
+	//formData.append("file", img_url.files[0]);
+	$.ajax({
+		url: contexPath + "/main/addUser", 
+		data: formData,
+		processData: false,
+		contentType: false,
+		type: 'POST',
+		success: function(response){
+			if(response.status == "SUCCESS"){
+				window.location.href = contexPath + "/main/" + response.result;
+			}else{
+				var errorInfo = "";
+				for(i =0 ; i < response.result.length ; i++){
+					var item = response.result[i];
+					//alert(item.field);
+					var errorField = $('#' + item.field + "Error");
+					//errorInfo += "<br>" + (i + 1) +". " + response.result[i].code;
+					errorField.html(item.code);
+				}
+				//errorField.html("Please correct following errors: " + errorInfo);
+				//$('#info').hide('slow');
+				//errorField.show('slow');
+			}	      
+		},  
+		error: function(e){  
+			alert('Error: ' + e);  
+		}  
+});
+}
+
 	function validName() {
 		var login = $("#login").val();
 		$.ajax({
@@ -22,7 +66,7 @@ $( document ).ready(function() {
 		    data: "login=" + login,
 		    success: function(response){
 		    	if(response == "FALSE")
-		    		$("#errorLogin").append("<p>This name is busy. </p>");
+		    		$("#loginError").append("<p>This name is busy. </p>");
 		    },
 			error: function(error) {
 				alert("In valid name error: " + error);
@@ -48,8 +92,7 @@ $( document ).ready(function() {
 			}
 		});
 	}
-	
-		function fIn(field) {
+		/*function fIn(field) {
 		var errField ;
 		switch(field) {
 		case 'login':
@@ -91,5 +134,5 @@ $( document ).ready(function() {
 		var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 		if (!regex.test(_text))
 			_errField.append("<p>Incorrect email.</p>");
-	}
+	}*/
 	

@@ -16,11 +16,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,6 +38,7 @@ import org.springframework.ui.Model;
 
 import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
 import com.kverchi.dao.UserDAO;
+import com.kverchi.domain.AjaxValidation;
 import com.kverchi.domain.Country;
 import com.kverchi.domain.Message;
 import com.kverchi.domain.ResetPassword;
@@ -72,6 +76,7 @@ public class UserController {
 	@Autowired private FriendService friendService;
 	@Autowired private UserDataService userDataService;
 	@Autowired private MessageService messageService;
+	@Autowired private MessageSource messageSource;
 	@Autowired private PageContentService pageContentService;
 	@Autowired private ResetPasswordService resetPasswordService;
 	
@@ -262,8 +267,44 @@ public class UserController {
 		model.addAttribute("url", P_REG_USER);
 		return P_REG_FORM;
 	}
+	@RequestMapping(value = "addUser", method = RequestMethod.POST)
+	public @ResponseBody AjaxValidation addUser(@ModelAttribute("user") @Valid SignUpForm form, BindingResult result, HttpServletRequest request) {
+		AjaxValidation res = new AjaxValidation();
+		ValidationUtils.rejectIfEmpty(result, "login", "Login can't be empty.");
+		ValidationUtils.rejectIfEmpty(result, "email", "Email can't be empty");
+		ValidationUtils.rejectIfEmpty(result, "password", "Password can't be empty");
+		ValidationUtils.rejectIfEmpty(result, "confirmPassword", "Repeat password can't be empty");
 	
-	@RequestMapping("addUser")
+		convertPasswordError(result);
+		checkUsername(form.getLogin(), result);
+		checkCaptcha(request, request.getParameter("jcaptchaResponse"), result);
+		
+		for (Object object : result.getAllErrors()) {
+		    if(object instanceof FieldError) {
+		        FieldError fieldError = (FieldError) object;
+		        String msg = messageSource.getMessage("error.incorrect.user.captcha", null, null);
+		        System.out.println(msg);
+		    }
+		}
+		
+		if(!result.hasErrors()) {
+		 if(!userService.registerAccount(toUser(form))) {
+			 result.rejectValue("email", "Error with sending email"); 
+			 res.setStatus("ERROR");
+			 res.setResult(result.getAllErrors());
+		 }
+		 else {
+			 res.setStatus("SUCCESS");
+			 res.setResult("result");
+		 }
+		}
+		else {
+			res.setStatus("ERROR");
+			res.setResult(result.getAllErrors());
+		}	
+		return res;
+	}
+	/*@RequestMapping("addUser")
 	public String addUser(@ModelAttribute("user") @Valid SignUpForm form, BindingResult result, HttpServletRequest request) throws SQLException {
 		convertPasswordError(result);
 		checkUsername(form.getLogin(), result);
@@ -274,7 +315,7 @@ public class UserController {
 			 result.reject("Error with sending email."); 
 		}
 		return (result.hasErrors() ? P_REG_FORM : P_REG_OK);		
-	}
+	}*/
 	@RequestMapping("confirm")
 	public String confirmUser(@RequestParam("id") int userId) {
 		User user = new User();
@@ -398,7 +439,7 @@ public class UserController {
 	private void checkCaptcha(HttpServletRequest request, String captcha, BindingResult result) {
 		boolean captchaPassed = SimpleImageCaptchaServlet.validateResponse(request, captcha);	
 			if(!captchaPassed)
-				result.reject("error.captcha");
+				result.rejectValue("captcha", "error.incorrect", new String[] {null}, null);
 	}
  	//TODO
 	private static User toUser(SignUpForm form) {
