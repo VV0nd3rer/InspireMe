@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,6 +18,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -270,28 +272,22 @@ public class UserController {
 	@RequestMapping(value = "addUser", method = RequestMethod.POST)
 	public @ResponseBody AjaxValidation addUser(@ModelAttribute("user") @Valid SignUpForm form, BindingResult result, HttpServletRequest request) {
 		AjaxValidation res = new AjaxValidation();
-		ValidationUtils.rejectIfEmpty(result, "login", "Login can't be empty.");
-		ValidationUtils.rejectIfEmpty(result, "email", "Email can't be empty");
-		ValidationUtils.rejectIfEmpty(result, "password", "Password can't be empty");
-		ValidationUtils.rejectIfEmpty(result, "confirmPassword", "Repeat password can't be empty");
-	
 		convertPasswordError(result);
 		checkUsername(form.getLogin(), result);
 		checkCaptcha(request, request.getParameter("jcaptchaResponse"), result);
-		
+		Map<String, String> errorsMsg = new HashMap();
 		for (Object object : result.getAllErrors()) {
 		    if(object instanceof FieldError) {
 		        FieldError fieldError = (FieldError) object;
-		        String msg = messageSource.getMessage("error.incorrect.user.captcha", null, null);
-		        System.out.println(msg);
+		        String message = messageSource.getMessage(fieldError, LocaleContextHolder.getLocale());
+		        errorsMsg.put(fieldError.getField(), message);
 		    }
 		}
-		
 		if(!result.hasErrors()) {
 		 if(!userService.registerAccount(toUser(form))) {
 			 result.rejectValue("email", "Error with sending email"); 
 			 res.setStatus("ERROR");
-			 res.setResult(result.getAllErrors());
+			 res.setResult(errorsMsg);
 		 }
 		 else {
 			 res.setStatus("SUCCESS");
@@ -300,7 +296,7 @@ public class UserController {
 		}
 		else {
 			res.setStatus("ERROR");
-			res.setResult(result.getAllErrors());
+			res.setResult(errorsMsg);
 		}	
 		return res;
 	}

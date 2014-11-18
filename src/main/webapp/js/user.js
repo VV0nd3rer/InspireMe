@@ -1,8 +1,7 @@
 $(function() {
-	$("#password").passStrengthify();
 	$("body").on("focus", "#login", function() {
 		if(!$.isEmptyObject($("#loginError"))) 
-			$("#loginError").empty()
+			$("#loginError").empty();
 	});
 	$("body").on("blur", "#login", function() {
 		validName();
@@ -12,23 +11,9 @@ $(function() {
 		event.preventDefault();
 		addUser();
 	});
-	/*$("body").on("focus", "input", function() {
-		fIn($(this).attr('id'), $(this).val());
-	});
-	$("body").on("blur", "input", function() {
-		if($(this).attr('id') == 'login')
-			{
-			//alert($(this).attr('id').val());
-			validName();
-			}
-			
-		fOut($(this).attr('id'), $(this).val());
-	});*/
 });
 function addUser() {
-	//var errorField = $(".inputError");
 	var formData = new FormData(document.getElementById("user"));
-	//formData.append("file", img_url.files[0]);
 	$.ajax({
 		url: contexPath + "/main/addUser", 
 		data: formData,
@@ -39,17 +24,11 @@ function addUser() {
 			if(response.status == "SUCCESS"){
 				window.location.href = contexPath + "/main/" + response.result;
 			}else{
-				var errorInfo = "";
-				for(i =0 ; i < response.result.length ; i++){
-					var item = response.result[i];
-					//alert(item.field);
-					var errorField = $('#' + item.field + "Error");
-					//errorInfo += "<br>" + (i + 1) +". " + response.result[i].code;
-					errorField.html(item.code);
-				}
-				//errorField.html("Please correct following errors: " + errorInfo);
-				//$('#info').hide('slow');
-				//errorField.show('slow');
+				$.each(response.result, function(field, msg) {
+					var errorField = $('#' + field + "Error");
+					errorField.html(msg);
+				});
+				refreshCaptcha();
 			}	      
 		},  
 		error: function(e){  
@@ -57,7 +36,10 @@ function addUser() {
 		}  
 });
 }
-
+function refreshCaptcha() {
+	var image = document.getElementById("captchaImg");
+    image.src = contexPath+"/jcaptcha.jpg?"+Math.floor(Math.random()*100)           
+}
 	function validName() {
 		var login = $("#login").val();
 		$.ajax({
@@ -92,47 +74,4 @@ function addUser() {
 			}
 		});
 	}
-		/*function fIn(field) {
-		var errField ;
-		switch(field) {
-		case 'login':
-			errField = $("#errorLogin");
-			break;
-		case 'password':
-			errField = $("#errorPass");
-			break;
-		case 'email':
-			errField = $("#errorEmail");
-			break;
-		}
-		if(!$.isEmptyObject(errField)) 
-			errField.empty();
-	}
-	function fOut(field, text) {
-		var max;
-		var min;
-		var chars = text.length; 
-		var errField;
-		switch (field) {
-		case 'login':
-			minMax(5, 50, chars, $("#errorLogin"));
-			break;
-		case 'password':
-			minMax(6, 64, chars, $("#errorPass"));
-			break;
-		case 'email':
-			validEmail(text, $("#errorEmail"));
-			break;
-		}
-	}
-	function minMax(_min, _max, _length, _errField) {
-		if(_length > _max || _length < _min) {
-			_errField.append("<p>Size of login must be between " + _min + " and " + _max + "</p>");
-		}
-	}
-	function validEmail(_text, _errField) {
-		var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-		if (!regex.test(_text))
-			_errField.append("<p>Incorrect email.</p>");
-	}*/
 	

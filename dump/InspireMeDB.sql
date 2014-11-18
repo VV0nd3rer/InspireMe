@@ -1,6 +1,6 @@
 /*
-SQLyog Community v12.01 (64 bit)
-MySQL - 5.6.16 : Database - inspireme
+SQLyog Ultimate v11.52 (64 bit)
+MySQL - 5.6.21-log : Database - inspireme
 *********************************************************************
 */
 
@@ -189,6 +189,21 @@ CREATE TABLE `posts` (
 
 /*Data for the table `posts` */
 
+/*Table structure for table `reset_password` */
+
+DROP TABLE IF EXISTS `reset_password`;
+
+CREATE TABLE `reset_password` (
+  `token` varchar(255) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `time_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`token`),
+  KEY `fk_reset_password_1` (`user_id`),
+  CONSTRAINT `fk_reset_password_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `reset_password` */
+
 /*Table structure for table `role` */
 
 DROP TABLE IF EXISTS `role`;
@@ -219,7 +234,7 @@ CREATE TABLE `user_role` (
 
 /*Data for the table `user_role` */
 
-insert  into `user_role`(`user_id`,`role_id`) values (6,1),(7,1),(8,1),(9,1);
+insert  into `user_role`(`user_id`,`role_id`) values (6,1),(7,1),(8,1),(9,1),(10,1);
 
 /*Table structure for table `users` */
 
@@ -233,11 +248,11 @@ CREATE TABLE `users` (
   `email` varchar(60) NOT NULL,
   PRIMARY KEY (`user_id`),
   KEY `userId` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 /*Data for the table `users` */
 
-insert  into `users`(`user_id`,`username`,`password`,`enabled`,`email`) values (6,'FlyinGMind','$2a$10$oeW5cEUtxdvCWMaj0nVJ.uUh1Vjn/v0QJMH599Zfy/tQx4gB1Fn9.',1,''),(7,'Vasya','$2a$10$W.6EDTwrMp4n97F/pHkzRuFN8y7cKDok.lg4yiIdX6NMGWFZm6vHC',1,''),(8,'Petya','$2a$10$Adkflw72.4jueJqRFo9vi.bzH/yMfQ8R05tiDbxPXi5ePdV459X4m',1,''),(9,'Olechka','$2a$10$kdxADPcs3zMmukd.dmbXQ.hZgFr.2IVt4jJxy.DOf15h2U2CLEl7u',1,'');
+insert  into `users`(`user_id`,`username`,`password`,`enabled`,`email`) values (6,'FlyinGMind','$2a$10$xsp4hsDpTKGsTPCj3LWqzOY1qMhdQ.04I8pDmfFgoA41Xbwyh.tCa',1,'kverchi@hotmail.com'),(7,'Vasya','$2a$10$W.6EDTwrMp4n97F/pHkzRuFN8y7cKDok.lg4yiIdX6NMGWFZm6vHC',1,''),(8,'Petya','$2a$10$Adkflw72.4jueJqRFo9vi.bzH/yMfQ8R05tiDbxPXi5ePdV459X4m',1,''),(9,'Olechka','$2a$10$kdxADPcs3zMmukd.dmbXQ.hZgFr.2IVt4jJxy.DOf15h2U2CLEl7u',1,''),(10,'Kverchi','$2a$10$kYaj36R8UmFVUOKenBA0he8OPsIFL4GWQxp5xWzkkU.t/iKjEJWAy',0,'kverchi@hotmail.com');
 
 /*Table structure for table `users_data` */
 
@@ -258,7 +273,7 @@ CREATE TABLE `users_data` (
 
 /*Data for the table `users_data` */
 
-insert  into `users_data`(`user_id`,`first_name`,`last_name`,`avatar_url`,`about`,`country_code`) values (6,'Kolya','Pylypets','mPylypets.jpg','Good guy.','uk'),(7,'&#1057;&#1072;&#1096;&#1072;','&#1043;&#1086;&#1083;&#1099;&#1081;','GOLOSKOKOV.jpg','&#1040; &#1089;&#1077;&#1081;&#1095;&#1072;&#1089; &#1079;&#1072;&#1087;&#1080;&#1096;&#1077;&#1084; &#1072;&#1087;&#1087;&#1088;&#1086;&#1082;&#1089;&#1080;&#1084;&#1072;&#1094;&#1080;&#1102;...','ua'),(8,NULL,NULL,'noavatar.jpg',NULL,NULL),(9,NULL,NULL,'noavatar.jpg',NULL,NULL);
+insert  into `users_data`(`user_id`,`first_name`,`last_name`,`avatar_url`,`about`,`country_code`) values (6,'Kolya','Pylypets','mPylypets.jpg','Good guy.','uk'),(7,'&#1057;&#1072;&#1096;&#1072;','&#1043;&#1086;&#1083;&#1099;&#1081;','GOLOSKOKOV.jpg','&#1040; &#1089;&#1077;&#1081;&#1095;&#1072;&#1089; &#1079;&#1072;&#1087;&#1080;&#1096;&#1077;&#1084; &#1072;&#1087;&#1087;&#1088;&#1086;&#1082;&#1089;&#1080;&#1084;&#1072;&#1094;&#1080;&#1102;...','ua'),(8,NULL,NULL,'noavatar.jpg',NULL,NULL),(9,NULL,NULL,'noavatar.jpg',NULL,NULL),(10,NULL,NULL,'noavatar.jpg',NULL,NULL);
 
 /*Table structure for table `users_friends` */
 
