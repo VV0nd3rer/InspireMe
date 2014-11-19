@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <%@ include file="include.jspf" %>
-<script src="<%=request.getContextPath() %>/js/user.js"></script>
+<script src="<%=request.getContextPath() %>/js/user.search.js"></script>
 <title>Adding a new friend</title>
 </head>
 <body>

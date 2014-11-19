@@ -1,15 +1,9 @@
 package com.kverchi.controller;
 
 import java.security.Principal;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -25,9 +19,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
-import org.springframework.validation.ValidationUtils;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,18 +30,15 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.ui.Model;
 
 import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
-import com.kverchi.dao.UserDAO;
 import com.kverchi.domain.AjaxValidation;
 import com.kverchi.domain.Country;
 import com.kverchi.domain.Message;
-import com.kverchi.domain.ResetPassword;
 import com.kverchi.domain.User;
 import com.kverchi.domain.UserData;
 import com.kverchi.domain.UserDetailsAdapter;
 import com.kverchi.service.CountryService;
 import com.kverchi.service.FriendService;
 import com.kverchi.service.MessageService;
-import com.kverchi.service.PageContentService;
 import com.kverchi.service.ResetPasswordService;
 import com.kverchi.service.SightService;
 import com.kverchi.service.UserDataService;
@@ -60,7 +48,7 @@ import com.kverchi.tools.Pair;
 @EnableWebMvc
 @Controller
 @SessionAttributes("content")
-public class UserController {
+public class UserController extends ContentController{
 	private static final String P_REG_FORM = "signup";
 	private static final String P_REG_OK = "redirect:result";
 	private static final String P_LOGIN_FORM = "login";
@@ -68,10 +56,7 @@ public class UserController {
 	private static final String P_MAIN = "main";
 	private static final String P_HOME = "home";
 	private static final String P_ERROR = "error";
-	private Map<String,String> content = new HashMap<String,String>();;
-	private List<String> visitedPages = new ArrayList<String>();
-	private String lang;
-	
+		
 	@Autowired private UserService userService;
 	@Autowired private CountryService countryService;
 	@Autowired private SightService countrySightsService;
@@ -79,7 +64,6 @@ public class UserController {
 	@Autowired private UserDataService userDataService;
 	@Autowired private MessageService messageService;
 	@Autowired private MessageSource messageSource;
-	@Autowired private PageContentService pageContentService;
 	@Autowired private ResetPasswordService resetPasswordService;
 	
 	@Autowired
@@ -192,15 +176,6 @@ public class UserController {
 		List<Pair<User, Integer>> resultList = friendService.getPeopleList(userId, fragment);
 		return resultList;
 	}
-	/*@RequestMapping(value="peopleSearch", method=RequestMethod.GET)
-	public String searchUsers(@RequestParam("fragment") String fragment, Principal principal,
-			Model model) {
-		UserDetailsAdapter currentUser = loadUserDetails(principal);
-		int userId = currentUser.getId();
-		List<Pair<User, Integer>> resultList = friendService.getPeopleList(userId, fragment);
-		model.addAttribute("users", resultList);
-	    return "newFriendPage";
-		}*/
 	
 	@RequestMapping(value="messages")
 	public String showMessages(Principal principal, Model model,
@@ -284,7 +259,7 @@ public class UserController {
 		convertPasswordError(result);
 		checkUsername(form.getLogin(), result);
 		checkCaptcha(request, request.getParameter("jcaptchaResponse"), result);
-		Map<String, String> errorsMsg = new HashMap();
+		Map<String, String> errorsMsg = new HashMap<String, String>();
 		for (Object object : result.getAllErrors()) {
 		    if(object instanceof FieldError) {
 		        FieldError fieldError = (FieldError) object;
@@ -379,30 +354,13 @@ public class UserController {
 
 	@RequestMapping("Login")
 	public String Login(Model model, HttpServletRequest request) {
-		if(lang==null)
-		{
-			lang="en";
-		}
-		if(!visitedPages.contains("Login")){
-			content.putAll(pageContentService.loadPageContentDB("Login", lang));
-			model.addAttribute("content",content);
-			visitedPages.add("Login");
-			}
+		loadPageDynamicalContent(request.getPathInfo(), model);
 		return P_LOGIN_FORM;
 	}
 	
 	@RequestMapping("main")
 	public String main(Model model,HttpServletRequest request) {
-		
-		if(lang==null)
-		{
-			lang="en";
-		}
-		if(!visitedPages.contains("main")){
-		content.putAll(pageContentService.loadPageContentDB("main", lang));
-		model.addAttribute("content",content);
-		visitedPages.add("main");
-		}
+		loadPageDynamicalContent(request.getPathInfo(), model);	
 		return P_MAIN;	
 	}
 	
@@ -412,19 +370,16 @@ public class UserController {
 		String pageToReload = request.getHeader("Referer");
 		if(!lang.equals(langParam)){
 			content = new HashMap<String,String>();
-			content.putAll(pageContentService.loadPageContentDB("main", langParam));
 			visitedPages.clear();
-			//System.out.println(pageToReload);
-			request.removeAttribute("content");
-			model.addAttribute("content", content);
 			lang = langParam;
 		}
 		return "redirect:"+pageToReload;	
 	}
+	
 	@RequestMapping("error") 
 	public String error() {
 		return P_ERROR;
-	}
+	}	
 	
 	private static void convertPasswordError(BindingResult result) {
 		for(ObjectError error : result.getGlobalErrors()) {

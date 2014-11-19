@@ -40,14 +40,13 @@ import com.kverchi.domain.UserDetailsAdapter;
 @Controller
 @RequestMapping("sights")
 @SessionAttributes("country_code") 
-public class SightController {
+public class SightController extends ContentController{
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.setAllowedFields(new String[] {
 				"title", "description", "img_url"});
 	}
 	
-	private final static String IMG_PATH="C:/Users/Giperborej/Documents/workspace-sts-3.6.0.RELEASE/fixMe/src/main/webapp/countryImg/countries_sights";
 	private final static String P_COUNTRY = "redirect:/main/sights/country";
 	private static final String P_ERROR = "error";
 	
@@ -82,7 +81,7 @@ public class SightController {
 			HttpServletRequest request) {
 		//String countryCode = request.getSession().getAttribute("country_code").toString();
 		CountrySight sight = sightsService.getSight(sightId);
-		File delFile = new File(IMG_PATH+"/"+sight.getImg_url());
+		File delFile = new File(SIGHT_IMG_PATH+"/"+sight.getImg_url());
 		delFile.delete();
 		sightsService.removeSight(sight);
 				
@@ -113,7 +112,7 @@ public class SightController {
 		
 		//imageService.setCustomImgSize(200, 200);
 		imageService.setImgSizeToDefault();
-		boolean saveImgResult = imageService.saveImg(imgFile, IMG_PATH, allowedImageExtensions);
+		boolean saveImgResult = imageService.saveImg(imgFile, SIGHT_IMG_PATH, allowedImageExtensions);
 		if(!result.hasErrors() && saveImgResult) {
 			CountrySight sight = new CountrySight(); 		
 	 		

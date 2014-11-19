@@ -8,17 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kverchi.controller.ContentController;
 import com.kverchi.dao.UserDataDAO;
 import com.kverchi.domain.UserData;
 import com.kverchi.service.ImageService;
 import com.kverchi.service.UserDataService;
 
 @Service
-public class UserDataServiceImpl implements UserDataService {
+public class UserDataServiceImpl extends ContentController implements UserDataService {
 
 	@Autowired private UserDataDAO userDataDAO;
 	@Autowired private ImageService imageService;
-	private final static String IMG_PATH="C:/Users/Giperborej/Documents/workspace-sts-3.6.0.RELEASE/fixMe/src/main/webapp/usersAvatars";
+	
 	
 	@Override
 	public UserData getUserData(int userId) {
@@ -50,10 +51,10 @@ public class UserDataServiceImpl implements UserDataService {
 		allowedImageExtensions.add("gif");
 		
 		imageService.setCustomImgSize(150, 100);
-		imageService.saveImg(avatarImg, IMG_PATH, allowedImageExtensions);
+		imageService.saveImg(avatarImg, AVATAR_IMG_PATH, allowedImageExtensions);
 		if(!data.getAvatarUrl().equals("noavatar.jpg"))
 		{
-		File delFile = new File(IMG_PATH+data.getAvatarUrl());
+		File delFile = new File(AVATAR_IMG_PATH+data.getAvatarUrl());
 		delFile.delete();
 		}
 		data.setAvatarUrl(avatarImg.getOriginalFilename());
