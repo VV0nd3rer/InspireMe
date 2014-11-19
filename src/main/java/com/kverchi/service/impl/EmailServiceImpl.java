@@ -25,17 +25,11 @@ import com.kverchi.service.EmailService;
 
 @Service
 public class EmailServiceImpl implements EmailService {
-	
-	/*@Autowired
-	private JavaMailSender mailSender;*/
 	@Autowired private VelocityEngine velocityEngine;
 	@Autowired private NemailAddresseDAO emailAddrDAO;
 	
-	private MimeMessage createEmail(User user, String tempPath,
+	private MimeMessage createMimeMsg(Map<String, Object> model, String tempPath,
 			String subject, String toEmail, String fromEmail, String fromName, MimeMessage mimeMsg) {
-		//mailSender.createMimeMessage();
-		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("user", user);
 		String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, tempPath, "utf-8", model);
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(mimeMsg);
@@ -54,29 +48,20 @@ public class EmailServiceImpl implements EmailService {
 		return mimeMsg;
 	}
 
-	@Override
-	public void sendEmail(User user, String tempPath, String subject, 
-						  String toEmail, String fromEmail, String fromName) {
+	private boolean sendMsg(MimeMessage msg, Session session) {
+		boolean isSended = false;
 		String email = "kverchi24@gmail.com";
 	    NemailAddresse emailAddr = new NemailAddresse();
-	    emailAddr = emailAddrDAO.getEmailData(email);
-	    //final String password = emailAddr.getEmail();
-	    
+	    emailAddr = emailAddrDAO.getEmailData(email);   
 	    String host = "smtp.gmail.com";
 	    String username = email;
 	    String password = emailAddr.getPassword();
-	    Properties props = new Properties();
-	    props.setProperty("mail.smtp.auth", "true");
-	    props.setProperty("mail.smtp.starttls.enable", "true");
-	    props.setProperty("mail.debug", "true");
-	    Session session = Session.getInstance(props);
-	    MimeMessage msg = new MimeMessage(session);
-	    msg = createEmail(user, tempPath, subject, toEmail, fromEmail, fromName, msg);
 	    Transport t = null;
 	    try {
 	    	t = session.getTransport("smtps");
 	    	t.connect(host, username, password);
 	    	t.sendMessage(msg, msg.getAllRecipients());
+	    	isSended = true;
 	    } catch(Exception e) {
 	    	
 	    } finally {
@@ -88,6 +73,42 @@ public class EmailServiceImpl implements EmailService {
 	    		 
 	    		 }
 	    }
-	   
+	   return isSended;
+	}
+	private Properties setProperties() {
+		Properties props = new Properties();
+	    props.setProperty("mail.smtp.auth", "true");
+	    props.setProperty("mail.smtp.starttls.enable", "true");
+	    props.setProperty("mail.debug", "true");
+	    return props;
+	}
+	@Override
+	public boolean sendEmail(User user, String tempPath, String subject, 
+						     String fromEmail, String fromName) {
+		//Set JavaMail properties and create session
+		Session session = Session.getInstance(setProperties());
+	    MimeMessage msg = new MimeMessage(session);
+	    //Set model parameters for template
+	    Map<String, Object> model = new HashMap<String, Object>();
+		model.put("user", user);
+		//Create MimeMessage
+	    msg = createMimeMsg(model, tempPath, subject, user.getEmail(), fromEmail, fromName, msg);
+	    //Send message
+	    return sendMsg(msg, session);
+	}
+	@Override
+	public boolean sendEmail(User user, String token, String tempPath, String subject, 
+		     				 String fromEmail, String fromName) {
+		//Set JavaMail properties and create session
+		Session session = Session.getInstance(setProperties());
+		MimeMessage msg = new MimeMessage(session);
+		//Set model parameters for template
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("user", user);
+		model.put("token", token);
+		//Create MimeMessage
+		msg = createMimeMsg(model, tempPath, subject, user.getEmail(), fromEmail, fromName, msg);
+		//Send message
+		return sendMsg(msg, session);
 	}
 }

@@ -12,7 +12,7 @@
 			<div id="content">
 				<h4>Please, login</h4>
 				<c:if test="${param.failed == true}">
-					<p class="inputError">Your login attempt failed. Please try again.</p>
+				    <p class="inputError"><spring:message code="error.login"/></p>
 				</c:if>
 				<form id="loginForm" action="${postLoginUrl}" method="POST">
 					<p><input type="text" name="j_username" placeholder="Username"/></p>

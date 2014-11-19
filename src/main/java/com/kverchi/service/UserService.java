@@ -9,10 +9,12 @@ import com.kverchi.domain.User;
 
 @Service
 public interface UserService {
-	boolean registerAccount(User user, Errors errors);
+	public boolean registerAccount(User user);
+	public void resetPassword(User user);
 	public boolean validateUsername(String usrName);
 	public User getUserByUsername(String username);
 	public User getUserById(int userId);
 	public List<User> getAllUsers();
 	public boolean setEnabled(User user);
+	public boolean sendResetLink(String email);
 }

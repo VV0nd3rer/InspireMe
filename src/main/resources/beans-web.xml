@@ -24,7 +24,7 @@
 <context:component-scan base-package="com.kverchi.tools" />
 <context:component-scan base-package="com.kverchi.domain" />     
 <tx:annotation-driven transaction-manager="hibernateTransactionManager" />  
-<!-- <mvc:annotation-driven /> -->
+
 <bean id="jspViewResolver"  
       class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
       <property name="viewClass"  
@@ -32,9 +32,20 @@
       <property name="prefix" value="/WEB-INF/jsp/" />  
       <property name="suffix" value=".jsp" />  
 </bean>  
+<!-- Define the message resources -->
 <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
 	  p:basename="classpath:messages"
 	  p:defaultEncoding="UTF-8" />
+<!-- Class LocaleChangeInterceptor implemented a feature where user will be able to select lang for the app -->
+<mvc:interceptors>
+  <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+      <property name="paramName" value="lang"/>
+   </bean>
+</mvc:interceptors>
+<!-- Launguage changes are saved in cookies -->
+<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+    <property name="defaultLocale" value="en" />        
+</bean>
 <bean id="dataSource"  
             class="org.springframework.jdbc.datasource.DriverManagerDataSource">  
             <property name="driverClassName" value="${database.driver}" />  

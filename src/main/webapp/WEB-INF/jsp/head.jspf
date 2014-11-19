@@ -24,6 +24,7 @@
 </ul>
 <p>
 <a href="<%=request.getContextPath() %>/main/setLanguage?lang=en" style="color:yellow">ENG</a>
+<a href="?lang=de" style="color:yellow">DE</a>
 <a href="<%=request.getContextPath() %>/main/setLanguage?lang=uk" style="color:yellow">UKR</a>
 <security:authorize access="isAuthenticated()">
  
