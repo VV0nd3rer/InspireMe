@@ -92,7 +92,7 @@
 	  }
 	  image.onerror="";
 	  check = 1;
-	  setTimeout(refreshImage, 3500, image);
+	  setTimeout(refreshImage, 5000, image);
 	   
 	  return true;
 	}

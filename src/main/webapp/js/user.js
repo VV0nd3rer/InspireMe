@@ -1,5 +1,7 @@
 $( document ).ready(function() {
+	userSearch();
 	$("#password").passStrengthify();
+
 	//$("#confirmPassword").passStrengthify();
 	$("body").on("focus", "input", function() {
 		fIn($(this).attr('id'), $(this).val());
@@ -37,11 +39,18 @@ $( document ).ready(function() {
 		    url: contexPath + "/main/peopleSearch",  
 		    data: "fragment=" + login,
 		    success: function(response){
-		    	$("div.users").empty();
+		    	$("#users").empty();
 		    	for(var r in response){
-		    		$("div.users").append("<div class='user'>"+response[r].first.username+"</div>");
+		    		var linkText="";
+		    		if(response[r].second==0){
+		    			linkText = "<p>Already in your friends/requests</p>";
+		    		}else linkText = '<a href="addFriend?id='+response[r].first.userId+'">Add to friends</a>';
+		    		
+		    		$("#users").append("<div class='user'>"+"<h3>"+response[r].first.username+"</h3>"
+		    				+ linkText
+		    				+"</div>");
 		    	}
-		    			    	
+		    	
 		    },
 			error: function(error) {
 				alert("In valid name error: " + error);

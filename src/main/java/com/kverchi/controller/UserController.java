@@ -178,13 +178,22 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="peopleSearch", method=RequestMethod.POST)
-	public @ResponseBody List<Pair<User, Integer>> acceptFriend(@RequestParam("fragment") String fragment, Principal principal,
-			HttpServletRequest request) {
+	public @ResponseBody List<Pair<User, Integer>> searchUsers(@RequestParam("fragment") String fragment, Principal principal,
+			HttpServletRequest request, Model model) {
 		UserDetailsAdapter currentUser = loadUserDetails(principal);
 		int userId = currentUser.getId();
-		List<Pair<User, Integer>> resultList = friendService.getPeopleList(userId, fragment);		
+		List<Pair<User, Integer>> resultList = friendService.getPeopleList(userId, fragment);
 		return resultList;
 	}
+	/*@RequestMapping(value="peopleSearch", method=RequestMethod.GET)
+	public String searchUsers(@RequestParam("fragment") String fragment, Principal principal,
+			Model model) {
+		UserDetailsAdapter currentUser = loadUserDetails(principal);
+		int userId = currentUser.getId();
+		List<Pair<User, Integer>> resultList = friendService.getPeopleList(userId, fragment);
+		model.addAttribute("users", resultList);
+	    return "newFriendPage";
+		}*/
 	
 	@RequestMapping(value="messages")
 	public String showMessages(Principal principal, Model model,
