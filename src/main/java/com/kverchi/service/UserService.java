@@ -11,7 +11,8 @@ import com.kverchi.domain.User;
 public interface UserService {
 	public boolean registerAccount(User user);
 	public void resetPassword(User user);
-	public boolean validateUsername(String usrName);
+	public boolean isValidUsername(String usrName);
+	public boolean isValidEmail(String email);
 	public User getUserByUsername(String username);
 	public User getUserById(int userId);
 	public List<User> getAllUsers();

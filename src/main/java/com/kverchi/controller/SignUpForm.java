@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.ScriptAssert;
 @ScriptAssert(
 		lang = "javascript",
 		script = "_this.confirmPassword.equals(_this.password)",
-		message = "password.mismatch.message")
+		message = "user.password.mismatch.message")
 public class SignUpForm {
 	private String login, password, confirmPassword, email, captcha;
 
@@ -41,7 +41,7 @@ public class SignUpForm {
 	}
 	@NotNull
 	@Email
-	@Size(min = 5, max = 10)
+	@Size(min = 5, max = 30)
 	public String getEmail() {
 		return email;
 	}
