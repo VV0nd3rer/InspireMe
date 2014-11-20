@@ -22,7 +22,7 @@ import com.kverchi.service.PostService;
 
 @Controller
 @RequestMapping("posts")
-public class PostController {
+public class PostController extends ContentController {
 	private static final String VN_ERROR = "error";
 	private static final String VN_SIGHT = "redirect:sightPosts?sightId=";
 	private static final String VN_NEW_POST = "newPost";
