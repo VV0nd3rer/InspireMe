@@ -9,31 +9,34 @@
 	<div id="wrapper">
 		<%@ include file="head.jspf"%>
 		<div id="content">
-			<h2>Reset password</h2>
+			<h4><spring:message code="text.resetPassword"/></h4>
 			<form:form action="${url}" modelAttribute="user">
 				<form:errors path="*">
 					<div>
 						<spring:message code="error.global" />
 					</div>
 				</form:errors>
-				<div>
-					<form:input path="email" placeholder="Email" />
-					<p id="errorEmail" class="inputError">
+				<p><spring:message code="label.email"/></p>
+				<p> 
+					<form:input path="email"/>
+					<em id="errorEmail" class="inputError">
 						<form:errors path="email" htmlEscape="false" />
-					</p>
-				</div>
-				<div>
-					<form:password path="password" placeholder="Password" />
-					<p id="errorPass" class="inputError">
-						<form:errors path="password" htmlEscape="false" />
-					</p>
-				</div>
-				<div>
-					<form:password path="confirmPassword"
-						placeholder="Confirm password" />
-				</div>
+					</em>
+				</p>
+				<p><spring:message code="label.password"/></p>
 				<p>
-					<input type="submit" value="Save"></input>
+					<form:password path="password"/>
+					<em id="errorPass" class="inputError">
+						<form:errors path="password" htmlEscape="false" />
+					</em>
+				</p>
+				<p><spring:message code="label.confirmPassword"/></p>
+				<p>
+					<form:password path="confirmPassword"/>
+				</p>
+				<spring:message code="button.ok" var="btnLabel"/>
+				<p>
+					<input type="submit" value="${btnLabel}"></input>
 				</p>
 			</form:form>
 		</div>

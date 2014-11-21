@@ -10,17 +10,22 @@
 		<div id="wrapper">
 			<%@ include file="head.jspf" %>
 			<div id="content">
-				<h4>Please, login</h4>
+				<h4><spring:message code="text.logIn"/></h4>
 				<c:if test="${param.failed == true}">
 				    <p class="inputError"><spring:message code="error.login"/></p>
 				</c:if>
 				<form id="loginForm" action="${postLoginUrl}" method="POST">
-					<p><input type="text" name="j_username" placeholder="Username"/></p>
-					<p><input type="password" name="j_password" placeholder="Password"/></p>
-					<p><input type="checkbox" name="_spring_security_remember_me" />
-					Remember me</p>
-					<input type="submit" value="Log in" /></p>
-					<a href="recoverPasswordPage">Forgot password?</a>
+					<p><spring:message code="label.username"/></p>
+					<p><input type="text" name="j_username"/></p>
+					<p><spring:message code="label.password"/></p>
+					<p><input type="password" name="j_password"/></p>
+					<p>
+					  <input type="checkbox" name="_spring_security_remember_me" />
+					  <spring:message code="text.rememberMe"/>
+					</p>
+					<spring:message code="button.ok" var="btnLabel"/>
+					<p><input type="submit" value="${btnLabel}" /></p>
+					<a href="recoverPasswordPage"><spring:message code="text.forgotPass"/></a>
 				</form>
 			</div>
 			<%@ include file="footer.jspf" %>

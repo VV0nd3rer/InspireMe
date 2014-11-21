@@ -258,6 +258,7 @@ public class UserController extends ContentController{
 		AjaxValidation res = new AjaxValidation();
 		convertPasswordError(result);
 		checkUsername(form.getLogin(), result);
+		checkEmail(form.getEmail(), result);
 		checkCaptcha(request, request.getParameter("jcaptchaResponse"), result);
 		Map<String, String> errorsMsg = new HashMap<String, String>();
 		for (Object object : result.getAllErrors()) {
@@ -284,23 +285,13 @@ public class UserController extends ContentController{
 		}	
 		return res;
 	}
-	/*@RequestMapping("addUser")
-	public String addUser(@ModelAttribute("user") @Valid SignUpForm form, BindingResult result, HttpServletRequest request) throws SQLException {
-		convertPasswordError(result);
-		checkUsername(form.getLogin(), result);
-		checkCaptcha(request, request.getParameter("jcaptchaResponse"), result);
-		if(!result.hasErrors())
-		{
-		 if(!userService.registerAccount(toUser(form)))
-			 result.reject("Error with sending email."); 
-		}
-		return (result.hasErrors() ? P_REG_FORM : P_REG_OK);		
-	}*/
 	@RequestMapping("confirm")
-	public String confirmUser(@RequestParam("id") int userId) {
-		User user = new User();
-		user = userService.getUserById(userId);
-		boolean res = userService.setEnabled(user);
+	public String confirmUser(@RequestParam("username") String username) {
+		User user = null;
+		boolean res = false;
+		user = userService.getUserByUsername(username);
+		if (user != null)
+			res = userService.setEnabled(user);
 		if (res)
 			return "login";
 		else 
@@ -313,10 +304,12 @@ public class UserController extends ContentController{
 	}
 	@RequestMapping(value="recoverPassword")
 	public String recoverPassword(@ModelAttribute("parameters") @Valid RecoverPasswordForm form, BindingResult result, HttpServletRequest request) {
-		checkCaptcha(request, request.getParameter("jcaptchaResponse"), result);
-		if(!result.hasErrors()) 
+		checkCaptcha(request, request.getParameter("captcha"), result);
+		if(!result.hasErrors())  {
+			
 			if(userService.sendResetLink(form.getEmail()))
 				return P_REG_OK;
+		}
 		return (result.hasErrors() ? "recoverPasswordPage" : P_REG_OK);
 	}
 	@RequestMapping(value="resetPasswordPage")
@@ -345,13 +338,35 @@ public class UserController extends ContentController{
 			userService.resetPassword(toUser(form));
 		return (result.hasErrors() ? "resetPasswordPage" : P_REG_OK); 
 	}
-	@RequestMapping(value="validName", method=RequestMethod.GET)
-	public @ResponseBody String validName(String login) {
-		if(userService.validateUsername(login))
-			return "TRUE";
-		return "FALSE";
+	@RequestMapping(value="checkName", method=RequestMethod.GET)
+	public @ResponseBody AjaxValidation checkName(String login) {
+		AjaxValidation res = new AjaxValidation();
+		if(!userService.isValidUsername(login)) {
+			Map<String, String> errorsMsg = new HashMap();
+			String errMsg = messageSource.getMessage("error.duplicate.login", new String[] {login}, LocaleContextHolder.getLocale());
+			errorsMsg.put("login", errMsg);
+			res.setStatus("ERROR");
+			res.setResult(errorsMsg);
+		} else {
+			res.setStatus("SUCCESS");
+		}
+		return res;
 	}
-
+    @RequestMapping(value="checkEmail", method=RequestMethod.GET)
+    public @ResponseBody AjaxValidation checkEmail(String email) {
+    	System.out.println(email);
+    	AjaxValidation res = new AjaxValidation();
+		if(!userService.isValidEmail(email)) {
+			Map<String, String> errorsMsg = new HashMap();
+			String errMsg = messageSource.getMessage("error.duplicate.email", new String[] {email}, LocaleContextHolder.getLocale());
+			errorsMsg.put("email", errMsg);
+			res.setStatus("ERROR");
+			res.setResult(errorsMsg);
+		} else {
+			res.setStatus("SUCCESS");
+		}
+		return res;
+    }
 	@RequestMapping("Login")
 	public String Login(Model model, HttpServletRequest request) {
 		loadPageDynamicalContent(request.getPathInfo(), model);
@@ -392,8 +407,13 @@ public class UserController extends ContentController{
 		}
 	}
 	private void checkUsername(String username, BindingResult result) {
-		if(!userService.validateUsername(username)){
+		if(!userService.isValidUsername(username)) {
 			result.rejectValue("login", "error.duplicate", new String[] {username}, null);
+		}
+	}
+	private void checkEmail(String email, BindingResult result) {
+		if(!userService.isValidEmail(email)) {
+			result.rejectValue("email", "error.duplicate", new String[] {email}, null);
 		}
 	}
 	private void checkCaptcha(HttpServletRequest request, String captcha, BindingResult result) {

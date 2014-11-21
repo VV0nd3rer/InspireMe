@@ -10,41 +10,45 @@
 		<div id="wrapper">
 			<%@ include file="head.jspf" %>
 			<div id="content">
-				<h2>Sign Up</h2>
+			<h4><spring:message code="text.signUp"/></h4>
 			<form:form action="${url}" modelAttribute="user">
 				<form:errors path="*">
 					<div>
 						<spring:message code="error.global" />
 					</div>
 				</form:errors>
+				<p><spring:message code="label.username"/></p>
 				<p>
 					<form:input path="login" />
 					<em id="loginError" class="inputError"></em>
 				</p>
+				<p><spring:message code="label.email"/></p>
 				<p>
-					<form:input path="email" placeholder="Email" />
+					<form:input path="email"/>
 					<em id="emailError" class="inputError"></em>
 				</p>
+				<p><spring:message code="label.password"/></p>
 				<p>
-					<form:password path="password" placeholder="Password" />
+					<form:password path="password"/>
 					<em id="passwordError" class="inputError"></em>
 				</p>
+				<p><spring:message code="label.confirmPassword"/></p>
+				<p><form:password path="confirmPassword"/></p>
 				<p>
-				    <div class='pwdwidgetdiv' id='thepwddiv'></div>
-				</p>
-				<p>
-					<form:password path="confirmPassword"
-						placeholder="Confirm password" />
-				</p>
-				<p>
-					<form:input path="captcha" placeholder="Enter the code" />
+					<form:input path="captcha"/>
+					<em id="captchaError" class="inputError"></em>
+					<img src="/InspireMe/jcaptcha.jpg" id="captchaImg">
+					<button name="RefreshButton" onclick="refreshCaptcha()" type="button"><spring:message code="button.refresh"/></button>
+			    </p>
+				<%-- <p> 
+					<input type="text" name="jcaptchaResponse" value=""/>
 					<em id="captchaError" class="inputError"></em> 
 					<img src="/InspireMe/jcaptcha.jpg" id="captchaImg">
-					<button name="RefreshButton" onclick="refreshCaptcha()"
-						type="button">Refresh</button>
-				</p>
+					<button name="RefreshButton" onclick="refreshCaptcha()" type="button">Refresh</button>
+				</p>--%>
+				<spring:message code="button.ok" var="btnLabel"/>
 				<p>
-					<input type="submit" id="register" value="Register"></input>
+					<input type="submit" id="register" value="${btnLabel}"></input>
 				</p>
 			</form:form>
 		</div>

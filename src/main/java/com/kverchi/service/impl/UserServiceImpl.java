@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
 		User user = null;
 		/*String token = new String();*/
 		user = userDAO.findByEmail(email);
-		if(user == null) 
+		if(user == null || !user.isEnabled()) 
 		  return false;
 		//Generate random token
 		String token = resetPasswordService.generateToken();
@@ -80,8 +80,14 @@ public class UserServiceImpl implements UserService {
 		return emailService.sendEmail(user, token, RESET_PASSWORD, 
 									  "Recovering password", "admin@mail.com", "admin");
 	}
-	public boolean validateUsername(String usrName) {
+	public boolean isValidUsername(String usrName) {
 		if (userDAO.findByUsername(usrName) != null) 
+			return false;
+		else
+			return true;
+	}
+	public boolean isValidEmail(String email) {
+		if(userDAO.findByEmail(email) != null)
 			return false;
 		else
 			return true;
