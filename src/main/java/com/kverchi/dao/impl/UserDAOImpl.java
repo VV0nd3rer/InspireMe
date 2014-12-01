@@ -34,7 +34,7 @@ public class UserDAOImpl extends GenericDAOImpl<User> implements UserDAO {
    
    public User findByEmail(String email) {
 	   Session session = null;
-	   User res = new User();
+	   User res = null;
 	   List<User> resList = new ArrayList();
 	   try {
 		   session = sessionFactory.openSession();

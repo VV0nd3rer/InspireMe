@@ -13,6 +13,8 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -27,12 +29,15 @@ import com.kverchi.service.EmailService;
 public class EmailServiceImpl implements EmailService {
 	@Autowired private VelocityEngine velocityEngine;
 	@Autowired private NemailAddresseDAO emailAddrDAO;
+	@Autowired private MessageSource messageSource;
 	
 	private MimeMessage createMimeMsg(Map<String, Object> model, String tempPath,
 			String subject, String toEmail, String fromEmail, String fromName, MimeMessage mimeMsg) {
 		String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, tempPath, "utf-8", model);
 		try {
-			MimeMessageHelper helper = new MimeMessageHelper(mimeMsg);
+			//In constructor the second boolean parameter is multipart - whether to create a multipart message 
+			//that supports alternative texts, inline elements and attachments
+			MimeMessageHelper helper = new MimeMessageHelper(mimeMsg, true, "UTF-8");
 			helper.setSubject(subject);
 			helper.setTo(toEmail);
 			try {
@@ -90,6 +95,10 @@ public class EmailServiceImpl implements EmailService {
 	    MimeMessage msg = new MimeMessage(session);
 	    //Set model parameters for template
 	    Map<String, Object> model = new HashMap<String, Object>();
+	    //Put messages from messages.properties
+	    model.put("messages", this.messageSource);
+	    //Put current locale
+	    model.put("locale", LocaleContextHolder.getLocale());
 		model.put("user", user);
 		//Create MimeMessage
 	    msg = createMimeMsg(model, tempPath, subject, user.getEmail(), fromEmail, fromName, msg);
@@ -104,6 +113,10 @@ public class EmailServiceImpl implements EmailService {
 		MimeMessage msg = new MimeMessage(session);
 		//Set model parameters for template
 		Map<String, Object> model = new HashMap<String, Object>();
+		//Put messages from messages.properties
+	    model.put("messages", this.messageSource);
+	    //Put current locale
+	    model.put("locale", LocaleContextHolder.getLocale());
 		model.put("user", user);
 		model.put("token", token);
 		//Create MimeMessage

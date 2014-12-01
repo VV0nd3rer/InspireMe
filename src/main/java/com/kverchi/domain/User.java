@@ -1,5 +1,6 @@
 package com.kverchi.domain;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -24,7 +25,7 @@ import javax.persistence.JoinColumn;
 		query = "from User where username =:username")
 @Entity
 @Table(name="users")
-public class User{
+public class User implements Serializable {
 		
 	private int userId;
 	private String username;
