@@ -11,35 +11,30 @@
 			<%@ include file="head.jspf" %>
 			<div id="content">
 			<h4><spring:message code="text.signUp"/></h4>
-			<form:form action="${url}" modelAttribute="user">
+			<div id="infoContent">
+			<form:form action="${url}" modelAttribute="user" class="left_block">
 				<form:errors path="*">
 					<div>
 						<spring:message code="error.global" />
 					</div>
 				</form:errors>
-				<p><spring:message code="label.username"/></p>
-				<p>
-					<form:input path="login" />
-					<em id="loginError" class="inputError"></em>
-				</p>
-				<p><spring:message code="label.email"/></p>
-				<p>
-					<form:input path="email"/>
-					<em id="emailError" class="inputError"></em>
-				</p>
-				<p><spring:message code="label.password"/></p>
-				<p>
-					<form:password path="password"/>
-					<em id="passwordError" class="inputError"></em>
-				</p>
-				<p><spring:message code="label.confirmPassword"/></p>
-				<p><form:password path="confirmPassword"/></p>
-				<p>
-					<form:input path="captcha"/>
-					<em id="captchaError" class="inputError"></em>
-					<img src="/InspireMe/jcaptcha.jpg" id="captchaImg">
-					<button name="RefreshButton" onclick="refreshCaptcha()" type="button"><spring:message code="button.refresh"/></button>
-			    </p>
+				<form:label path="login"><spring:message code="label.username"/></form:label>
+				<form:input path="login" />
+				<em id="loginError" class="inputError"></em>
+				<form:label path="email"><spring:message code="label.email"/></form:label>
+				<form:input path="email"/>
+				<em id="emailError" class="inputError"></em>
+				<form:label path="password"><spring:message code="label.password"/></form:label>
+				<form:password path="password"/>
+				<em id="passwordError" class="inputError"></em>
+				<form:label path="confirmPassword"><spring:message code="label.confirmPassword"/></form:label>
+				<form:password path="confirmPassword"/>
+				<form:input path="captcha"/>
+				<em id="captchaError" class="inputError"></em>
+				<img src="/InspireMe/jcaptcha.jpg" id="captchaImg">
+				<button name="RefreshButton" onclick="refreshCaptcha()" type="button">
+				   <spring:message code="button.refresh"/>
+				</button>
 				<%-- <p> 
 					<input type="text" name="jcaptchaResponse" value=""/>
 					<em id="captchaError" class="inputError"></em> 
@@ -47,10 +42,9 @@
 					<button name="RefreshButton" onclick="refreshCaptcha()" type="button">Refresh</button>
 				</p>--%>
 				<spring:message code="button.ok" var="btnLabel"/>
-				<p>
-					<input type="submit" id="register" value="${btnLabel}"></input>
-				</p>
+				<input type="submit" id="register" value="${btnLabel}"></input>
 			</form:form>
+			</div>
 		</div>
 			<%@ include file="footer.jspf" %>
 		</div>

@@ -1,8 +1,14 @@
-h3 {
+/*h3 {
 	background-color:yellow;
+}*/
+#sight_bg {
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
 }
 #country {
-	margin: auto;
+	//margin: auto;
 }
 #country img {
 	display: block;
@@ -12,11 +18,22 @@ h3 {
 #wrapper {
 	margin: 0 auto;
 	width: 800px;
-	background:#fff;
+	background: rgba(255, 255, 255, 0.31);
 }
 #header {
-	background:#ccc;
-	padding: 20px;
+	background: url("./styles_img/header_bg.png") no-repeat;
+	height: 246px;
+	position: relative;
+	/*padding: 20px;*/
+}
+#lang_menu ul {
+	bottom: 36px;
+	margin-right: 30px;
+	position: absolute;
+	right: 0px;
+}
+#lang_menu ul li {
+	list-style-type: none;
 }
 .inputError {
 	color: red;
@@ -26,16 +43,20 @@ h3 {
 	float: right;
 	padding-right: 40%;
 }
+/* Mani menu in the header */
 #navigation {
 	float: left;
 	width: 800px;
-	background:#333;
+	//background:#333;
+	position: absolute;
+	bottom: 0px;
 }
 #navigation ul
 {
 	margin: 0;
 	padding: 0;
 }
+
 #navigation ul li
 {
 	list-style-type: none;
@@ -54,23 +75,94 @@ h3 {
 	padding: 5px 10px;
 	color:#fff;
 	text-decoration: none;
-	border-right: 1px solid#fff;
+	border-right: 1px solid #fff;
 }
 #navigation li a:hover { background:#383; }
+/* ------- */
+/* Sidebar menu in 'My cabinet' */
+#menu {
+	float: left;
+}
 
-		    .menu {
-		    float:left;
-		    }
-		    #infoContent {
-		float:right;
-		    }
+.common_link #menu a {
+	background: url("./styles_img/wood_bg.png") repeat;
+	color: rgba(255, 255, 255, 1);
+	border-radius: 5px;
+	border-color: #634004;
+}
 
+.common_link #menu a:hover {
+	color: rgba(145, 248, 145, 1);
+}
+
+.common_link #menu ul {
+	padding-left: 5px;
+}
+
+.common_link #menu ul li {
+	list-style-type: none;
+	margin: 10px 0px;
+}
+#newMsgLink {
+	margin-left: 65px;
+}
+/*---------*/
+/* Table with users messages */
+#msg_table {
+	margin: 15px;
+	border: 3px solid green;
+}
+#msg_table tr, td {
+    border: 1px solid green;
+}
+#msg_table a {
+	background: none;
+	border: none;
+}
+/*-------*/
+/* Content with sights and relative posts where on background is country flag */
+#infoContent {
+	display: table;
+	width: 560px;
+	padding-left: 25px;
+}
+
+#infoContent .right_block { //
+	display: table-column;
+	float: right;
+	width: 150px;
+}
+
+#infoContent .right_block img {
+	margin-bottom: 10px;
+}
+
+#infoContent .left_block {
+	width: 350px;
+	margin: 20px 10px;
+}
+
+#infoContent .left_block label, input {
+	display: inline-block;
+	margin: 5px;
+}
+
+#infoContent .left_block label {
+	width: 35%;
+	text-align: left;
+}
+
+#infoContent .left_block input {
+	
+}
+/*--------*/
 .unread{
 	font-weight:bold;
 	}
 .unread a{
 	text-decoration: none;	
 	font-weight:bold;
+	
 	}
 .messageHeader a{
 	text-decoration: none;
@@ -79,6 +171,42 @@ h3 {
 	clear: left;
 	padding: 20px;
 	overflow: hidden;
+	background: #fff url("./styles_img/content_bgr.jpg") repeat;
+}
+/* links style in content */
+.common_link a {
+	border: 1px solid #048901;
+	border-radius: 40px 3px;
+	background: #40B324 url("./styles_img/leave_bg.png") repeat;
+	padding: 2px 10px;
+	text-decoration: none;
+	color: #382D06;
+	font-style: italic;
+	font-weight: bold;
+	font-size: 15px;
+}
+.common_link a:hover {
+	 color: #026B74;
+}
+/* -------- */
+
+/* buttons style in content */
+button, input[type="submit"], input[type="button"] {
+	border-radius: 5px;
+	border-color: rgba(0, 143, 87, 1);
+	background: #039F62;
+	color: rgba(255, 255, 255, 1);
+	font-weight: bold;
+}
+/* -------- */
+
+#sightContent {
+	clear: left;
+	padding: 20px;
+	overflow: hidden;
+}
+#sightContent a {
+	text-decoration: none;
 }
 #footer {
 	background:#ccc;
@@ -87,10 +215,12 @@ h3 {
 	height: 1%;
 }
 .postPreview {
-	background: -webkit-linear-gradient(left, #FDFDFD, #BCBCBC); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(right, #FDFDFD, #BCBCBC); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(right, #FDFDFD, #BCBCBC); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(to right, #FDFDFD, #BCBCBC); /* Standard syntax (must be last) */
+	
+	background: linear-gradient(to right, rgba(109, 180, 88, 0.32), rgba(255, 255, 0, 0.4)); /*repeat scroll 0% 0% rgba(239, 219, 0, 0.38)*/
+		background: -webkit-linear-gradient(to right, rgba(109, 180, 88, 0.32), rgba(255, 255, 0, 0.4));
+		background: -o-linear-gradient(to right, rgba(109, 180, 88, 0.32), rgba(255, 255, 0, 0.4));
+		background: -moz-linear-gradient(to right, rgba(109, 180, 88, 0.32), rgba(255, 255, 0, 0.4));
+		background: linear-gradient(to right, rgba(109, 180, 88, 0.32), rgba(255, 255, 0, 0.4));
 }
 .postPreview a {
 	text-decoration: none;

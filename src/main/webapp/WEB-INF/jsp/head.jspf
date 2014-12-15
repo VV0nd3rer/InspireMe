@@ -7,32 +7,36 @@
 <c:url var="logoutUrl" value="/j_spring_security_logout" />
 
 <div id="header">
-</div>
-<div id="navigation">
-<ul>
-		<li id="default"><a href="${mainUrl}">${content['header.mainLabel']}</a></li>
-		<security:authorize access="isAuthenticated()">
-		<li><a href="${homeUrl}">${content['header.homeLabel']}</a></li>
-		</security:authorize>
-		<security:authorize access="isAnonymous()">
-		<li><a href="${loginUrl}">${content['header.loginLabel']}</a></li>
-		<li><a href="${RegUrl}">${content['header.signupLabel']}</a></li>
-		</security:authorize>
-		<security:authorize access="isAuthenticated()">
-		<li><a href="${logoutUrl}">${content['header.logoutLabel']}</a></li>
-		</security:authorize>
-</ul>
-<p>
-<a href="<%=request.getContextPath() %>/main/setLanguage?lang=en" style="color:yellow">ENG</a>
-<a href="<%=request.getContextPath() %>/main/setLanguage?lang=uk" style="color:yellow">UKR</a>
-<security:authorize access="isAuthenticated()">
- 
-	<a href="<%=request.getContextPath() %>/main/cabinet" style="color:white">${content['header.cabinetLink']}</a>
+    <div id="lang_menu">
+		<ul>
+		  <li><a href="<%=request.getContextPath()%>/main/setLanguage?lang=en" style="color: yellow">EN</a></li>
+		  <li><a href="<%=request.getContextPath()%>/main/setLanguage?lang=uk" style="color: yellow">UK</a></li>
+		  <li><a href="<%=request.getContextPath()%>/main/setLanguage?lang=de" style="color: yellow">DE</a></li>
+		</ul>
+	</div>
+	<div id="navigation">
+		<ul>
+				<li id="default"><a href="${mainUrl}"><spring:message code="header_menu.main"/></a></li>
+			<security:authorize access="isAuthenticated()">
+				<li><a href="${homeUrl}"><spring:message code="header_menu.home"/></a></li>
+			</security:authorize>
+			<security:authorize access="isAnonymous()">
+				<li><a href="${loginUrl}"><spring:message code="header_menu.login"/></a></li>
+				<li><a href="${RegUrl}"><spring:message code="header_menu.signup"/></a></li>
+			</security:authorize>
+			<security:authorize access="isAuthenticated()">
+				<li><a href="${logoutUrl}"><spring:message code="header_menu.logout"/></a></li>
+			</security:authorize>
+		</ul>
+		<p>
+			<security:authorize access="isAuthenticated()">
+				<a href="<%=request.getContextPath()%>/main/cabinet" style="color: white"><spring:message code="header.cabinet"/></a>
+				   <spring:message code="header.welcome"/> <security:authentication property="principal.username" />.
+			</security:authorize>
+			<security:authorize access="isAnonymous()">
+				   <spring:message code="header.welcome"/> guest.
+			</security:authorize>
+		</p>
 		
-	${content['header.hiWord']} <security:authentication property="principal.username" />.
-</security:authorize>
-<security:authorize access="isAnonymous()">
-	${content['header.hiWord']} guest.
-</security:authorize>
-</p>
+	</div>
 </div>

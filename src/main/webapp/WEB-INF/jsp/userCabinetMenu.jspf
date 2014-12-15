@@ -5,12 +5,12 @@
 
 </head>
 <body>
-		<div class="menu"> 
+		<div id="menu"> 
 			<ul>
-				<li><a href="profile">My profile</a></li>
-				<li><a href="friends">My friends</a></li>
-				<li><a href="requests">Friend requests</a></li>
-				<li><a href="messages">Messages</a></li>
+				<li><a href="profile"><spring:message code="cabinet_menu.profile"/></a></li>
+				<li><a href="friends"><spring:message code="cabinet_menu.friends"/></a></li>
+				<li><a href="requests"><spring:message code="cabinet_menu.requests"/></a></li>
+				<li><a href="messages"><spring:message code="cabinet_menu.messages"/></a></li>
 			</ul>
 	</div>
 </body>

@@ -19,6 +19,7 @@ $(function() {
 	});
 });
 function addUser() {
+	clearErrorFields();
 	var formData = new FormData(document.getElementById("user"));
 	$.ajax({
 		url: contexPath + "/main/addUser", 
@@ -96,5 +97,9 @@ function refreshCaptcha() {
 		});
 	}
 	//
-	
+	//Clear all errors field after resend question to the server
+	function clearErrorFields() {
+		$("#passwordError").empty();
+		$("#captchaError").empty();
+	}
 	

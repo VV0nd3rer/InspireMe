@@ -9,21 +9,18 @@
 <body>
 		<div id="wrapper">
 			<%@ include file="head.jspf" %>
-			<div id="content">
-				<div id="cabinetMenu">
+			<div id="content" class="common_link">	
 				<%@ include file="userCabinetMenu.jspf" %>
-				</div>
+				<div id="infoContent">
 				<a href="addFriendPage">Add a new friend!</a>
 					<c:forEach items="${friendList}" var="f">
 		           	   <div class="user">
 				     	    <h3>${f.username}</h3>
-				     	    <a href="removeFriend?id=${f.userId}">Remove</a>	 
-							
+				     	    <a href="removeFriend?id=${f.userId}">Remove</a>	 					
 						</div>
     	 			</c:forEach>
-    	 	
-				</div>
-			
+    	 	    </div>
+			</div>
 			<%@ include file="footer.jspf" %>
 		</div>
 	</body>

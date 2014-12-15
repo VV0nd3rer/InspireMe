@@ -2,7 +2,6 @@
 <html>
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<%@ include file="include.jspf" %>
 	<script src="<%=request.getContextPath() %>/js/tinymce/tinymce.min.js"></script>
 	<script src="<%=request.getContextPath() %>/js/messages.js"></script>
@@ -10,15 +9,12 @@
 <title>Messages</title>
 </head>
 <body>
-		<div id="wrapper">
-			<%@ include file="head.jspf" %>
-			<div id="content">
-			
-				<%@ include file="userCabinetMenu.jspf" %>
-				
-				<div id="infoContent">
+	<div id="wrapper">
+	   <%@ include file="head.jspf" %>
+	   <div id="content" class="common_link">
+		  <%@ include file="userCabinetMenu.jspf" %>
+		  <div id="infoContent">
 				<%@ include file="messagesMenu.jspf" %>
-				
 				<p>Subject: ${message.subject}</p>
 				<c:set var="test" scope="session" value="${messageToSend.removed_by}"/>
 				<c:if test="${test==0}"> 
@@ -47,9 +43,9 @@
 						<p><form:button>Send</form:button><a href="#" id="cancel">Cancel</a></p>
 					</form:form>
 			    </c:if>
-				</div>
-			</div>
-			<%@ include file="footer.jspf" %>
-		</div>
-	</body>
+		  </div>
+	   </div>
+	   <%@ include file="footer.jspf" %>
+	</div>
+</body>
 </html>

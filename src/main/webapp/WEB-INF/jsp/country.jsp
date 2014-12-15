@@ -5,17 +5,14 @@
   <meta charset="UTF-8">
   
   <title>My country</title>
-  <link rel="stylesheet" href="<%=request.getContextPath() %>/css/sights_common.css">
-  <link rel="stylesheet" href="<%=request.getContextPath() %>/css/sights_special.css">	
- 
-  	<script src="<%=request.getContextPath() %>/js/dialog-polyfill.js"></script>
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/dialog-polyfill.css">
-	<script type="text/javascript">
-	 
+  <link rel="stylesheet" href="<%=request.getContextPath() %>/css/carousel/sights_common.css">
+  <link rel="stylesheet" href="<%=request.getContextPath() %>/css/carousel/sights_special.css">
+  <script src="<%=request.getContextPath() %>/js/dialog-polyfill.js"></script>
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/dialog-polyfill.css">
 
-	</script>
 </head>
-<body>
+<body id="sight_bg" style="background: url(<%=request.getContextPath() %>/countryImg/${country.imgPath}) no-repeat top center fixed">
+ <div id="wrapper">
 	<%@ include file="head.jspf" %>
 		
 	<button id="showNewSightDialog">Add new sight!</button>
@@ -47,7 +44,7 @@
  </dialog>
 
 <!-- Content -->
-	<div id="content">
+	<div id="sightContent">
 	<input id="contextPath" type="hidden" value="<%=request.getContextPath() %>"/>
 	   <div id="wrap">
     	  <div id="showcase" class="noselect">
@@ -75,7 +72,7 @@
   
   <script src="<%=request.getContextPath() %>/js/jquery.reflection.js"></script>
   <script src="<%=request.getContextPath() %>/js/dialogs.js"></script>
-  <script src="<%=request.getContextPath() %>/js/jquery.cloud9carousel.js"></script>
+  <script src="<%=request.getContextPath() %>/js/carousel/jquery.cloud9carousel.js"></script>
   <script>
   var imgUrl;
   var check = 0;
@@ -151,5 +148,6 @@
       }) 
       }); 
   </script>
+  </div>
 </body>
 </html>

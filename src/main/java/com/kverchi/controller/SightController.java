@@ -39,7 +39,7 @@ import com.kverchi.domain.UserDetailsAdapter;
 
 @Controller
 @RequestMapping("sights")
-@SessionAttributes("country_code") 
+@SessionAttributes({"country_code", "country"})
 public class SightController extends ContentController{
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {

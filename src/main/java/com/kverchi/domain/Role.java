@@ -1,5 +1,7 @@
 package com.kverchi.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "role")
 @NamedQuery(name = "findRoleByName", query = "from Role where rolename= :rolename")
-public class Role {
+public class Role implements Serializable {
 	private int roleId;
 	private String rolename;
 	
