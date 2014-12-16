@@ -259,7 +259,7 @@ public class UserController extends ContentController{
 		convertPasswordError(result);
 		checkUsername(form.getLogin(), result);
 		checkEmail(form.getEmail(), result);
-		checkCaptcha(request, request.getParameter("jcaptchaResponse"), result);
+		checkCaptcha(request, request.getParameter("captcha"), result);
 		Map<String, String> errorsMsg = new HashMap<String, String>();
 		for (Object object : result.getAllErrors()) {
 		    if(object instanceof FieldError) {

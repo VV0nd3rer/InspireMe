@@ -1,5 +1,5 @@
-<b>[This e-mail was automatically generated. Please do not reply.]</b>
-Thank you for registration.
-Your login: ${user.username}
-To confirm registration, please, click on
-<a href="https://localhost:8443/InspireMe/main/confirm?username=${user.username}">this link</a>
+#macro( msg $key )$messages.getMessage($key, null, $locale)#end
+
+<p><b>#msg("email.title")</b></p>
+#msg("email.registration.text") ${user.username}</br>
+#msg("email.registration.link.text") <a href="https://localhost:8443/InspireMe/main/confirm?username=${user.username}">#msg("email.link.title")</a>
