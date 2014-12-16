@@ -7,26 +7,27 @@
 <title>My profile</title>
 </head>
 <body>
-		<div id="wrapper">
-			<%@ include file="head.jspf" %>
-			<div id="content">
-			
-				<%@ include file="userCabinetMenu.jspf" %>
-				
-				<div id="infoContent">
-				<img src="<%=request.getContextPath()%>/usersAvatars/${curUserData.avatarUrl}">
-				
+	<div id="wrapper">
+		<%@ include file="head.jspf"%>
+		<div id="content" class="common_link">
+			<%@ include file="userCabinetMenu.jspf"%>
+			<div id="infoContent">
+			    <div class="right_block">
+					<img src="<%=request.getContextPath()%>/usersAvatars/${curUserData.avatarUrl}">
+					<a href="editProfilePage">Edit profile</a>
+				</div>
+				<div class="left_block">
 					<p>${curUserData.firstName} ${curUserData.lastName}</p>
 					<%-- <p>e-mail: ${curUserData.e_mail}</p> --%>
 					<p>Country: ${curUserData.country}</p>
-						<div id="about">
+					<div>
 						<p>About me:</p>
 						${curUserData.about}
-						</div>
-						<a href="editProfilePage">Edit profile</a>
+					</div>
 				</div>
 			</div>
-			<%@ include file="footer.jspf" %>
 		</div>
-	</body>
+		<%@ include file="footer.jspf"%>
+	</div>
+</body>
 </html>

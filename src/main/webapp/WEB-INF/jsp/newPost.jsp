@@ -7,10 +7,10 @@
 	<script src="<%=request.getContextPath() %>/js/tinymce/tinymce.min.js"></script>
 	<title>Posts</title>
 	</head>
-	<body>
+	<body id="sight_bg" style="background: url(<%=request.getContextPath() %>/countryImg/${country.imgPath}) no-repeat top center fixed">
 		<div id="wrapper">
 		  <%@ include file="head.jspf" %>
-		  <div id="content">		
+		  <div id="sightContent">		
 				<form:form action="${url}" modelAttribute="newPost">
 				  <form:errors path="*">
 						<div class="inputError"><spring:message code="error.post" /></div>

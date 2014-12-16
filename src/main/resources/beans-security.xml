@@ -12,7 +12,10 @@
 		http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<context:annotation-config />
-	<http  auto-config="true" use-expressions="true" access-denied-page="/main/denied"> 
+	<http  auto-config="true" use-expressions="true" disable-url-rewriting="true" access-denied-page="/main/denied"> 
+	    <security:session-management invalid-session-url="/main/main">
+	      <security:concurrency-control expired-url="/main/main"/>
+	    </security:session-management>
 	    <form-login 
 	    	login-page="/main/Login"
 	    	authentication-failure-url="/main/Login?failed=true"

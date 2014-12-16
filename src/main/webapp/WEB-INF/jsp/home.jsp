@@ -2,11 +2,11 @@
 	<head>
 	<%@ include file="include.jspf" %>
 	<title>Home</title>
-	<link href="/InspireMe/css/jqvmap.css" media="screen" rel="stylesheet" type="text/css" />
+	<link href="/InspireMe/css/jqvmap/jqvmap.css" media="screen" rel="stylesheet" type="text/css" />
     
     <script src="/InspireMe/js/jquery.js"></script>
-    <script src="/InspireMe/js/jquery.vmap.js" type="text/javascript"></script>
-    <script src="/InspireMe/js/jquery.vmap.europe.js" type="text/javascript"></script>
+    <script src="/InspireMe/js/jqvmap/jquery.vmap.js" type="text/javascript"></script>
+    <script src="/InspireMe/js/jqvmap/jquery.vmap.europe.js" type="text/javascript"></script>
     
 	<script type="text/javascript">
 	jQuery(document).ready(function() {
@@ -28,7 +28,7 @@
 	<body>
 		<div id="wrapper">
 			<%@ include file="head.jspf" %>
-			<div id="content">
+			<div id="content" class="common_link">
 				<p>It is a secret page. It's shown only for authorization users.</p>
 			
 			<div>

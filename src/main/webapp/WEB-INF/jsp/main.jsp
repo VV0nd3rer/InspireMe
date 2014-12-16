@@ -10,7 +10,7 @@
 	<body>
 		<div id="wrapper">
 			<%@ include file="head.jspf" %>
-			<div id="content">
+			<div id="content" class="common_link">
 				<p>${content['allUsersMessage']}</p> 
 			</div>
 			<%@ include file="footer.jspf" %>

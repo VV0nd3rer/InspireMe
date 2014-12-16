@@ -9,16 +9,16 @@
 </head>
 <body>
 		<div id="wrapper">
-			<%@ include file="head.jspf" %>
-		<%@ include file="userCabinetMenu.jspf" %>
-			<div id="content">
-			
-				<input type="text" name="searchUserField" id="searchUserField" placeholder="Type for search" oninput="userSearch()">
+	    <%@ include file="head.jspf" %>
+			<div id="content" class="common_link">
+			 <%@ include file="userCabinetMenu.jspf" %>
+			 <div id="infoContent">
+				 <input type="text" name="searchUserField" id="searchUserField" placeholder="Type for search" oninput="userSearch()">
 				 <div id="users">
-				
 				 </div>
+			 </div>
 			</div>
-			<%@ include file="footer.jspf" %>
+		<%@ include file="footer.jspf" %>
 		</div>
 	</body>
 </html>

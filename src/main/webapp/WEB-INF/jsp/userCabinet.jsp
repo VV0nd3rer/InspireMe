@@ -8,7 +8,7 @@
 <body>
 		<div id="wrapper">
 			<%@ include file="head.jspf" %>
-			<div id="content">
+			<div id="content" class="common_link">
 				<%@ include file="userCabinetMenu.jspf" %>
 			</div>
 			<%@ include file="footer.jspf" %>

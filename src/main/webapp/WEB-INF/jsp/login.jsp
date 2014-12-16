@@ -9,7 +9,7 @@
 	<body>
 		<div id="wrapper">
 			<%@ include file="head.jspf" %>
-			<div id="content">
+			<div id="content" class="common_link">
 				<h4><spring:message code="text.logIn"/></h4>
 				<c:if test="${param.failed == true}">
 				    <p class="inputError"><spring:message code="error.login"/></p>

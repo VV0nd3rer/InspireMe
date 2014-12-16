@@ -12,7 +12,7 @@ function userSearch() {
 	    	$("#users").empty();
 	    	for(var r in response){
 	    		var linkText="";
-	    		if(response[r].second==0){
+	    		if(response[r].second==1){
 	    			linkText = "<p>Already in your friends/requests</p>";
 	    		}else linkText = '<a href="addFriend?id='+response[r].first.userId+'">Add to friends</a>';
 	    		

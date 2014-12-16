@@ -45,7 +45,6 @@ import com.kverchi.service.UserDataService;
 import com.kverchi.service.UserService;
 import com.kverchi.tools.Pair;
 
-@EnableWebMvc
 @Controller
 @SessionAttributes("content")
 public class UserController extends ContentController{
@@ -75,7 +74,11 @@ public class UserController extends ContentController{
 		binder.setAllowedFields(new String[] {
 				"login", "password", "confirmPassword"
 				});
-	}*/		
+	}*/
+	@RequestMapping("denied")
+	public String denied() {
+		return "denied";
+	}
 	@RequestMapping("home") 
 	public String home(HttpServletRequest request, Model model) {
 		List<Country> countries = countryService.findAllCountries();
@@ -369,7 +372,6 @@ public class UserController extends ContentController{
     }
 	@RequestMapping("Login")
 	public String Login(Model model, HttpServletRequest request) {
-		loadPageDynamicalContent(request.getPathInfo(), model);
 		return P_LOGIN_FORM;
 	}
 	
@@ -396,7 +398,7 @@ public class UserController extends ContentController{
 		return P_ERROR;
 	}	
 	
-	private static void convertPasswordError(BindingResult result) {
+	private void convertPasswordError(BindingResult result) {
 		for(ObjectError error : result.getGlobalErrors()) {
 			String msg = error.getDefaultMessage();
 			if("user.password.mismatch.message".equals(msg)) {
