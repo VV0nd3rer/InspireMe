@@ -224,7 +224,7 @@
 /* Content with sights and relative posts where on background is country flag */
 #infoContent {
 	display: table;
-	width: 560px;
+	//width: 560px;
 	padding-left: 25px;
 }
 
