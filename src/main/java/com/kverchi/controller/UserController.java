@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.ui.Model;
 
 import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
@@ -55,6 +54,7 @@ public class UserController extends ContentController{
 	private static final String P_MAIN = "main";
 	private static final String P_HOME = "home";
 	private static final String P_ERROR = "error";
+	private static final String P_RECOVER_PASSWORD = "recoverPasswordPage";
 		
 	@Autowired private UserService userService;
 	@Autowired private CountryService countryService;
@@ -303,7 +303,7 @@ public class UserController extends ContentController{
 	@RequestMapping(value="recoverPasswordPage")
 	public String recoverPasswordPage(Model model) {
 		model.addAttribute("parameters", new RecoverPasswordForm());
-		return "recoverPasswordPage";
+		return P_RECOVER_PASSWORD;
 	}
 	@RequestMapping(value="recoverPassword")
 	public String recoverPassword(@ModelAttribute("parameters") @Valid RecoverPasswordForm form, BindingResult result, HttpServletRequest request) {

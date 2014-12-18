@@ -26,10 +26,10 @@
 		  </div>
 				<%@ include file="menuPost.jspf" %>
 				 <p>
-					<a href="<%=request.getContextPath() %>/main/posts/newPost?sightId=${singlePost.sightId}">
+					<a class="imgLinks" href="<%=request.getContextPath() %>/main/posts/newPost?sightId=${singlePost.sightId}">
 						<img src="<%=request.getContextPath() %>/css/icons/add.png"/>
 					</a>
-					<a href="<%=request.getContextPath() %>/main/posts/sightPosts?sightId=${singlePost.sightId}">
+					<a class="imgLinks" href="<%=request.getContextPath() %>/main/posts/sightPosts?sightId=${singlePost.sightId}">
 						<img src="<%=request.getContextPath() %>/css/icons/back.png"/>
 		  			</a>
 				</p>

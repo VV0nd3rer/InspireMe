@@ -46,18 +46,18 @@
 	  <%@ include file="userCabinetMenu.jspf" %>
 		<div id="infoContent">
 		 <%@ include file="messagesMenu.jspf" %><br>
-		 <div class="left_block">
-			 <label><spring:message code="label.msg_to"/></label>
-			 <input id="toLogin" type="text" oninput="userSearch()"></input>
+		 <div class="form-style">
 			 <form:form id="newMessageForm" action="sendMessage" modelAttribute="messageToSend" method="POST">
+				 <label><spring:message code="label.msg_to"/></label>
+			  	 <input id="toLogin" type="text" oninput="userSearch()"/>
 				 <form:hidden path="from_id" value="${messageToSend.from_id}"/>
 				 <form:hidden id="toId" path="to_id" />
 				 <form:label path="subject"><spring:message code="label.msg_subject"/></form:label>
 				 <form:input path="subject"/>
 				 <form:label path="text"><spring:message code="label.msg_text"/></form:label>
-				 <form:textarea class="edit" path="text" style="width:100%; height:800" htmlEscape="false"/>
+				 <form:textarea class="mceSimple" path="text" htmlEscape="false"/>
 				 <spring:message code="button.ok" var="btnLabel"/>
-				 <p><input type="submit" value="${btnLabel}"/></p>
+				 <input type="submit" value="${btnLabel}"/>
 			 </form:form>
 		 </div>
 	   </div>

@@ -36,6 +36,9 @@
     .card p {
       font-size: 15px;
     }
+    .card button, input[type="submit"], input[type="button"] {
+      margin-left: 37%;
+    }
     footer hr {
       width: 6px;
     }

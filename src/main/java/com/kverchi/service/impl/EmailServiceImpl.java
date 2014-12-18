@@ -2,8 +2,10 @@ package com.kverchi.service.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -20,19 +22,19 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
-import com.kverchi.dao.NemailAddresseDAO;
-import com.kverchi.domain.NemailAddresse;
+import com.kverchi.dao.NotificationsEmailsDAO;
+import com.kverchi.domain.NotificationsEmails;
 import com.kverchi.domain.User;
 import com.kverchi.service.EmailService;
 
 @Service
 public class EmailServiceImpl implements EmailService {
 	@Autowired private VelocityEngine velocityEngine;
-	@Autowired private NemailAddresseDAO emailAddrDAO;
+	@Autowired private NotificationsEmailsDAO emailAddrDAO;
 	@Autowired private MessageSource messageSource;
 	
 	private MimeMessage createMimeMsg(Map<String, Object> model, String tempPath,
-			String subject, String toEmail, String fromEmail, String fromName, MimeMessage mimeMsg) {
+		String subject, String toEmail, String fromEmail, String fromName, MimeMessage mimeMsg) {
 		String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, tempPath, "utf-8", model);
 		try {
 			//In constructor the second boolean parameter is multipart - whether to create a multipart message 
@@ -55,11 +57,10 @@ public class EmailServiceImpl implements EmailService {
 
 	private boolean sendMsg(MimeMessage msg, Session session) {
 		boolean isSended = false;
-		String email = "kverchi24@gmail.com";
-	    NemailAddresse emailAddr = new NemailAddresse();
-	    emailAddr = emailAddrDAO.getEmailData(email);   
+	    NotificationsEmails emailAddr = new NotificationsEmails();
+	    emailAddr = emailAddrDAO.getById("admin");   
 	    String host = "smtp.gmail.com";
-	    String username = email;
+	    String username = emailAddr.getEmail();
 	    String password = emailAddr.getPassword();
 	    Transport t = null;
 	    try {
