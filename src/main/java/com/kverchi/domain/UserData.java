@@ -1,5 +1,7 @@
 package com.kverchi.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +17,7 @@ import org.hibernate.annotations.Parameter;
 
 @Entity
 @Table(name="users_data")
-public class UserData {
+public class UserData implements Serializable {
 	
 		private int userId;
 	 	private String firstName;

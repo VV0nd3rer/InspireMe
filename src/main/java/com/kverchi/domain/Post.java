@@ -6,11 +6,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name="posts")
-public class Post {
+public class Post implements Serializable {
 	private int postId, sightId, userId;
 	private String title, text, description;
 	private Date stampCreated, stampUpdated;

@@ -1,17 +1,20 @@
 package com.kverchi.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.GeneratorType;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="messages")
-public class Message {
+public class Message implements Serializable {
 	
 	private int message_id;
 	private String subject;
@@ -31,6 +34,7 @@ public class Message {
 	public void setMessage_id(int message_id) {
 		this.message_id = message_id;
 	}
+	@NotEmpty
 	@Column(name="subject")
 	public String getSubject() {
 		return subject;
@@ -38,6 +42,7 @@ public class Message {
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
+	@NotEmpty
 	@Column(name="text")
 	public String getText() {
 		return text;
@@ -52,6 +57,7 @@ public class Message {
 	public void setFrom_id(int from_id) {
 		this.from_id = from_id;
 	}
+	@NotNull
 	@Column(name="to_id")
 	public int getTo_id() {
 		return to_id;

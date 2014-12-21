@@ -12,11 +12,11 @@
 			<div id="content" class="common_link">	
 				<%@ include file="userCabinetMenu.jspf" %>
 				<div id="infoContent">
-				<a href="addFriendPage">Add a new friend!</a>
+				<h3><a href="addFriendPage">Add a new friend!</a></h3>
 					<c:forEach items="${friendList}" var="f">
 		           	   <div class="user">
-				     	    <h3>${f.username}</h3>
-				     	    <a href="removeFriend?id=${f.userId}">Remove</a>	 					
+				     	    <h3 class="inline">${f.username}</h3>
+				     	    <a class="inline" href="removeFriend?id=${f.userId}">Remove</a>	 					
 						</div>
     	 			</c:forEach>
     	 	    </div>

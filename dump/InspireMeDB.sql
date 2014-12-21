@@ -1,5 +1,5 @@
 /*
-SQLyog Community Edition- MySQL GUI v8.03 
+SQLyog Community v12.03 (64 bit)
 MySQL - 5.6.10 : Database - inspireme
 *********************************************************************
 */
@@ -8,9 +8,10 @@ MySQL - 5.6.10 : Database - inspireme
 
 /*!40101 SET SQL_MODE=''*/;
 
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 CREATE DATABASE /*!32312 IF NOT EXISTS*/`inspireme` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `inspireme`;
@@ -76,9 +77,9 @@ CREATE TABLE `countries_sights` (
   PRIMARY KEY (`sight_id`),
   KEY `country_code` (`country_code`),
   KEY `userId` (`userId`),
-  CONSTRAINT `countries_sights_ibfk_1` FOREIGN KEY (`country_code`) REFERENCES `countries` (`country_code`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `countries_sights_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8;
+  CONSTRAINT `countries_sights_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `countries_sights_ibfk_1` FOREIGN KEY (`country_code`) REFERENCES `countries` (`country_code`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;
 
 /*Data for the table `countries_sights` */
 
@@ -115,11 +116,11 @@ CREATE TABLE `messages` (
   KEY `messages_ibfk_2` (`to_id`),
   CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`from_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`to_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 /*Data for the table `messages` */
 
-insert  into `messages`(`message_id`,`subject`,`text`,`from_id`,`to_id`,`status`,`date`,`removed_by`) values (4,'answer','And to you hello!',6,7,1,'2014-10-26 14:18:06',0),(7,'test','qwerty',8,6,1,'2014-10-24 14:27:08',0),(9,'RE:test','<p>REPLY 2.</p>',6,8,1,'2014-10-31 16:03:10',0),(10,'RE:test','<p>WWWW</p>',6,8,1,'2014-10-31 16:06:04',0),(12,'qqO','',6,9,0,'2014-11-02 21:56:13',0),(13,'qqP','',6,8,0,'2014-11-02 23:54:47',0),(15,'hello','<p>hello xamp</p>',6,18,0,'2014-11-03 17:29:15',0),(16,'test','<p>test<img src=\"../js/tinymce/plugins/emoticons/img/smiley-cool.gif\" alt=\"cool\" /></p>',6,7,0,'2014-11-03 23:34:26',0),(17,'RE:test','<p>we</p>',6,8,0,'2014-11-04 00:49:03',0),(18,'joy','<p>joy</p>',6,9,0,'2014-11-04 01:30:23',0),(19,'RE:test','<p>pampam</p>',6,8,0,'2014-11-04 01:31:25',0),(20,'Ð?Ñ?Ð¸Ð²Ñ?Ñ?:)','<p>Ð¯Ðº Ñ?Ð²Ð¾Ñ? Ñ?Ð¿Ñ?Ð°Ð²Ð¸? Ð Ð°Ð´Ñ?Ñ?Ñ? Ñ?Ð½Ñ?Ð³Ñ??</p>',15,7,0,'2014-12-03 19:58:48',0),(21,'Let\'s get acquainted','<p>Hello! :) My name is Trisha, I like interesting books and in my life always present music. Also I have black lady-cat which usually read books with me on the sofa with cup of tea. And what about you? What you prefer? Do you have some hobbies?</p>',15,6,1,'2014-12-05 22:29:55',0),(22,'RE:Let\'s get acquainted','<p>Hello Trisha) Nice to meet you. My name is Erica and I also like read books. Also I like&nbsp;sport and travel.</p>',6,15,1,'2014-12-05 23:13:41',6),(23,'','',15,0,0,'2014-12-17 23:35:28',0),(24,'','',15,0,0,'2014-12-17 23:35:37',0),(25,'','',15,0,0,'2014-12-17 23:45:55',0),(26,'kuku','<p>test msg</p>',15,7,0,'2014-12-17 23:47:16',0);
+insert  into `messages`(`message_id`,`subject`,`text`,`from_id`,`to_id`,`status`,`date`,`removed_by`) values (4,'answer','And to you hello!',6,7,1,'2014-10-26 14:18:06',0),(7,'test','qwerty',8,6,1,'2014-10-24 14:27:08',0),(9,'RE:test','<p>REPLY 2.</p>',6,8,1,'2014-10-31 16:03:10',0),(10,'RE:test','<p>WWWW</p>',6,8,1,'2014-10-31 16:06:04',0),(12,'qqO','',6,9,0,'2014-11-02 21:56:13',0),(13,'qqP','',6,8,0,'2014-11-02 23:54:47',0),(15,'hello','<p>hello xamp</p>',6,18,0,'2014-11-03 17:29:15',0),(16,'test','<p>test<img src=\"../js/tinymce/plugins/emoticons/img/smiley-cool.gif\" alt=\"cool\" /></p>',6,7,0,'2014-11-03 23:34:26',0),(17,'RE:test','<p>we</p>',6,8,0,'2014-11-04 00:49:03',0),(18,'joy','<p>joy</p>',6,9,0,'2014-11-04 01:30:23',0),(19,'RE:test','<p>pampam</p>',6,8,0,'2014-11-04 01:31:25',0),(20,'Ð?Ñ?Ð¸Ð²Ñ?Ñ?:)','<p>Ð¯Ðº Ñ?Ð²Ð¾Ñ? Ñ?Ð¿Ñ?Ð°Ð²Ð¸? Ð Ð°Ð´Ñ?Ñ?Ñ? Ñ?Ð½Ñ?Ð³Ñ??</p>',15,7,0,'2014-12-03 19:58:48',0),(21,'Let\'s get acquainted','<p>Hello! :) My name is Trisha, I like interesting books and in my life always present music. Also I have black lady-cat which usually read books with me on the sofa with cup of tea. And what about you? What you prefer? Do you have some hobbies?</p>',15,6,1,'2014-12-05 22:29:55',0),(22,'RE:Let\'s get acquainted','<p>Hello Trisha) Nice to meet you. My name is Erica and I also like read books. Also I like&nbsp;sport and travel.</p>',6,15,1,'2014-12-05 23:13:41',6),(26,'kuku','<p>test msg</p>',15,7,0,'2014-12-17 23:47:16',0);
 
 /*Table structure for table `n_emails_addresses` */
 
@@ -188,7 +189,7 @@ CREATE TABLE `posts` (
 
 /*Data for the table `posts` */
 
-insert  into `posts`(`post_id`,`title`,`text`,`sight_id`,`description`,`userId`,`stamp_created`,`stamp_updated`) values (1,'Pinguin','<p>Tra-ta-ta))) Their are sleep in refregerator!</p>\r\n<p><img src=\"http://fotodes.ru/upload/img1342861656.jpg\" alt=\"Pinguin\" width=\"300\" height=\"169\" /></p>',80,'About amazing animals)',15,NULL,NULL),(2,'Yellow sun','<p>;lkjsf;asjf;slkjfdakfdj;askjf;ieurwourkvnx,mcnv :)&nbsp;<img src=\"../../js/tinymce/plugins/emoticons/img/smiley-cool.gif\" alt=\"cool\" /></p>',73,'Hello',6,NULL,NULL),(3,'Test title','<h1><span style=\"color: #ff0000;\"><iframe src=\"//www.youtube.com/embed/OeGRAFtBakM\" width=\"425\" height=\"350\"></iframe>text</span> <strong>test</strong></h1>',83,'Test title description',18,NULL,NULL);
+insert  into `posts`(`post_id`,`title`,`text`,`sight_id`,`description`,`userId`,`stamp_created`,`stamp_updated`) values (1,'Pinguin','<p>Tra-ta-ta))) They sleep in refregerator!</p>\r\n<p><img src=\"http://fotodes.ru/upload/img1342861656.jpg\" alt=\"Pinguin\" width=\"300\" height=\"169\" /></p>',80,'About amazing animals)',15,NULL,NULL),(2,'Yellow sun','<p>;lkjsf;asjf;slkjfdakfdj;askjf;ieurwourkvnx,mcnv :)&nbsp;<img src=\"../../js/tinymce/plugins/emoticons/img/smiley-cool.gif\" alt=\"cool\" /></p>',73,'Hello',6,NULL,NULL),(3,'Test title','<h1><span style=\"color: #ff0000;\"><iframe src=\"//www.youtube.com/embed/OeGRAFtBakM\" width=\"425\" height=\"350\"></iframe>text</span> <strong>test</strong></h1>',83,'Test title description',18,NULL,NULL);
 
 /*Table structure for table `reset_password` */
 
@@ -204,6 +205,8 @@ CREATE TABLE `reset_password` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `reset_password` */
+
+insert  into `reset_password`(`token`,`user_id`,`time_created`) values ('-342915366',38,'2014-12-20 21:46:02'),('1756406230',38,'2014-12-20 21:50:02'),('697490175',38,'2014-12-20 21:50:47');
 
 /*Table structure for table `role` */
 
@@ -235,7 +238,7 @@ CREATE TABLE `user_role` (
 
 /*Data for the table `user_role` */
 
-insert  into `user_role`(`user_id`,`role_id`) values (0,1),(6,1),(7,1),(8,1),(9,1),(15,1),(18,1),(24,1);
+insert  into `user_role`(`user_id`,`role_id`) values (6,1),(7,1),(8,1),(9,1),(15,1),(18,1),(38,1),(39,1);
 
 /*Table structure for table `users` */
 
@@ -249,11 +252,11 @@ CREATE TABLE `users` (
   `email` varchar(60) NOT NULL,
   PRIMARY KEY (`user_id`),
   KEY `userId` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
 /*Data for the table `users` */
 
-insert  into `users`(`user_id`,`username`,`password`,`enabled`,`email`) values (0,'Ritaaa','$2a$10$G0z.V2hgHI6gEqz4GgIr6Oqp22q1P4cHMUlJXgJ5h4UUSCdZRrrT.',0,'rita@gmail.com'),(6,'FlyinGMind','$2a$10$xsp4hsDpTKGsTPCj3LWqzOY1qMhdQ.04I8pDmfFgoA41Xbwyh.tCa',1,''),(7,'Vasya','$2a$10$W.6EDTwrMp4n97F/pHkzRuFN8y7cKDok.lg4yiIdX6NMGWFZm6vHC',1,''),(8,'Petya','$2a$10$Adkflw72.4jueJqRFo9vi.bzH/yMfQ8R05tiDbxPXi5ePdV459X4m',1,''),(9,'Olechka','$2a$10$kdxADPcs3zMmukd.dmbXQ.hZgFr.2IVt4jJxy.DOf15h2U2CLEl7u',1,''),(15,'GoodGirl','$2a$10$nN5uJvMh8dLYE8Gq5ID6P.QMwIKgNsyp3O.eCMxM3w2svYuB2Co0.',1,''),(18,'tester3','$2a$10$Ix70R8QllqCJQSkXvOdMIOJnDL8hsJgHPn9LQtWFSPxaCAu7CXV6O',1,'sergiy1@yahoo.com'),(24,'BlackCat','$2a$10$IHR7x.aet0XwQ7mEspi/qu/LPl00EQPqtjztLLoBMnyrpkE4rWQVa',1,'kverchi@hotmail.com');
+insert  into `users`(`user_id`,`username`,`password`,`enabled`,`email`) values (6,'FlyinGMind','$2a$10$xsp4hsDpTKGsTPCj3LWqzOY1qMhdQ.04I8pDmfFgoA41Xbwyh.tCa',1,'rita@gmail.com'),(7,'Vasya','$2a$10$W.6EDTwrMp4n97F/pHkzRuFN8y7cKDok.lg4yiIdX6NMGWFZm6vHC',1,'rita@gmail.com'),(8,'Petya','$2a$10$Adkflw72.4jueJqRFo9vi.bzH/yMfQ8R05tiDbxPXi5ePdV459X4m',1,'rita@gmail.com'),(9,'Olechka','$2a$10$kdxADPcs3zMmukd.dmbXQ.hZgFr.2IVt4jJxy.DOf15h2U2CLEl7u',1,'rita@gmail.com'),(15,'GoodGirl','$2a$10$nN5uJvMh8dLYE8Gq5ID6P.QMwIKgNsyp3O.eCMxM3w2svYuB2Co0.',1,'rita@gmail.com'),(18,'tester3','$2a$10$Ix70R8QllqCJQSkXvOdMIOJnDL8hsJgHPn9LQtWFSPxaCAu7CXV6O',1,'sergiy1@yahoo.com'),(38,'BlackCat','$2a$10$/apLtIBDx8.5u1285TMF1eZUfCsQ/iPF3.6yxJwY/q4IH5xpIss2u',1,'kverchi@hotmail.com'),(39,'Dracula','$2a$10$yRlISlFbs4NlmofV8.Xvn.UYikQTw0kmefbKO4eUBjtAPtxgFYtkW',0,'dracula@gmail.com');
 
 /*Table structure for table `users_data` */
 
@@ -274,7 +277,7 @@ CREATE TABLE `users_data` (
 
 /*Data for the table `users_data` */
 
-insert  into `users_data`(`user_id`,`first_name`,`last_name`,`avatar_url`,`about`,`country_code`) values (0,NULL,NULL,'noavatar.jpg',NULL,NULL),(6,'Kolya','Pylypets','mPylypets.jpg','Good guy.','uk'),(7,'&#1057;&#1072;&#1096;&#1072;','&#1043;&#1086;&#1083;&#1099;&#1081;','GOLOSKOKOV.jpg','&#1040; &#1089;&#1077;&#1081;&#1095;&#1072;&#1089; &#1079;&#1072;&#1087;&#1080;&#1096;&#1077;&#1084; &#1072;&#1087;&#1087;&#1088;&#1086;&#1082;&#1089;&#1080;&#1084;&#1072;&#1094;&#1080;&#1102;...','ua'),(8,NULL,NULL,'noavatar.jpg',NULL,NULL),(9,NULL,NULL,'noavatar.jpg',NULL,NULL),(15,'Melissa','Sterling','Hydrangeas.jpg','I am a cheerful girl :) I like light and sun.\r\nIf today you will write me a message than your life will change!','cz'),(18,NULL,NULL,'noavatar.jpg',NULL,NULL),(24,NULL,NULL,'noavatar.jpg',NULL,NULL);
+insert  into `users_data`(`user_id`,`first_name`,`last_name`,`avatar_url`,`about`,`country_code`) values (6,'Kolya','Pylypets','mPylypets.jpg','Good guy.','uk'),(7,'&#1057;&#1072;&#1096;&#1072;','&#1043;&#1086;&#1083;&#1099;&#1081;','GOLOSKOKOV.jpg','&#1040; &#1089;&#1077;&#1081;&#1095;&#1072;&#1089; &#1079;&#1072;&#1087;&#1080;&#1096;&#1077;&#1084; &#1072;&#1087;&#1087;&#1088;&#1086;&#1082;&#1089;&#1080;&#1084;&#1072;&#1094;&#1080;&#1102;...','ua'),(8,NULL,NULL,'noavatar.jpg',NULL,NULL),(9,NULL,NULL,'noavatar.jpg',NULL,NULL),(15,'Melissa','Sterling','Hydrangeas.jpg','I am a cheerful girl :) I like light and sun.\r\nIf today you will write me a message than your life will change!','cz'),(18,NULL,NULL,'noavatar.jpg',NULL,NULL),(38,NULL,NULL,'noavatar.jpg',NULL,NULL),(39,NULL,NULL,'noavatar.jpg',NULL,NULL);
 
 /*Table structure for table `users_friends` */
 
@@ -296,3 +299,5 @@ insert  into `users_friends`(`friend_one_id`,`friend_two_id`,`status`) values (6
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

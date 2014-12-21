@@ -16,7 +16,7 @@
 					<img src="<%=request.getContextPath()%>/usersAvatars/${curUserData.avatarUrl}">
 					<a href="editProfilePage">Edit profile</a>
 				</div>
-				<div class="form-style">
+				<div id="form-style">
 					<p>${curUserData.firstName} ${curUserData.lastName}</p>
 					<%-- <p>e-mail: ${curUserData.e_mail}</p> --%>
 					<p>Country:<br> ${curUserData.country}</p>

@@ -11,10 +11,9 @@
 			<%@ include file="head.jspf" %>
 			<div id="content">
 				<h4><spring:message code="text.signUp"/></h4>
-				<div id="infoContent">
-				   <div class="form-style">
-					<form:form action="${url}" modelAttribute="user">
-						
+				   <div id="form-style">
+					<form:form action="resultAjax" modelAttribute="user" method="POST">
+						<input type="hidden" id="msg_code" name="msg_code" value=""/>
 						<form:label path="login"><span><spring:message code="label.username"/><span class="required">*</span></span>
 							<form:input path="login"/>
 							<em id="loginError" class="inputError"></em>
@@ -34,8 +33,8 @@
 							<form:input path="captcha"/>
 							<em id="captchaError" class="inputError"></em>
 							<img class="word" src="/InspireMe/jcaptcha.jpg" id="captchaImg">
-							<a onclick="refreshCaptcha()" >
-							   <img class="icon" src="<%=request.getContextPath() %>/css/icons/refresh.png"/>
+							<a class="icon" onclick="refreshCaptcha()" >
+							   <img src="<%=request.getContextPath() %>/css/icons/refresh.png"/>
 							</a>
 						</div>
 						<%-- <p> 
@@ -48,7 +47,6 @@
 						<input type="submit" id="register" value="${btnLabel}"></input>
 					</form:form>
 				  </div>
-				</div>
 		    </div>
 			<%@ include file="footer.jspf" %>
 		</div>

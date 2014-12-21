@@ -25,7 +25,7 @@
 					</c:if>
 					Choose new avatar: <input type="file" name="usrAvatar"><p>
 				</div>
-				<div class="form-style">
+				<div id="form-style">
 						<form:hidden path="userId" value="${userData.userId}" />
 						<form:hidden path="avatarUrl" value="${userData.avatarUrl}" />
 						<form:label path="firstName"><span><spring:message code="label.firstname"/></span>

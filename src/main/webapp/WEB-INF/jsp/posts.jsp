@@ -33,11 +33,11 @@
 				<hr>
 			</c:forEach>
 			<p>
-					<a class="imgLinks" href="<%=request.getContextPath() %>/main/posts/newPost?sightId=${sightId}">
-						<img class="icon" src="<%=request.getContextPath() %>/css/icons/add.png"/>
+					<a class="icon" href="<%=request.getContextPath() %>/main/posts/newPost?sightId=${sightId}">
+						<img src="<%=request.getContextPath() %>/css/icons/add.png"/>
 					</a>
-					<a class="imgLinks" href="<%=request.getContextPath() %>/main/sights/country?country_code=${country_code}">
-						<img class="icon" src="<%=request.getContextPath() %>/css/icons/back.png"/>
+					<a class="icon" href="<%=request.getContextPath() %>/main/sights/country?country_code=${country_code}">
+						<img src="<%=request.getContextPath() %>/css/icons/back.png"/>
 		  			</a>
 			</p>
 		  </div>

@@ -1,21 +1,21 @@
-.form-style{
+#form-style{
     max-width: 700px;
     padding: 20px 12px 10px 20px;
    // font: 13px Arial, Helvetica, sans-serif;
 }
-.form-style label{
+#form-style label{
     display: block;
    // margin: 0px 0px 15px 0px;
    margin: 3px 0px 4px;
 }
-.form-style label > span{
+#form-style label > span{
     width: 135px;
     font-weight: bold;
     float: left;
     padding-top: 2px;
     padding-right: 5px;
 }
-.form-style span.required{
+#form-style span.required{
     color:red;
 }
 /*.form-style .tel-number-field{
@@ -27,8 +27,8 @@
 //}
 
 //.form-style input.input-field,
-.form-style .textarea-field,
-.form-style .select-field{
+#form-style .textarea-field,
+#form-style .select-field{
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -43,11 +43,11 @@
     outline: none;
 }
 //.form-style .input-field:focus,
-.form-style .textarea-field:focus,
-.form-style .select-field:focus{
+#form-style .textarea-field:focus,
+#form-style .select-field:focus{
     border: 1px solid #0C0;
 }
-.form-style .textarea-field{
+#form-style .textarea-field{
     height:100px;
     width: 55%;
 }
@@ -199,14 +199,22 @@
 	border: none;
 }
 /*-------*/
-.user{
+.user {
+	//padding-top: 15px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid green;
+}
+.user a {
+	float: right;
+}
+.user .inline {
 	display:inline;
 }
 .captcha {
 	border: 2px solid #25CB3E;
 	//margin-left: 20%;
 	margin-left: 105px;
-	display: inline-block;
+	//display: inline-block;
 	width: 210px;
 	padding: 10px 20px 10px 29px;
 	border-radius: 10px;
@@ -224,10 +232,12 @@
 /* Content with sights and relative posts where on background is country flag */
 #infoContent {
 	display: table;
-	//width: 560px;
+	width: 560px;
 	padding-left: 25px;
 }
-
+#infoContent .title {
+	font-style: italic;
+}
 #infoContent .right_block { //
 	display: table-column;
 	float: right;
@@ -301,9 +311,6 @@ button, input[type="submit"], input[type="button"] {
 	background: #039F62;
 	color: rgba(255, 255, 255, 1);
 	font-weight: bold;
-	display: block;
-	//margin-left: 280px;
-	margin: 5% 0;
 }
 /* -------- */
 
@@ -316,9 +323,12 @@ button, input[type="submit"], input[type="button"] {
 	text-decoration: none;
 }*/
 #footer {
-	background:#ccc;
+	background:#7CBE5B;
 	text-align: right;
-	padding: 20px;
+	//padding: 20px;
+	padding: 12px 10px 28px 0px;
+	color: #FFFC00;
+	font-style: italic;
 	height: 1%;
 }
 .postPreview {
@@ -338,14 +348,23 @@ button, input[type="submit"], input[type="button"] {
 	width: auto;
 	padding: 10px;
 }
-.imgLinks {
-	text-decoration: none;
+.flag {
+	color: #fff;
+}
+.flag img {
+	width: 24px;
+	height: 15px;
+	margin: 0px 4px -4px 0px;
 }
 //.postPreview b a:hover { background:rgba(139, 248, 252, 1); }
 .postPreview em {
 	padding-left: 5px;
 }
 .icon {
+	text-decoration: none;
+	color: #fff;
+}
+.icon img {
 	width:32px;
 	height: 32px;
 }
@@ -353,7 +372,7 @@ button, input[type="submit"], input[type="button"] {
 	padding: 5px;
 }
 
-#singlePost .title {
+#singlePost .postTitle {
 	background: -webkit-linear-gradient(left, #9BF7B6, #DCDFDD); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(right, #9BF7B6, #DCDFDD); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(right, #9BF7B6, #DCDFDD); /* For Firefox 3.6 to 15 */

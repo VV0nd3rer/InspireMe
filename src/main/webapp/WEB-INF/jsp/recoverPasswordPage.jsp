@@ -7,7 +7,7 @@
 	<div id="wrapper">
 		<%@ include file="head.jspf"%>
 		<div id="content">
-		  <div class="form-style">
+		  <div id="form-style">
 			<form:form action="recoverPassword" modelAttribute="parameters">
 				<label><span><spring:message code="label.email"/></span>
 					<form:input path="email" />
@@ -21,8 +21,8 @@
 					 <form:errors path="captcha" htmlEscape="false" />
 					</em>
 					<img class="word" src="/InspireMe/jcaptcha.jpg" id="captchaImg">
-					<a onclick="refreshCaptcha()" >
-					  <img class="icon" src="<%=request.getContextPath() %>/css/icons/refresh.png"/>
+					<a class="icon" onclick="refreshCaptcha()" >
+					  <img src="<%=request.getContextPath() %>/css/icons/refresh.png"/>
 					</a>
 			    </div>
 			    <spring:message code="button.ok" var="btnLabel"/>

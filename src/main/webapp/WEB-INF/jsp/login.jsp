@@ -10,8 +10,8 @@
 		<div id="wrapper">
 			<%@ include file="head.jspf" %>
 			<div id="content" class="common_link">
-			  <h4><spring:message code="text.logIn"/></h4>
-			  <div class="form-style">
+			  <h3><spring:message code="text.logIn"/></h3>
+			  <div id="form-style">
 				<form id="loginForm" action="${postLoginUrl}" method="POST">
 					<c:if test="${param.failed == true}">
 				      <p class="inputError"><spring:message code="error.login"/></p>
@@ -27,8 +27,10 @@
 					  <span><spring:message code="text.rememberMe"/></span>
 					</label>
 					<spring:message code="button.ok" var="btnLabel"/>
+					<p>
 					<input type="submit" value="${btnLabel}" />
 					<a href="recoverPasswordPage"><spring:message code="text.forgotPass"/></a>
+					</p>
 				</form>
 			  </div>
 			</div>

@@ -20,16 +20,16 @@
 			</div>
  		  </dialog>	
 		  <div id="singlePost">
-			  <h3 class="title">${singlePost.title}</h3>
+			  <h3 class="postTitle">${singlePost.title}</h3>
 			  <p>${singlePost.stampCreated}</p>
 			  <div class="text">${singlePost.text}</div> 
 		  </div>
 				<%@ include file="menuPost.jspf" %>
 				 <p>
-					<a class="imgLinks" href="<%=request.getContextPath() %>/main/posts/newPost?sightId=${singlePost.sightId}">
+					<a class="icon" href="<%=request.getContextPath() %>/main/posts/newPost?sightId=${singlePost.sightId}">
 						<img src="<%=request.getContextPath() %>/css/icons/add.png"/>
 					</a>
-					<a class="imgLinks" href="<%=request.getContextPath() %>/main/posts/sightPosts?sightId=${singlePost.sightId}">
+					<a class="icon" href="<%=request.getContextPath() %>/main/posts/sightPosts?sightId=${singlePost.sightId}">
 						<img src="<%=request.getContextPath() %>/css/icons/back.png"/>
 		  			</a>
 				</p>
