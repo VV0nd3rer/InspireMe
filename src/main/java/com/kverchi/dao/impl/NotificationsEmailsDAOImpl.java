@@ -5,19 +5,20 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import com.kverchi.dao.NemailAddresseDAO;
-import com.kverchi.domain.NemailAddresse;
+import com.kverchi.dao.NotificationsEmailsDAO;
+import com.kverchi.domain.NotificationsEmails;
 
-@Service
-public class NemailAddresseDAOImpl extends GenericDAOImpl<NemailAddresse> implements NemailAddresseDAO{
+@Repository
+public class NotificationsEmailsDAOImpl extends GenericDAOImpl<NotificationsEmails> implements NotificationsEmailsDAO {
 
 	@Override
-	public NemailAddresse getEmailData(String address) {
+	public NotificationsEmails getEmailData(String address) {
 		Session session = null;
-		List<NemailAddresse> temp = new ArrayList();
-		NemailAddresse res = new NemailAddresse();
+		List<NotificationsEmails> temp = new ArrayList();
+		NotificationsEmails res = new NotificationsEmails();
 		try {
 			session = sessionFactory.openSession();
 	    	session.beginTransaction();

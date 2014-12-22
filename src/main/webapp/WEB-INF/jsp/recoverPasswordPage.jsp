@@ -7,32 +7,28 @@
 	<div id="wrapper">
 		<%@ include file="head.jspf"%>
 		<div id="content">
+		  <div id="form-style">
 			<form:form action="recoverPassword" modelAttribute="parameters">
-				<p><spring:message code="label.email"/></p>
-				<p>
+				<label><span><spring:message code="label.email"/></span>
 					<form:input path="email" />
 					<em id="errorEmail" class="inputError"> 
 					<form:errors path="email" htmlEscape="false" />
 					</em>
-				</p>
-				<%--<form:errors path="*">
-					<div class="inputError">
-						<spring:message code="error.captcha" />
-					</div>
-				</form:errors>--%>
-				<p>
+				</label>
+				<div class="captcha">
 					<form:input path="captcha"/>
 					<em id="errorCaptcha" class="inputError">
 					 <form:errors path="captcha" htmlEscape="false" />
 					</em>
-					<img src="/InspireMe/jcaptcha.jpg" id="captchaImg">
-					<button name="RefreshButton" onclick="refreshCaptcha()" type="button"><spring:message code="button.refresh"/></button>
-			    </p>
-			     <spring:message code="button.ok" var="btnLabel"/>
-				<p>
-					<input type="submit" value="${btnLabel}" />
-				</p>
+					<img class="word" src="/InspireMe/jcaptcha.jpg" id="captchaImg">
+					<a class="icon" onclick="refreshCaptcha()" >
+					  <img src="<%=request.getContextPath() %>/css/icons/refresh.png"/>
+					</a>
+			    </div>
+			    <spring:message code="button.ok" var="btnLabel"/>
+				<input type="submit" value="${btnLabel}" />
 			</form:form>
+		  </div>
 		</div>
 		<%@ include file="footer.jspf"%>
 	</div>

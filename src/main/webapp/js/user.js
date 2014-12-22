@@ -32,13 +32,11 @@ function addUser() {
 		type: 'POST',
 		success: function(response){
 			if(response.status == "SUCCESS"){
-				window.location.href = contexPath + "/main/" + response.result;
+				$("#msg_code").val(response.result);
+				$("#user").submit();
+				//window.location.href = contexPath + "/main/" + response.result;
 			}else{
 				showErrors(response.result);
-				/*$.each(response.result, function(field, msg) {
-					var errorField = $('#' + field + "Error");
-					errorField.html(msg);
-				});*/
 				refreshCaptcha();
 			}	      
 		},  

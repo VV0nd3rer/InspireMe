@@ -79,7 +79,7 @@ public class PostController extends ContentController {
 			postService.createPost(post);
 		}
 		else 
-			result.reject("error.post");
+			result.reject("error.required");
 		return (result.hasErrors() ? VN_NEW_POST : VN_SIGHT+sightId);	
 	}
 	@RequestMapping("deletePost")
@@ -112,7 +112,7 @@ public class PostController extends ContentController {
 			postService.updatePost(post);
 		}
 		else {
-			result.reject("error.post");
+			result.reject("error.required");
 		}
 		return (result.hasErrors() ? VN_NEW_POST : VN_SIGHT+sightId);	 
 	}

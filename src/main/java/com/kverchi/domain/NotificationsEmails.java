@@ -7,17 +7,17 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "n_emails_addresses")
-public class NemailAddresse {
-	int email_id;
+public class NotificationsEmails {
+	String author;
 	String email, password;
 	
 	@Id
-	@Column(name="email_id")
-	public int getEmail_id() {
-		return email_id;
+	@Column(name="author")
+	public String getAuthor() {
+		return author;
 	}
-	public void setEmail_id(int email_id) {
-		this.email_id = email_id;
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 	@Column(name="email")
 	public String getEmail() {

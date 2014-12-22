@@ -22,10 +22,10 @@
 	    	default-target-url="/main/home"/>
 	    <remember-me/>
 	    <logout logout-success-url="/main/main" delete-cookies="JSESSIONID"/>
+	    <intercept-url pattern="/**" requires-channel="https"/>
    		<intercept-url pattern="/main/home" access="hasRole('user')"/>
    		<intercept-url pattern="/main/sights/*" access="hasRole('user')"/>
    		<intercept-url pattern="/main/posts/*" access="hasRole('user')"/>
-   		<intercept-url pattern="/main/Login" access="isAnonymous()" requires-channel="https"/>
    		<intercept-url pattern="/main/signUp" access="isAnonymous()"/>
    		<intercept-url pattern="/main/result" access="permitAll"/>
    		<intercept-url pattern="/main/denied" access="permitAll"/>

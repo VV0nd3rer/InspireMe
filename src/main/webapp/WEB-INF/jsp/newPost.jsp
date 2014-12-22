@@ -13,17 +13,17 @@
 		  <div id="sightContent">		
 				<form:form action="${url}" modelAttribute="newPost">
 				  <form:errors path="*">
-						<div class="inputError"><spring:message code="error.post" /></div>
+						<div class="inputError"><spring:message code="error.required" /></div>
 				  </form:errors>
-					<p>Title</p>
+					<p>Title <em class="inputError">*</em></p>
 					<form:input path="title" size="50"/>
-					<p>Description</p>
+					<p>Description <em class="inputError">*</em></p>
 					<form:textarea path="description" rows="4" cols="50"/> 
-					<p>Text</p>
-					<form:textarea class="edit" path="text" style="width:100%; height:800" htmlEscape="false"/>  
+					<p>Text <em class="inputError">*</em></p>
+					<form:textarea class="edit" path="text" style="height:800px" htmlEscape="false"/>  
 					<p><input type="submit" value="Ok"></p>
 				</form:form>
-				<a href="<%=request.getContextPath() %>/main/posts/sightPosts?sightId=${newPost.sightId}">
+				<a class="icon" href="<%=request.getContextPath() %>/main/posts/sightPosts?sightId=${newPost.sightId}">
 					<img src="<%=request.getContextPath() %>/css/icons/back.png"/>
 				</a>
 		  </div>

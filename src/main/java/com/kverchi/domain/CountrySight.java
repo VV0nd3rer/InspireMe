@@ -1,5 +1,7 @@
 package com.kverchi.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="countries_sights")
-public class CountrySight {
+public class CountrySight implements Serializable {
 	
 		private int sight_id;
 	    private String sight_label;

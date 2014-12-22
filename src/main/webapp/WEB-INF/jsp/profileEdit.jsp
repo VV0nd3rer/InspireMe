@@ -9,10 +9,8 @@
 <body>
 		<div id="wrapper">
 			<%@ include file="head.jspf" %>
-			<div id="content" class="common_link">
-			
+			<div id="content" class="common_link">	
 				<%@ include file="userCabinetMenu.jspf" %>
-				
 				<div id="infoContent">
 				<h4>Editing of profile.</h4>
 				<c:set var="imgName" scope="session" value="${userData.avatarUrl}"/>
@@ -27,18 +25,18 @@
 					</c:if>
 					Choose new avatar: <input type="file" name="usrAvatar"><p>
 				</div>
-				<div class="left_block">
-					
+				<div id="form-style">
 						<form:hidden path="userId" value="${userData.userId}" />
 						<form:hidden path="avatarUrl" value="${userData.avatarUrl}" />
-					    
-						<form:label path="firstName"><spring:message code="label.firstname"/></form:label> 
-						<form:input path="firstName" value="${userData.firstName}" />
-						<form:label path="lastName"><spring:message code="label.lastname"/></form:label>
-						<form:input path="lastName" value="${userData.lastName}"/>
+						<form:label path="firstName"><span><spring:message code="label.firstname"/></span>
+						 <form:input path="firstName" value="${userData.firstName}" class="input-field"/>
+						</form:label> 
+						<form:label path="lastName"><span><spring:message code="label.lastname"/></span>
+						 <form:input path="lastName" value="${userData.lastName}" class="input-field"/>
+						</form:label>
 						<%-- E-mail: <form:input path="e_mail" value="${userData.e_mail}"/><p> --%>
-						<form:label path="country"><spring:message code="label.country"/></form:label>
-						<form:select path="country" value="${userData.country}"> 
+						<form:label path="country"><span><spring:message code="label.country"/></span>
+						<form:select path="country" value="${userData.country}" class="select-field"> 
 						<c:set var="code" scope="session" value="${userData.country}"/>
 								<c:forEach items="${countryList}" var="s">
 									<c:set var="res" scope="session" value="${s.getCountryCode()}" />
@@ -52,13 +50,15 @@
 									</c:choose>
 								</c:forEach>
 						</form:select>
-						<form:label path="about"><spring:message code="label.about"/></form:label>
-						<form:textarea path="about"/>			
+						</form:label>
+						<form:label path="about"><span><spring:message code="label.about"/></span>
+						 <form:textarea path="about" class="textarea-field"/>		
+						</form:label>	
 						<spring:message code="button.ok" var="btnLabel"/>		
-						<p><input type="submit" value="${btnLabel}"/></p>
-					</form:form>
-				</div>							
-				</div>
+						<input type="submit" value="${btnLabel}"/>
+				</div>						
+				</form:form>
+			  </div>
 			</div>
 			<%@ include file="footer.jspf" %>
 		</div>

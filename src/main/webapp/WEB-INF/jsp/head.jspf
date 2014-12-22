@@ -9,9 +9,9 @@
 <div id="header">
     <div id="lang_menu">
 		<ul>
-		  <li><a href="<%=request.getContextPath()%>/main/setLanguage?lang=en" style="color: yellow">EN</a></li>
-		  <li><a href="<%=request.getContextPath()%>/main/setLanguage?lang=uk" style="color: yellow">UK</a></li>
-		  <li><a href="<%=request.getContextPath()%>/main/setLanguage?lang=de" style="color: yellow">DE</a></li>
+		  <li><a class="flag" href="<%=request.getContextPath()%>/main/setLanguage?lang=en"><img src="<%=request.getContextPath() %>/css/lang_flags/en.png"/>EN</a></li>
+		  <li><a class="flag" href="<%=request.getContextPath()%>/main/setLanguage?lang=uk"><img src="<%=request.getContextPath() %>/css/lang_flags/uk.png"/>UK</a></li>
+		  <li><a class="flag" href="<%=request.getContextPath()%>/main/setLanguage?lang=de"><img src="<%=request.getContextPath() %>/css/lang_flags/de.png"/>DE</a></li>
 		</ul>
 	</div>
 	<div id="navigation">

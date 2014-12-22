@@ -16,14 +16,12 @@
 					<img src="<%=request.getContextPath()%>/usersAvatars/${curUserData.avatarUrl}">
 					<a href="editProfilePage">Edit profile</a>
 				</div>
-				<div class="left_block">
+				<div id="form-style">
 					<p>${curUserData.firstName} ${curUserData.lastName}</p>
 					<%-- <p>e-mail: ${curUserData.e_mail}</p> --%>
-					<p>Country: ${curUserData.country}</p>
-					<div>
-						<p>About me:</p>
-						${curUserData.about}
-					</div>
+					<p>Country:<br> ${curUserData.country}</p>
+					<p class="text_block">About me:<br>
+					${curUserData.about}</p>	
 				</div>
 			</div>
 		</div>

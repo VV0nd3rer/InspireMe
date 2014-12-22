@@ -1,5 +1,7 @@
 package com.kverchi.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,7 +11,7 @@ import javax.persistence.Table;
 @Entity
 @IdClass(FriendId.class)
 @Table(name = "users_friends")
-public class Friend {
+public class Friend implements Serializable {
 	@Id private int friend_one_id;
 	@Id private int friend_two_id;
 	

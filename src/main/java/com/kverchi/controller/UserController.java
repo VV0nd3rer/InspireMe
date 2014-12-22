@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.ui.Model;
 
 import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
@@ -51,12 +50,13 @@ import com.kverchi.tools.Pair;
 @SessionAttributes("content")
 public class UserController extends ContentController{
 	private static final String P_REG_FORM = "signup";
-	private static final String P_REG_OK = "redirect:result";
+	private static final String P_REG_OK = "result";
 	private static final String P_LOGIN_FORM = "login";
 	private static final String P_REG_USER = "addUser";
 	private static final String P_MAIN = "main";
 	private static final String P_HOME = "home";
 	private static final String P_ERROR = "error";
+	private static final String P_RECOVER_PASSWORD = "recoverPasswordPage";
 		
 	@Autowired private UserService userService;
 	@Autowired private CountryService countryService;
@@ -230,9 +230,16 @@ public class UserController extends ContentController{
 	}
 		
 	@RequestMapping(value="sendMessage")
-	public String sendMessage(@ModelAttribute("messageToSend") Message messageToSend) {
-		messageService.sendMessage(messageToSend);
-		return "redirect:messages";
+	public String sendMessage(@ModelAttribute("messageToSend") @Valid Message messageToSend, BindingResult result) {
+		System.out.println("msg id: "+messageToSend.getTo_id());
+		if(messageToSend.getTo_id() == 0)
+			result.reject("error.msgTo");
+		else  
+			if(result.hasErrors())
+				result.reject("error.required");
+			else
+				messageService.sendMessage(messageToSend);
+		return (result.hasErrors() ? "newMessage": "redirect:messages");
 	}
 			
 	@RequestMapping(value="newMessage")
@@ -243,19 +250,19 @@ public class UserController extends ContentController{
 		return "newMessage";
 	}
 	
-	@RequestMapping("result")
-	public String result() {
+	@RequestMapping(value="resultAjax", method=RequestMethod.POST)
+	public String result(Model model, @RequestParam("msg_code") String msg_code) {
+		model.addAttribute("msg_code", msg_code);
 		return "result";
 	}
-	
 	@RequestMapping("signUp")
 	public String singUp(Model model) {
 		model.addAttribute("user", new SignUpForm());
-		model.addAttribute("url", P_REG_USER);
+		//model.addAttribute("url", "resultAjax");
 		return P_REG_FORM;
 	}
 	@RequestMapping(value = "addUser", method = RequestMethod.POST)
-	public @ResponseBody AjaxValidation addUser(@ModelAttribute("user") @Valid SignUpForm form, BindingResult result, HttpServletRequest request) {
+	public @ResponseBody AjaxValidation addUser(Model model, @ModelAttribute("user") @Valid SignUpForm form, BindingResult result, HttpServletRequest request) {
 		AjaxValidation res = new AjaxValidation();
 		convertPasswordError(result);
 		checkUsername(form.getLogin(), result);
@@ -277,7 +284,8 @@ public class UserController extends ContentController{
 		 }
 		 else {
 			 res.setStatus("SUCCESS");
-			 res.setResult("result");
+			 //res.setResult(P_REG_OK);
+			 res.setResult("info.registration");
 		 }
 		}
 		else {
@@ -301,15 +309,15 @@ public class UserController extends ContentController{
 	@RequestMapping(value="recoverPasswordPage")
 	public String recoverPasswordPage(Model model) {
 		model.addAttribute("parameters", new RecoverPasswordForm());
-		return "recoverPasswordPage";
+		return P_RECOVER_PASSWORD;
 	}
 	@RequestMapping(value="recoverPassword")
-	public String recoverPassword(@ModelAttribute("parameters") @Valid RecoverPasswordForm form, BindingResult result, HttpServletRequest request) {
+	public String recoverPassword(Model model, @ModelAttribute("parameters") @Valid RecoverPasswordForm form, BindingResult result, HttpServletRequest request) {
 		checkCaptcha(request, request.getParameter("captcha"), result);
-		if(!result.hasErrors())  {
-			
-			if(userService.sendResetLink(form.getEmail()))
-				return P_REG_OK;
+		if(!result.hasErrors())  {			
+			if(userService.sendResetLink(form.getEmail())) {
+			  	model.addAttribute("msg_code", "info.recoverPassword");
+			}
 		}
 		return (result.hasErrors() ? "recoverPasswordPage" : P_REG_OK);
 	}
@@ -333,10 +341,12 @@ public class UserController extends ContentController{
 			return P_ERROR;
 	}
 	@RequestMapping(value="resetPassword")
-	public String resetPassword(@ModelAttribute("user") @Valid ResetPasswordForm form, BindingResult result) {
+	public String resetPassword(Model model, @ModelAttribute("user") @Valid ResetPasswordForm form, BindingResult result) {
 		convertPasswordError(result);
-		if(!result.hasErrors())
+		if(!result.hasErrors()) {
 			userService.resetPassword(toUser(form));
+			model.addAttribute("msg_code", "info.resetPassword");
+		}
 		return (result.hasErrors() ? "resetPasswordPage" : P_REG_OK); 
 	}
 	@RequestMapping(value="checkName", method=RequestMethod.GET)

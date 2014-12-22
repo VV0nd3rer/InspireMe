@@ -2,8 +2,14 @@ $( document ).ready(function() {
 	tinyMCEInit();
 });
 function tinyMCEInit() {
-	tinymce.init({
-	    selector: "textarea.edit",
+	tinyMCE.init({
+        mode : "textareas",
+        theme : "modern",
+        editor_selector : "mceSimple"
+	});
+	
+	tinyMCE.init({
+		selector: "textarea.edit",
 	    theme: "modern",
 	    plugins: [
 	        "advlist autolink lists link image charmap print preview hr anchor pagebreak",

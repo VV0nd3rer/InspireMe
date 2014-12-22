@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Entity
 @IdClass(UserRoleId.class)
 @Table(name = "user_role")
-public class UserRole {
+public class UserRole implements Serializable {
 	
 	@Id private int user_id;
 	@Id private int role_id;

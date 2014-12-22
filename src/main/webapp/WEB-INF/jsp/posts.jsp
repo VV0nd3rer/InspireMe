@@ -20,22 +20,23 @@
  		  </dialog>
 			<c:forEach items="${posts}" var="singlePost">
 				<div class="postPreview">
-					<b><a href="<%=request.getContextPath() %>/main/posts/singlePost?postId=${singlePost.postId}">
+				  <div>
+					<a href="<%=request.getContextPath() %>/main/posts/singlePost?postId=${singlePost.postId}">
 						 ${singlePost.title}.
-					   </a>
-					</b> 
+					</a>
 					<em>
 						${singlePost.description}
 					</em> 
+				  </div>
 					<%@ include file="menuPost.jspf" %>	
 				</div>
 				<hr>
 			</c:forEach>
 			<p>
-					<a href="<%=request.getContextPath() %>/main/posts/newPost?sightId=${sightId}">
+					<a class="icon" href="<%=request.getContextPath() %>/main/posts/newPost?sightId=${sightId}">
 						<img src="<%=request.getContextPath() %>/css/icons/add.png"/>
 					</a>
-					<a href="<%=request.getContextPath() %>/main/sights/country?country_code=${country_code}">
+					<a class="icon" href="<%=request.getContextPath() %>/main/sights/country?country_code=${country_code}">
 						<img src="<%=request.getContextPath() %>/css/icons/back.png"/>
 		  			</a>
 			</p>
