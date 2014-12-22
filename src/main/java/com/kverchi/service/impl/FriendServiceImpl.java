@@ -31,37 +31,20 @@ public class FriendServiceImpl implements FriendService {
 		friendDAO.create(friend);
 	}
 	
-	public List<Pair<User, Integer>> getPeopleList(int userId){
-		List<Pair<User, Integer>> peopleList = new ArrayList<Pair<User, Integer>>();
-		
-		List<Integer> temp = friendDAO.getFriendsId(userId, 0);
-		List<Integer> tempResult = friendDAO.getFriendsId(userId, 1);
-		tempResult.addAll(temp);
-		List<User> pListTemp = friendDAO.getPeople(userId);
-		for(User user : pListTemp){
-			if(tempResult.contains(user.getUserId()))
-			{
-				peopleList.add(new Pair<User, Integer>(user, 1));
-			}
-			else
-			{
-				peopleList.add(new Pair<User, Integer>(user, 0));
-			}
-		}
-			
-		return peopleList;
-	}
-	
 public List<Pair<User, Integer>> getPeopleList(int userId, String fragment){
 		
 		List<Pair<User, Integer>> peopleList = new ArrayList<Pair<User, Integer>>();
 		
-		List<Integer> temp = friendDAO.getFriendsId(userId, 0);
-		List<Integer> tempResult = friendDAO.getFriendsId(userId, 1);
-		tempResult.addAll(temp);
+		List<Integer> tempResultRequest = friendDAO.getFriendsId(userId, 0);
+		List<Integer> tempResultFriends = friendDAO.getFriendsId(userId, 1);
+		
 		List<User> pListTemp = friendDAO.getPeople(userId, fragment);
 		for(User user : pListTemp){
-			if(tempResult.contains(user.getUserId()))
+			if(tempResultFriends.contains(user.getUserId()))
+			{
+				peopleList.add(new Pair<User, Integer>(user, 2));
+			}
+			else if(tempResultRequest.contains(user.getUserId()))
 			{
 				peopleList.add(new Pair<User, Integer>(user, 1));
 			}

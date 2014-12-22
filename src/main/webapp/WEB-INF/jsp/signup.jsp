@@ -4,6 +4,7 @@
 	<head>
 	<%@ include file="include.jspf" %>
 	<script src="<%=request.getContextPath() %>/js/user.js"></script>
+	<script src="<%=request.getContextPath() %>/js/user.js"></script>
 	<title>SignUp</title>
 	</head>
 	<body>
@@ -25,7 +26,8 @@
 				<form:input path="email"/>
 				<em id="emailError" class="inputError"></em>
 				<form:label path="password"><spring:message code="label.password"/></form:label>
-				<form:password path="password"/>
+				<form:password id="password" path="password"/>
+				<div id="infoPass" align="center"></div>
 				<em id="passwordError" class="inputError"></em>
 				<form:label path="confirmPassword"><spring:message code="label.confirmPassword"/></form:label>
 				<form:password path="confirmPassword"/>

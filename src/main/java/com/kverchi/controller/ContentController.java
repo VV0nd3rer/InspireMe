@@ -16,16 +16,16 @@ public abstract class ContentController {
 	
 	protected Map<String,String> content = new HashMap<String,String>();
 	protected List<String> visitedPages = new ArrayList<String>();
-	protected String lang;
+	protected String lang="en";
 	
 	@Autowired protected PageContentService pageContentService;
 	
 	public void loadPageDynamicalContent(String request, Model model){
 		String pageName = "";
-		if(lang==null)
+		/*if(lang==null)
 		{
 			lang="en";
-		}
+		}*/
 		
 		if(request.contains("?")){
 			pageName = request.substring(1, request.indexOf("?"));

@@ -156,6 +156,9 @@
 	
 }
 /*--------*/
+.badPass { margin-left: 5px; size:2; color: white; width:100px;  background:red; } 
+.normalPass { margin-left: 5px; size:2; color: white; width:100px; background:orange; } 
+.strongPass {  margin-left: 5px; size:2; color: white; width:100px; background:green; }
 .unread{
 	font-weight:bold;
 	}

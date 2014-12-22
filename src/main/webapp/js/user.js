@@ -17,6 +17,9 @@ $(function() {
 		event.preventDefault();
 		addUser();
 	});
+	$("#password").on("input",function() {
+		checkStrength();
+	});
 });
 function addUser() {
 	clearErrorFields();
@@ -102,4 +105,29 @@ function refreshCaptcha() {
 		$("#passwordError").empty();
 		$("#captchaError").empty();
 	}
+	//Check strength of password
+	 function checkStrength() {
+	        // get the form values
+	       
+	        var password = $('#password').val();
+	 		
+	        $.ajax({
+	        type: "POST",
+	        url: "checkPass",
+	        data: "passInput=" + password,
+	        success: function(response){
+	        // we have the response
+	        $('#infoPass').html(response);
+	        switch(response){
+	        case 'Strong':document.getElementById('infoPass').className = 'strongPass';break;
+	        case 'Normal':document.getElementById('infoPass').className = 'normalPass';break;
+	        case 'Weak':document.getElementById('infoPass').className = 'badPass';break;
+	        }
+	        
+	        },
+	        error: function(e){
+	        alert('Error: ' + e);
+	        }
+	        });
+	        }
 	

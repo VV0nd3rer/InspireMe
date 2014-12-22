@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -137,10 +139,6 @@ public class UserController extends ContentController{
 	
 	@RequestMapping(value="addFriendPage")
 	public String addFriendPage(Model model, Principal principal) {
-		UserDetailsAdapter currentUser = loadUserDetails(principal);
-		int userId = currentUser.getId();
-		List<Pair<User, Integer>> peopleList = friendService.getPeopleList(userId);
-		model.addAttribute("users", peopleList);
 		return "newFriendPage";
 	}
 	
@@ -370,6 +368,22 @@ public class UserController extends ContentController{
 		}
 		return res;
     }
+    
+    @RequestMapping	(value="checkPass",method=RequestMethod.POST)
+    public @ResponseBody String checkPass(@RequestParam("passInput") String passCheck){
+        String returnText="";
+        	if(checkPassStrength(passCheck, "^.*(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$")){
+            	returnText =  "Strong";
+            }
+            else if(checkPassStrength(passCheck, "^.*(?=.*[a-z])(?=.*[0-9]).*$")){
+            	returnText =  "Normal";
+            }
+            else if(checkPassStrength(passCheck, "^.*(?=.*[a-z]).*$")){
+            	returnText =  "Weak";
+            }
+        return returnText;
+    }
+    
 	@RequestMapping("Login")
 	public String Login(Model model, HttpServletRequest request) {
 		return P_LOGIN_FORM;
@@ -440,5 +454,10 @@ public class UserController extends ContentController{
 	private UserDetailsAdapter loadUserDetails(Principal principal) {
 		UserDetailsAdapter currentUser = (UserDetailsAdapter) ((Authentication) principal).getPrincipal();
 	    return currentUser;
+	}
+	private boolean checkPassStrength(String pass, String pattern){
+		Pattern p = Pattern.compile(pattern);
+    	Matcher m = p.matcher(pass);
+		return m.matches();
 	}
 }

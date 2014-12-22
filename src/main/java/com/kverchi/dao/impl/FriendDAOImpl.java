@@ -50,28 +50,6 @@ public class FriendDAOImpl extends GenericDAOImpl<Friend> implements FriendDAO {
 	}
 	
 	@Override
-	public List<User> getPeople(int userId) {
-		Session session = null;
-		List<User> people = null;
-	       try {
-	    	   session = sessionFactory.openSession();
-	           session.beginTransaction();
-	           String query = "FROM User U WHERE U.userId <>:userId";
-	           Query hQuery = session.createQuery(query);
-	    	   hQuery.setParameter("userId", userId);
-	    	   people = hQuery.list();
-	           session.getTransaction().commit();
-	       } catch (Exception e) {
-	           JOptionPane.showMessageDialog(null, e.getMessage(), "I/O Exception", JOptionPane.OK_OPTION);
-	       } finally {
-	           if (session != null && session.isOpen()) {
-	               session.close();
-	           }
-	       }
-	       return people;
-	}
-	
-	@Override
 	public List<User> getPeople(int userId, String fragment) {
 		Session session = null;
 		List<User> people = null;
