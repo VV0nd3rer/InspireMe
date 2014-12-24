@@ -19,9 +19,9 @@ function userSearch() {
 	    			linkText = "<p>Already in your friends.";
 	    		}
 	    		else{
-	    			linkText = '<a href="addFriend?id='+response[r].first.userId+'">Add to friends</a>';
+	    			linkText = '<a class="inline" href="addFriend?id='+response[r].first.userId+'">Add to friends</a>';
 	    		}
-	    		$("#users").append("<div class='user'>"+"<h3>"+response[r].first.username+"</h3>"
+	    		$("#users").append("<div class='user'>"+"<h3 class='inline'>"+response[r].first.username+"</h3>"
 	    				+ linkText
 	    				+"</div>");
 	    	}

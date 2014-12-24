@@ -200,7 +200,7 @@
 }
 /*-------*/
 .user {
-	//padding-top: 15px;
+	padding-top: 12px;
 	padding-bottom: 10px;
 	border-bottom: 1px solid green;
 }
@@ -241,7 +241,8 @@
 #infoContent .right_block { //
 	display: table-column;
 	float: right;
-	width: 150px;
+	//width: 150px;
+	width: 145px;
 }
 
 #infoContent .right_block img {
@@ -269,6 +270,9 @@
 	
 }*/
 /*--------*/
+#infoPass {
+	margin-left: 23%;
+}
 .badPass { margin-left: 5px; size:2; color: white; width:100px;  background:red; } 
 .normalPass { margin-left: 5px; size:2; color: white; width:100px; background:orange; } 
 .strongPass {  margin-left: 5px; size:2; color: white; width:100px; background:green; }
@@ -320,6 +324,10 @@ button, input[type="submit"], input[type="button"] {
 	clear: left;
 	padding: 20px;
 	overflow: hidden;
+}
+#carouselContent {
+	clear: left;
+	margin: 5px 0px 0px -110px;
 }
 /*#sightContent a {
 	text-decoration: none;

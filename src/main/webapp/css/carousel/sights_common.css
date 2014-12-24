@@ -27,7 +27,8 @@ h1 {
 }
 #wrap {
   width: 980px; /* fixed width, centered in viewport */
-  left: -490px;
+  //left: -490px;
+  left: -436px;
   margin-left: 50%;
   position: relative;
 }
@@ -47,10 +48,10 @@ footer {
   position: relative;
 }
 #item-title {
-  color: #F31414;
+  color: #FFF;
   font-size: 29px;
   letter-spacing: 0.13em;
-  text-shadow: 1px 1px 6px #C72B2B;
+  text-shadow: 1px 1px 6px #10890D;
   text-align: center;
   margin-top: 30px;
   margin-bottom: 22px;

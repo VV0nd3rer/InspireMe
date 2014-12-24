@@ -44,12 +44,12 @@
  </dialog>
 
 <!-- Content -->
-	<div id="sightContent">
+	<div id="carouselContent">
 	<input id="contextPath" type="hidden" value="<%=request.getContextPath() %>"/>
 	   <div id="wrap">
     	  <div id="showcase" class="noselect">
            	<c:forEach items="${country_sigths}" var="s">
-           	      <div class="card">
+           	<div class="card">
 	     	    <h2>${s.sight_label}</h2>
 	     	   	<img src="<%=request.getContextPath() %>/countryImg/countries_sights/${s.img_url}" onerror="imgError(this)"/>
 	     		<p>${s.description}</p>

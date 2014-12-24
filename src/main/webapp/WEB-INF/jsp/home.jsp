@@ -44,7 +44,7 @@
 				</c:forEach>
 			</datalist>
 
-			<div align="center" id="vmap" style="width: 680px; height: 520px;"></div>
+			<div align="center" id="vmap" style="width: 680px; height: 520px; margin-left: 40px;"></div>
 			
 			</div>
 			<%@ include file="footer.jspf" %>

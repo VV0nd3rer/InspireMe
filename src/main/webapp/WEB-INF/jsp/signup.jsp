@@ -4,14 +4,12 @@
 	<head>
 	<%@ include file="include.jspf" %>
 	<script src="<%=request.getContextPath() %>/js/user.js"></script>
-	<script src="<%=request.getContextPath() %>/js/user.js"></script>
 	<title>SignUp</title>
 	</head>
 	<body>
 		<div id="wrapper">
 			<%@ include file="head.jspf" %>
 			<div id="content">
-				<div id="infoPass" align="center"></div>
 				<h4><spring:message code="text.signUp"/></h4>
 				   <div id="form-style">
 					<form:form action="resultAjax" modelAttribute="user" method="POST">
@@ -28,6 +26,7 @@
 							<form:password path="password"/>
 							<em id="passwordError" class="inputError"></em>
 						</form:label>
+						<div id="infoPass" align="center"></div>
 						<form:label path="confirmPassword"><span><spring:message code="label.confirmPassword"/><span class="required">*</span></span>
 							<form:password path="confirmPassword"/>
 						</form:label>
