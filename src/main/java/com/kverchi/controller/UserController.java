@@ -381,16 +381,19 @@ public class UserController extends ContentController{
     
     @RequestMapping	(value="checkPass",method=RequestMethod.POST)
     public @ResponseBody String checkPass(@RequestParam("passInput") String passCheck){
-        String returnText="";
-        	if(checkPassStrength(passCheck, "^.*(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$")){
-            	returnText =  "Strong";
-            }
-            else if(checkPassStrength(passCheck, "^.*(?=.*[a-z])(?=.*[0-9]).*$")){
-            	returnText =  "Normal";
-            }
-            else if(checkPassStrength(passCheck, "^.*(?=.*[a-z]).*$")){
-            	returnText =  "Weak";
-            }
+    	String returnText="";
+		 if(checkPassStrength(passCheck, "^.*(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$")){
+		          returnText =  "Strong";
+		      }
+		  else if(checkPassStrength(passCheck, "^.*(?=.*[a-z])(?=.*[0-9]).*$")||
+				  checkPassStrength(passCheck, "^.*(?=.*[a-z])(?=.*[A-Z]).*$"))
+		  	{
+		          returnText =  "Normal";
+		     }
+		  else if(checkPassStrength(passCheck, "^.*(?=.*[a-zA-Z]).*$"))
+		  {
+		          returnText =  "Weak";
+		   }
         return returnText;
     }
     
