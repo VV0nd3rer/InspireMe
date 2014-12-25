@@ -54,7 +54,7 @@ public class UserDataServiceImpl extends ContentController implements UserDataSe
 		imageService.saveImg(avatarImg, AVATAR_IMG_PATH, allowedImageExtensions);
 		if(!data.getAvatarUrl().equals("noavatar.jpg"))
 		{
-		File delFile = new File(AVATAR_IMG_PATH+data.getAvatarUrl());
+		File delFile = new File(AVATAR_IMG_PATH+"/"+data.getAvatarUrl());
 		delFile.delete();
 		}
 		data.setAvatarUrl(avatarImg.getOriginalFilename());
