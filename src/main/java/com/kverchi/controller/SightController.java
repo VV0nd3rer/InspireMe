@@ -44,7 +44,7 @@ public class SightController extends ContentController{
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.setAllowedFields(new String[] {
-				"title", "description", "img_url"});
+				"title", "description", "img_file"});
 	}
 	
 	private final static String P_COUNTRY = "redirect:/main/sights/country";
@@ -96,42 +96,28 @@ public class SightController extends ContentController{
 		AjaxValidation res = new AjaxValidation();
 		ValidationUtils.rejectIfEmpty(result, "title", "Title can not be empty.");
 		ValidationUtils.rejectIfEmpty(result, "description", "Description not be empty");
-		//ValidationUtils.rejectIfEmpty(result, "img_url", "Choose image");
+		ValidationUtils.rejectIfEmpty(result, "img_file", "Choose image");
 		String countryCode = request.getSession().getAttribute("country_code").toString();
-		MultipartFile imgFile = form.getImg_url();
+		MultipartFile imgFile = form.getImg_file();
 		String title = form.getTitle();
 		String description = form.getDescription();
 		
-		Set<String> allowedImageExtensions = new HashSet<String>();
-		allowedImageExtensions.add("png");
-		allowedImageExtensions.add("jpg");
-		allowedImageExtensions.add("JPG");
-		allowedImageExtensions.add("jpeg");
-		allowedImageExtensions.add("JPEG");
-		allowedImageExtensions.add("gif");
-		
-		//imageService.setCustomImgSize(200, 200);
-		imageService.setImgSizeToDefault();
-		boolean saveImgResult = imageService.saveImg(imgFile, SIGHT_IMG_PATH, allowedImageExtensions);
-		if(!result.hasErrors() && saveImgResult) {
+		if(!result.hasErrors()) {			
 			CountrySight sight = new CountrySight(); 		
-	 		
 	 		sight.setDescription(description);
 	 		sight.setSight_label(title);
 	 		sight.setImg_url(imgFile.getOriginalFilename());
 	 		sight.setCountry_code(countryCode);
 	 		sight.setUserId(currentUser.getId());
-	 		sightsService.addSight(sight);	
-				res.setStatus("SUCCESS");
-				res.setResult("/main/sights/country?country_code=" + countryCode);
+	 		if (sightsService.addSight(sight, imgFile)) {
+	 			res.setStatus("SUCCESS");
+	 			res.setResult("/main/sights/country?country_code=" + countryCode);
+	 			return res;
+	 		}
 		}
-		else {
-			res.setStatus("ERROR");
-			result.reject("vse ploho", null);
-			res.setResult(result.getAllErrors());
-		}
+		res.setStatus("ERROR");
+		res.setResult(result.getAllErrors());
+		result.reject("vse ploho", null);
 		return res;
 	}
-	
-		
 }

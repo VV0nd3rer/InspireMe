@@ -26,7 +26,7 @@
 		<div class="inputError"></div>
 		<form:input path="title" placeholder="Title"/>
 		<p><form:input path="description" placeholder="Description"/></p>
-	    <p><form:input path="img_url" type="file" /></p>
+	    <p><form:input path="img_file" type="file" /></p>
 		<input type="submit" value="Add sight" id="addSight">
     	<input type="button" id="close" value="Close" onclick="closeDialog()">
 	 </form:form>

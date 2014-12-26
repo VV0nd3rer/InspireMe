@@ -30,7 +30,7 @@ function addNewSight() {
 function addSight() {
 	var errorField = $(".inputError");
 	var formData = new FormData(document.getElementById("sight"));
-	formData.append("file", img_url.files[0]);
+	formData.append("file", img_file.files[0]);
 	 $.ajax({
 		    url: contexPath + "/main/sights/addSight", 
 		    data: formData,

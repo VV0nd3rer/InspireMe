@@ -8,25 +8,22 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
+import com.kverchi.domain.Country;
 import com.kverchi.service.PageContentService;
 
 public abstract class ContentController {
 	protected final String SIGHT_IMG_PATH="C:/Users/Giperborej/Documents/workspace-sts-3.6.0.RELEASE/fixMe/src/main/webapp/countryImg/countries_sights";
 	protected final String AVATAR_IMG_PATH="C:/Users/Giperborej/Documents/workspace-sts-3.6.0.RELEASE/fixMe/src/main/webapp/usersAvatars";
 	
-	protected Map<String,String> content = new HashMap<String,String>();
-	protected List<String> visitedPages = new ArrayList<String>();
+	protected Map<String,String> content = null;
+	protected List<String> visitedPages = null;
+	protected List<Country> countryList = null;
 	protected String lang="en";
 	
 	@Autowired protected PageContentService pageContentService;
 	
 	public void loadPageDynamicalContent(String request, Model model){
 		String pageName = "";
-		/*if(lang==null)
-		{
-			lang="en";
-		}*/
-		
 		if(request.contains("?")){
 			pageName = request.substring(1, request.indexOf("?"));
 			}else 
@@ -35,6 +32,8 @@ public abstract class ContentController {
 			}
 		
 		if(!visitedPages.contains(pageName)){
+			content = new HashMap<String,String>();
+			visitedPages = new ArrayList<String>();
 		content.putAll(pageContentService.loadPageContentDB(pageName, lang));
 		model.addAttribute("content",content);
 		visitedPages.add(pageName);

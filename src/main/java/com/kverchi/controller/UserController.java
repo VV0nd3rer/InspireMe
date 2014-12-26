@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.ui.Model;
 
@@ -83,8 +86,8 @@ public class UserController extends ContentController{
 	}
 	@RequestMapping("home") 
 	public String home(HttpServletRequest request, Model model) {
-		List<Country> countries = countryService.findAllCountries();
-		model.addAttribute("countriesList", countries);
+		countryList = countryService.findAllCountries();
+		model.addAttribute("countryList", countryList);
 		return P_HOME;
 	}
 	
@@ -100,20 +103,24 @@ public class UserController extends ContentController{
 		return "profile";
 	}
 	@RequestMapping("editProfilePage")
-	public String showEditProfilePage(Model model,  Principal principal) {
-	List<Country> countries = countryService.findAllCountries();
+	public String showEditProfilePage(Model model,  Principal principal, HttpServletRequest request) {
 	UserDetailsAdapter thisUser = loadUserDetails(principal);
 	UserData userData = userDataService.getUserData(thisUser.getId());
-	model.addAttribute("countryList", countries);
+	model.addAttribute("countryList", countryList);
 	model.addAttribute("userData", userData);
 	return "profileEdit";
 	}
 	
 	@RequestMapping("editData")
-	public String editProfile(@ModelAttribute("userData") UserData userData, BindingResult result,
-			@RequestParam("usrAvatar") MultipartFile avatarImg) {
-	  userDataService.updateUserData(userData, avatarImg);
-	return "redirect:profile";
+	public String editProfile(@ModelAttribute("userData") @Valid UserData userData, BindingResult result,
+			@RequestParam("usrAvatar") MultipartFile avatarImg, Model model) {
+	if (userDataService.updateUserData(userData, avatarImg))
+		return "redirect:profile";
+	else {
+			model.addAttribute("countryList", countryList);
+			result.reject("error.loadImg");
+			return "profileEdit";
+		}
 	}
 	
 	@RequestMapping("friends")

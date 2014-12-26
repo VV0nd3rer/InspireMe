@@ -9,7 +9,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 public class AddSightForm {
 	private String title;
 	private String description;
-	private CommonsMultipartFile img_url;
+	private CommonsMultipartFile img_file;
 	@NotNull
 	public String getTitle() {
 		return title;
@@ -25,11 +25,11 @@ public class AddSightForm {
 		this.description = description;
 	}
 	@NotNull
-	public CommonsMultipartFile  getImg_url() {
-		return img_url;
+	public CommonsMultipartFile  getImg_file() {
+		return img_file;
 	}
-	public void setImg_url(CommonsMultipartFile  img_url) {
-		this.img_url = img_url;
+	public void setImg_file(CommonsMultipartFile  img_file) {
+		this.img_file = img_file;
 	}
 	
 }

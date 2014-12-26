@@ -40,8 +40,10 @@ public class UserDataServiceImpl extends ContentController implements UserDataSe
 	}
 
 	@Override
-	public void updateUserData(UserData data, MultipartFile avatarImg) {
-		if(!avatarImg.isEmpty()){
+	public boolean updateUserData(UserData data, MultipartFile avatarImg) {
+	//boolean isAvatarChanged = false;
+	if(!avatarImg.isEmpty()){
+		//isAvatarChanged = true;
 		Set<String> allowedImageExtensions = new HashSet<String>();
 		allowedImageExtensions.add("png");
 		allowedImageExtensions.add("jpg");
@@ -51,16 +53,22 @@ public class UserDataServiceImpl extends ContentController implements UserDataSe
 		allowedImageExtensions.add("gif");
 		
 		imageService.setCustomImgSize(150, 100);
-		imageService.saveImg(avatarImg, AVATAR_IMG_PATH, allowedImageExtensions);
-		if(!data.getAvatarUrl().equals("noavatar.jpg"))
-		{
-		File delFile = new File(AVATAR_IMG_PATH+"/"+data.getAvatarUrl());
-		delFile.delete();
+		boolean res = imageService.saveImg(avatarImg, AVATAR_IMG_PATH, allowedImageExtensions);
+		if(res) {
+			//If it was not default avatar then we delete previous avatar
+			if(!data.getAvatarUrl().equals("noavatar.jpg"))
+			{
+				File delFile = new File(AVATAR_IMG_PATH+"/"+data.getAvatarUrl());
+				delFile.delete();
+			}
+			data.setAvatarUrl(avatarImg.getOriginalFilename());
 		}
-		data.setAvatarUrl(avatarImg.getOriginalFilename());
+		else {
+			return false;
 		}
+	  }
 		userDataDAO.update(data);
-
+		return true;
 	}
 
 }
