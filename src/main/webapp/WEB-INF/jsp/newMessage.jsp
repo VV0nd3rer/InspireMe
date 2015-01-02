@@ -2,11 +2,11 @@
 <html>
 <head>
 	<%@ include file="include.jspf" %>
-	<script src="<%=request.getContextPath() %>/js/tinymce/tinymce.min.js"></script>
-	<script src="<%=request.getContextPath() %>/js/editer.js"></script>
+	<script src="<c:url value="/resources/js/tinymce/tinymce.min.js"/>"></script>
+	<script src="<c:url value="/resources/js/editer.js"/>"></script>
 
-	 <script src="<%=request.getContextPath() %>/js/jquery-ui/jquery-ui.js"></script>
-	 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/jquery-ui/jquery-ui.css">
+	 <script src="<c:url value="/resources/js/jquery-ui/jquery-ui.js"/>"></script>
+	 <link rel="stylesheet" href="<c:url value="/resources/css/jquery-ui/jquery-ui.css"/>">
 	 <title>New message</title>
      <script>	
 	 function userSearch() {
@@ -15,7 +15,7 @@
 		  source:function( request, response ) { 
 		     $.ajax({
 			    type: "POST",  
-				url: contexPath + "/main/peopleSearch",  
+				url: contexPath + "/user/peopleSearch",  
 				data: "fragment=" + login,
 				success: function(data){
 					response( $.map( data, function( item ) {

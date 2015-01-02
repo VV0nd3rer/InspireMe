@@ -3,7 +3,7 @@
 <html>
 	<head>
 	<%@ include file="include.jspf" %>
-	<script src="<%=request.getContextPath() %>/js/user.js"></script>
+	<script src="<c:url value="/resources/js/user.js"/>"></script>
 	<title>SignUp</title>
 	</head>
 	<body>
@@ -35,7 +35,7 @@
 							<em id="captchaError" class="inputError"></em>
 							<img class="word" src="/InspireMe/jcaptcha.jpg" id="captchaImg">
 							<a class="icon" onclick="refreshCaptcha()" >
-							   <img src="<%=request.getContextPath() %>/css/icons/refresh.png"/>
+							   <img src="<c:url value="/resources/css/icons/refresh.png"/>"/>
 							</a>
 						</div>
 						<%-- <p> 

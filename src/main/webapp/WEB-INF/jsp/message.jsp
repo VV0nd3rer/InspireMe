@@ -3,8 +3,8 @@
 
 <head>
 	<%@ include file="include.jspf" %>
-	<script src="<%=request.getContextPath() %>/js/tinymce/tinymce.min.js"></script>
-	<script src="<%=request.getContextPath() %>/js/messages.js"></script>
+	<script src="<c:url value="/resources/js/tinymce/tinymce.min.js"/>"></script>
+	<script src="<c:url value="/resources/js/messages.js"/>"></script>
 
 <title>Messages</title>
 </head>

@@ -2,7 +2,6 @@ var deleteLink;
 var dialog;
 $(function() {
 	//Modal dialogs
-	
 	$("#showNewSightDialog").click(function() {
 		addNewSight();
 	});
@@ -10,12 +9,7 @@ $(function() {
 
 		event.preventDefault();
 		addSight();
-	});
-   	/*document.querySelector('#showNewSightDialog').onclick = function() {
-   		dialog = document.getElementById('newSightDialog');
-          	dialogPolyfill.registerDialog(dialog);
-          	dialog.showModal(); 
-    }; */         
+	});     
 	$(".delPost").click(function(event) {
 		event.preventDefault();
 		var href = $(this).attr('href');
@@ -32,9 +26,8 @@ function addSight() {
 	var formData = new FormData(document.getElementById("sight"));
 	formData.append("file", img_file.files[0]);
 	 $.ajax({
-		    url: contexPath + "/main/sights/addSight", 
+		    url: contexPath + "/sights/addSight", 
 		    data: formData,
-		    //dataType: 'json',
 		    processData: false,
 		    contentType: false,
 		    type: 'POST',
@@ -49,7 +42,6 @@ function addSight() {
 			    		  errorInfo += "<br>" + (i + 1) +". " + response.result[i].code;
 			    	  }
 			    	  errorField.html("Please correct following errors: " + errorInfo);
-			    	  //$('#info').hide('slow');
 			    	  errorField.show('slow');
 			      }	      
 			    },  
@@ -57,27 +49,6 @@ function addSight() {
 			    alert('Error: ' + e);  
 			 }  
 		  });
-	/*var str = $("#sight").serialize();
-	alert(str);
-	$.ajax({
-		type: "POST",  
-		data:str,
-	    url: contexPath + "/main/sights/addSight",  
-	    dataType: 'multipart/form-data',
-	    success: function(response){
-	    	alert(response);
-	    	if(response == "ok")
-	    		dialog.close();
-	    	else
-	    		$(".inputError").append("<p>Error! </p>");
-	    	dialog = document.getElementById('newSightDialog');
-	      	dialogPolyfill.registerDialog(dialog);
-	      	dialog.showModal(); 
-	    },
-		error: function(error) {
-			alert("In valid name error: " + error);
-		}
-	});*/
 }
 function confirmHref(objHref, id) {
 	deleteLink=objHref;

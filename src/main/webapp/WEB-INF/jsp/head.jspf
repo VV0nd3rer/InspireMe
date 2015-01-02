@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-<c:url var="homeUrl" value="/main/home" />
+<c:url var="homeUrl" value="/user/home" />
 <c:url var="mainUrl" value="/main/main" />
 <c:url var="loginUrl" value="/main/Login" />
 <c:url var="RegUrl" value="/main/signUp"/>
@@ -9,9 +9,9 @@
 <div id="header">
     <div id="lang_menu">
 		<ul>
-		  <li><a class="flag" href="<%=request.getContextPath()%>/main/setLanguage?lang=en"><img src="<%=request.getContextPath() %>/css/lang_flags/en.png"/>EN</a></li>
-		  <li><a class="flag" href="<%=request.getContextPath()%>/main/setLanguage?lang=uk"><img src="<%=request.getContextPath() %>/css/lang_flags/uk.png"/>UK</a></li>
-		  <li><a class="flag" href="<%=request.getContextPath()%>/main/setLanguage?lang=de"><img src="<%=request.getContextPath() %>/css/lang_flags/de.png"/>DE</a></li>
+		  <li><a class="flag" href="<%=request.getContextPath()%>/main/setLanguage?lang=en"><img src="<c:url value="/resources/css/lang_flags/en.png"/>"/>EN</a></li>
+		  <li><a class="flag" href="<%=request.getContextPath()%>/main/setLanguage?lang=uk"><img src="<c:url value="/resources/css/lang_flags/uk.png"/>"/>UK</a></li>
+		  <li><a class="flag" href="<%=request.getContextPath()%>/main/setLanguage?lang=de"><img src="<c:url value="/resources/css/lang_flags/de.png"/>"/>DE</a></li>
 		</ul>
 	</div>
 	<div id="navigation">
@@ -30,7 +30,7 @@
 		</ul>
 		<p>
 			<security:authorize access="isAuthenticated()">
-				<a href="<%=request.getContextPath()%>/main/cabinet" style="color: white"><spring:message code="header.cabinet"/></a>
+				<a href="<%=request.getContextPath()%>/user/cabinet" style="color: white"><spring:message code="header.cabinet"/></a>
 				   <spring:message code="header.welcome"/> <security:authentication property="principal.username" />.
 			</security:authorize>
 			<security:authorize access="isAnonymous()">

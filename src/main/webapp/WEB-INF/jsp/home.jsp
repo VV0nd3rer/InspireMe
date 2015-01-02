@@ -2,11 +2,11 @@
 	<head>
 	<%@ include file="include.jspf" %>
 	<title>Home</title>
-	<link href="/InspireMe/css/jqvmap/jqvmap.css" media="screen" rel="stylesheet" type="text/css" />
+	<link href="<c:url value="/resources/css/jqvmap/jqvmap.css"/>" media="screen" rel="stylesheet" type="text/css" />
     
-    <script src="/InspireMe/js/jquery.js"></script>
-    <script src="/InspireMe/js/jqvmap/jquery.vmap.js" type="text/javascript"></script>
-    <script src="/InspireMe/js/jqvmap/jquery.vmap.europe.js" type="text/javascript"></script>
+    <script src="<c:url value="/resources/js/jquery.js"/>"></script>
+    <script src="<c:url value="/resources/js/jqvmap/jquery.vmap.js"/>" type="text/javascript"></script>
+    <script src="<c:url value="/resources/js/jqvmap/jquery.vmap.europe.js"/>" type="text/javascript"></script>
     
 	<script type="text/javascript">
 	jQuery(document).ready(function() {
@@ -16,7 +16,7 @@
 		    showTooltip: true,
 		    onRegionClick: function(element, code, region){
 		    	//window.location.href = "http://stackoverflow.com";	
-		    	window.location.replace("../main/sights/country?country_code="+code);
+		    	window.location.replace("../sights/country?country_code="+code);
 		    }
 		});
 	});
@@ -32,7 +32,7 @@
 				<p>It is a secret page. It's shown only for authorization users.</p>
 			
 			<div>
-			<form action="../main/sights/country" method="get">
+			<form action="../sights/country" method="get">
 			<input type="text" list="searchCountry" name="country_code" autocomplete="off" placeholder="Double click to show list">
 			<input type="submit" value="Go!">
 			</form>

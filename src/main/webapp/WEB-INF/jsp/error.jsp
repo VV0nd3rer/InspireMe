@@ -7,7 +7,7 @@
 		<div id="wrapper">
 			<%@ include file="head.jspf" %>
 			<div id="content">
-				<p>Error 403</p>
+				<spring:message code="${msg_code}"/>
 			</div>
 		<%@ include file="footer.jspf" %>
 		</div>

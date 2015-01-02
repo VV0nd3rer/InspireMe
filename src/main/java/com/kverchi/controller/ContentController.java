@@ -25,15 +25,16 @@ public abstract class ContentController {
 	public void loadPageDynamicalContent(String request, Model model){
 		String pageName = "";
 		if(request.contains("?")){
-			pageName = request.substring(1, request.indexOf("?"));
-			}else 
-				{
-				pageName = request.substring(1);
-			}
-		
-		if(!visitedPages.contains(pageName)){
-			content = new HashMap<String,String>();
+		   pageName = request.substring(request.lastIndexOf('/') + 1, request.indexOf("?"));
+		}
+		else {
+		   pageName = request.substring(request.lastIndexOf('/') + 1);
+		}
+		if(visitedPages == null) {
 			visitedPages = new ArrayList<String>();
+			content = new HashMap<String,String>();
+		}
+		if(!visitedPages.contains(pageName)){	
 		content.putAll(pageContentService.loadPageContentDB(pageName, lang));
 		model.addAttribute("content",content);
 		visitedPages.add(pageName);

@@ -1,6 +1,6 @@
-<a class="icon" href="<%=request.getContextPath() %>/main/posts/updatePost?postId=${singlePost.postId}">
-	<img src="<%=request.getContextPath() %>/css/icons/edit.png"/>
+<a class="icon" href="<%=request.getContextPath() %>/posts/updatePost?postId=${singlePost.postId}">
+	<img src="<c:url value="/resources/css/icons/edit.png"/>"/>
 </a> 
-<a class="icon" class="delPost" href="<%=request.getContextPath() %>/main/posts/deletePost?postId=${singlePost.postId}&sightId=${singlePost.sightId}">
-	<img src="<%=request.getContextPath() %>/css/icons/delete.png"/>
+<a class="icon delPost" href="<%=request.getContextPath() %>/posts/deletePost?postId=${singlePost.postId}&sightId=${singlePost.sightId}">
+	<img src="<c:url value="/resources/css/icons/delete.png"/>"/>
 </a>

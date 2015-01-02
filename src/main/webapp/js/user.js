@@ -58,10 +58,6 @@ function refreshCaptcha() {
 		    success: function(response){
 		    	if(response.status == "ERROR") {
 		    		showErrors(response.result);
-		    		/*$.each(response.result, function(field, msg) {
-						var errorField = $('#' + field + "Error");
-						errorField.html(msg);
-					});*/
 		    	}
 		    },
 			error: function(error) {

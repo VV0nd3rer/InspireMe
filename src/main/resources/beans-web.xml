@@ -15,16 +15,6 @@
 		    http://www.springframework.org/schema/tx
 		    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
 		    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">  
-<mvc:annotation-driven />
-<context:property-placeholder location="classpath:hibernate.properties" /> 
-
-<context:component-scan base-package="com.kverchi.controller" />
-<context:component-scan base-package="com.kverchi.service" />
-<context:component-scan base-package="com.kverchi.dao" />
-<context:component-scan base-package="com.kverchi.tools" />
-<context:component-scan base-package="com.kverchi.domain" />     
-<tx:annotation-driven transaction-manager="hibernateTransactionManager" />  
-
 <bean id="jspViewResolver"  
       class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
       <property name="viewClass"  
@@ -32,51 +22,5 @@
       <property name="prefix" value="/WEB-INF/jsp/" />  
       <property name="suffix" value=".jsp" />  
 </bean>  
-<!-- Define the message resources -->
-<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
-	  p:basename="classpath:messages"
-	  p:defaultEncoding="UTF-8" />
-<!-- Class LocaleChangeInterceptor implemented a feature where user will be able to select lang for the app -->
-<mvc:interceptors>
-  <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-      <property name="paramName" value="lang"/>
-   </bean>
-</mvc:interceptors>
-<!-- Launguage changes are saved in cookies -->
-<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
-    <property name="defaultLocale" value="en" />        
-</bean>
-<bean id="dataSource"  
-            class="org.springframework.jdbc.datasource.DriverManagerDataSource">  
-            <property name="driverClassName" value="${database.driver}" />  
-            <property name="url" value="${database.url}" />  
-            <property name="username" value="${database.user}" />  
-            <property name="password" value="${database.password}" />
-</bean>  
-<util:properties id="hibernateProperties">
-		<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
-		<prop key="hibernate.show_sql">true</prop>
-</util:properties>      
-<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
-		p:dataSource-ref="dataSource"
-		p:hibernateProperties-ref="hibernateProperties"
-		p:packagesToScan="com.kverchi.domain" />      
- <bean id="hibernateTransactionManager"  
-            class="org.springframework.orm.hibernate4.HibernateTransactionManager">  
-            <property name="sessionFactory" ref="sessionFactory" />  
- </bean>  
-<bean id="multipartResolver"
-        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-         <!-- setting maximum upload size -->
-        <!-- property name="maxUploadSize" value="100000" / -->
- </bean>
- <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
-    <property name="velocityProperties">
-        <value>
-            resource.loader=class
-            class.resource.loader.class=org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader       
-        </value>
-    </property>
-</bean>
+
  </beans>  

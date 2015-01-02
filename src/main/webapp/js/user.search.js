@@ -6,7 +6,7 @@ function userSearch() {
 	var login = $("#searchUserField").val();
 	$.ajax({
 		type: "POST",  
-	    url: contexPath + "/main/peopleSearch",  
+	    url: contexPath + "/user/peopleSearch",  
 	    data: "fragment=" + login,
 	    success: function(response){
 	    	$("#users").empty();

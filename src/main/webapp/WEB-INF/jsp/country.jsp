@@ -5,13 +5,13 @@
   <meta charset="UTF-8">
   
   <title>My country</title>
-  <link rel="stylesheet" href="<%=request.getContextPath() %>/css/carousel/sights_common.css">
-  <link rel="stylesheet" href="<%=request.getContextPath() %>/css/carousel/sights_special.css">
-  <script src="<%=request.getContextPath() %>/js/dialog-polyfill.js"></script>
-  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/dialog-polyfill.css">
+  <link rel="stylesheet" href="<c:url value="/resources/css/carousel/sights_common.css"/>">
+  <link rel="stylesheet" href="<c:url value="/resources/css/carousel/sights_special.css"/>">
+  <script src="<c:url value="/resources/js/dialog-polyfill.js"/>"></script>
+  <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/dialog-polyfill.css"/>">
 
 </head>
-<body id="sight_bg" style="background: url(<%=request.getContextPath() %>/countryImg/${country.imgPath}) no-repeat top center fixed">
+<body id="sight_bg" style="background: url(<c:url value="/resources/countryImg/${country.imgPath}"/>) no-repeat top center fixed">
  <div id="wrapper">
 	<%@ include file="head.jspf" %>
 		
@@ -51,9 +51,9 @@
            	<c:forEach items="${country_sigths}" var="s">
            	<div class="card">
 	     	    <h2>${s.sight_label}</h2>
-	     	   	<img src="<%=request.getContextPath() %>/countryImg/countries_sights/${s.img_url}" onerror="imgError(this)"/>
+	     	   	<img src="<c:url value="/resources/countryImg/countries_sights/${s.img_url}"/>" onerror="imgError(this)"/>
 	     		<p>${s.description}</p>
-	     		<p><a href="<%=request.getContextPath() %>/main/posts/sightPosts?sightId=${s.sight_id}">Read more</a></p>
+	     		<p><a href="<%=request.getContextPath() %>/posts/sightPosts?sightId=${s.sight_id}">Read more</a></p>
 	     		<button type="button" value="removeSight?sightId=${s.sight_id}" onclick="confirmButton(this, 'removeSightDialog')">Delete</button>
      	    </div>
     	 	</c:forEach>
@@ -70,9 +70,9 @@
     </div>
   <%@ include file="footer.jspf" %> 
   
-  <script src="<%=request.getContextPath() %>/js/jquery.reflection.js"></script>
-  <script src="<%=request.getContextPath() %>/js/dialogs.js"></script>
-  <script src="<%=request.getContextPath() %>/js/carousel/jquery.cloud9carousel.js"></script>
+  <script src="<c:url value="/resources/js/jquery.reflection.js"/>"></script>
+  <script src="<c:url value="/resources/js/dialogs.js"/>"></script>
+  <script src="<c:url value="/resources/js/carousel/jquery.cloud9carousel.js"/>"></script>
   <script>
   var imgUrl;
   var check = 0;
@@ -85,7 +85,7 @@
 	  if(check == 0){
 	  imgUrl = image.src;
 	  var contextPath = document.getElementById("contextPath").value;
-	  image.style="background-image:url('"+contextPath+"/countryImg/countries_sights/loading.gif'); width:217px; height:153px;";
+	  image.style="background-image:url('<c:url value='/resources/countryImg/countries_sights/loading.gif'/>'); width:217px; height:153px;";
 	  }
 	  image.onerror="";
 	  check = 1;

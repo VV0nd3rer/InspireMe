@@ -2,15 +2,16 @@
 <html>
 	<head>
 	<%@ include file="include.jspf" %>
-	<script src="<%=request.getContextPath() %>/js/dialog-polyfill.js"></script>
-	<script src="<%=request.getContextPath() %>/js/dialogs.js"></script>
+	<script src="<c:url value="/resources/js/dialog-polyfill.js"/>"></script>
+	<script src="<c:url value="/resources/js/dialogs.js"/>"></script>
 	<title>Posts</title>
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/dialog-polyfill.css">
+	<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/dialog-polyfill.css"/>">
 	</head>
-	<body id="sight_bg" style="background: url(<%=request.getContextPath() %>/countryImg/${country.imgPath}) no-repeat top center fixed">
+	<body id="sight_bg" style="background: url(<c:url value="/resources/countryImg/${country.imgPath}"/>) no-repeat top center fixed">
 		<div id="wrapper">
 		  <%@ include file="head.jspf" %>
 		  <div id="sightContent">
+		  ${msg_code}
 		  <dialog id="removePost">
 			<p>Are you sure to <em class="inputError">delete post</em>?</p>
 			<div>
@@ -21,7 +22,7 @@
 			<c:forEach items="${posts}" var="singlePost">
 				<div class="postPreview">
 				  <div>
-					<a href="<%=request.getContextPath() %>/main/posts/singlePost?postId=${singlePost.postId}">
+					<a href="<%=request.getContextPath() %>/posts/singlePost?postId=${singlePost.postId}">
 						 ${singlePost.title}.
 					</a>
 					<em>
@@ -33,11 +34,11 @@
 				<hr>
 			</c:forEach>
 			<p>
-					<a class="icon" href="<%=request.getContextPath() %>/main/posts/newPost?sightId=${sightId}">
-						<img src="<%=request.getContextPath() %>/css/icons/add.png"/>
+					<a class="icon" href="<%=request.getContextPath() %>/posts/newPost?sightId=${sightId}">
+						<img src="<c:url value="/resources/css/icons/add.png"/>"/>
 					</a>
-					<a class="icon" href="<%=request.getContextPath() %>/main/sights/country?country_code=${country_code}">
-						<img src="<%=request.getContextPath() %>/css/icons/back.png"/>
+					<a class="icon" href="<%=request.getContextPath() %>/sights/country?country_code=${country_code}">
+						<img src="<c:url value="/resources/css/icons/back.png"/>"/>
 		  			</a>
 			</p>
 		  </div>

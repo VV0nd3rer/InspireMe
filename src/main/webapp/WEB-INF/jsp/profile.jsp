@@ -3,7 +3,19 @@
 
 <head>
 <%@ include file="include.jspf" %>
+<script src="<c:url value="/resources/js/jquery-ui/jquery-ui.js"/>"></script>
+<link rel="stylesheet" href="<c:url value="/resources/css/jquery-ui/jquery-ui.css"/>">
 <title>My profile</title>
+<script>
+$(function() {
+	$( document ).tooltip({
+		items: "[title]", 
+		content: function() {
+			return "<spring:message code='profile.edit.hint'/>";
+		}
+	});
+});
+</script>
 </head>
 <body>
 	<div id="wrapper">
@@ -12,8 +24,8 @@
 			<%@ include file="userCabinetMenu.jspf"%>
 			<div id="infoContent">
 			    <div class="right_block">
-					<img src="<%=request.getContextPath()%>/usersAvatars/${curUserData.avatarUrl}">
-					<a href="editProfilePage">Edit profile</a>
+					<img src="<c:url value="/resources/usersAvatars/${curUserData.avatarUrl}"/>">
+					<a title="" href="editProfilePage">Edit profile</a>
 				</div>
 				<div id="form-style">
 					<p>${curUserData.firstName} ${curUserData.lastName}</p>

@@ -20,9 +20,9 @@
 					<em id="errorCaptcha" class="inputError">
 					 <form:errors path="captcha" htmlEscape="false" />
 					</em>
-					<img class="word" src="/InspireMe/jcaptcha.jpg" id="captchaImg">
+					<img class="word" src="<c:url value="/resources/jcaptcha.jpg"/>" id="captchaImg">
 					<a class="icon" onclick="refreshCaptcha()" >
-					  <img src="<%=request.getContextPath() %>/css/icons/refresh.png"/>
+					  <img src="<c:url value="/resources/css/icons/refresh.png"/>"/>
 					</a>
 			    </div>
 			    <spring:message code="button.ok" var="btnLabel"/>
@@ -35,7 +35,7 @@
 	<script type="text/javascript">
 		function refreshCaptcha() {
 			var image = document.getElementById("captchaImg");
-		    image.src = "<%=request.getContextPath()%>/jcaptcha.jpg?"+Math.floor(Math.random()*100)           
+		    image.src = "<c:url value="/resources/jcaptcha.jpg?"/>"+Math.floor(Math.random()*100)           
 		}
 	</script>
 </body>

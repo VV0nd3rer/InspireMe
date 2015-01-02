@@ -17,7 +17,6 @@ public class NotificationsEmailsDAOImpl extends GenericDAOImpl<NotificationsEmai
 	@Override
 	public NotificationsEmails getEmailData(String address) {
 		Session session = null;
-		List<NotificationsEmails> temp = new ArrayList();
 		NotificationsEmails res = new NotificationsEmails();
 		try {
 			session = sessionFactory.openSession();
@@ -25,8 +24,7 @@ public class NotificationsEmailsDAOImpl extends GenericDAOImpl<NotificationsEmai
 	    	String query = "FROM NemailAddresse E where E.email =:email";
 	    	Query hQuery = session.createQuery(query);
 	    	hQuery.setParameter("email", address);
-	    	temp = hQuery.list();
-	    	res = temp.get(0);
+	    	res = (NotificationsEmails)hQuery.list().get(0);
 	    	session.getTransaction().commit();
 		} catch (Exception e) {
 			System.out.println("Exception in NemailsAddressesDAOImpl -> getEmailData: " + e);

@@ -47,8 +47,8 @@ public class SightController extends ContentController{
 				"title", "description", "img_file"});
 	}
 	
-	private final static String P_COUNTRY = "redirect:/main/sights/country";
-	private static final String P_ERROR = "error";
+	private final static String P_COUNTRY = "redirect:/sights/country";
+	private static final String P_ERROR = "redirect:/main/error";
 	
 	@Autowired private SightService sightsService;
 	@Autowired private CountryService countryService; 
@@ -111,7 +111,7 @@ public class SightController extends ContentController{
 	 		sight.setUserId(currentUser.getId());
 	 		if (sightsService.addSight(sight, imgFile)) {
 	 			res.setStatus("SUCCESS");
-	 			res.setResult("/main/sights/country?country_code=" + countryCode);
+	 			res.setResult("/sights/country?country_code=" + countryCode);
 	 			return res;
 	 		}
 		}

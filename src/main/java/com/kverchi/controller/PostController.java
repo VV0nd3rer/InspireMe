@@ -6,6 +6,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +35,8 @@ public class PostController extends ContentController {
 	//private int currentSight;
 	
 	@Autowired private PostService postService;
+	@Autowired 
+	private MessageSource messageSource;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -45,7 +49,12 @@ public class PostController extends ContentController {
 		List<Post> posts = null;
 		final UserDetailsAdapter currentUser = (UserDetailsAdapter) ((Authentication) principal).getPrincipal();
 		posts = postService.showSightPosts(id, currentUser.getId());
-	    model.addAttribute("posts", posts);
+		String msg = messageSource.getMessage("posts.empty", null, LocaleContextHolder.getLocale());
+		if(!posts.isEmpty())
+			model.addAttribute("msg_code", "");
+		else 
+			model.addAttribute("msg_code", msg);
+		model.addAttribute("posts", posts);
 		model.addAttribute("sightId", id);
 		return VN_POSTS;
 	}

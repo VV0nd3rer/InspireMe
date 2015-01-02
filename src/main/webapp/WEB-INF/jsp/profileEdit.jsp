@@ -17,10 +17,10 @@
 				<form:form action="editData" modelAttribute="userData" method="POST" enctype="multipart/form-data">
 				<div class="right_block">
 					<c:if test="${imgName==noAvatar}">
-					<img src="<%=request.getContextPath()%>/usersAvatars/noavatar.jpg"><br/><br/>
+					<img src="<c:url value="/resources/usersAvatars/noavatar.jpg"/>"><br/><br/>
 					</c:if>
 					<c:if test="${imgName!=noAvatar}">
-					<img src="<%=request.getContextPath()%>/usersAvatars/${userData.avatarUrl}"><br/><br/>
+					<img src="<c:url value="/resources/usersAvatars/${userData.avatarUrl}"/>"><br/><br/>
 					</c:if>
 					Choose new avatar: <input type="file" name="usrAvatar"><p>
 				</div>
