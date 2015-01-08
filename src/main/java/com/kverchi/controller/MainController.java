@@ -32,7 +32,6 @@ import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
 
 @Controller
 @RequestMapping("main")
-@SessionAttributes("content")
 public class MainController extends ContentController {
 	//@Autowired 
 	//private CountryService countryService;

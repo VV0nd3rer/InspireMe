@@ -38,7 +38,7 @@ public abstract class ContentController {
 		content.putAll(pageContentService.loadPageContentDB(pageName, lang));
 		model.addAttribute("content",content);
 		visitedPages.add(pageName);
-		}
+		}else model.addAttribute("content",content);
 	}
 	
 }

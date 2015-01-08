@@ -58,7 +58,7 @@ public class MessageDAOImpl extends GenericDAOImpl<Message> implements MessageDA
 	    			   .setParameter("userId", userId);
 	    	  
 	    	  tempObjList=querySQL.list();
-	    	  
+
 	    	  for(Object[] obj: tempObjList){
 	    		  MessageHeader mh= new MessageHeader();
 	    		  mh.setMessageId((int)obj[0]);

@@ -39,7 +39,7 @@
 			</div>
 
 			<datalist id="searchCountry">
-				<c:forEach items="${countriesList}" var="s">
+				<c:forEach items="${countryList}" var="s">
 					<option value="${s.getCountryCode()}" >${s.getCountryName()}</option>
 				</c:forEach>
 			</datalist>

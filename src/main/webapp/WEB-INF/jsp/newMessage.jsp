@@ -8,8 +8,10 @@
 	 <script src="<c:url value="/resources/js/jquery-ui/jquery-ui.js"/>"></script>
 	 <link rel="stylesheet" href="<c:url value="/resources/css/jquery-ui/jquery-ui.css"/>">
 	 <title>New message</title>
-     <script>	
+     <script>
+
 	 function userSearch() {
+		var flag = true;
 		var login = $("#toLogin").val();	
 		$( "#toLogin" ).autocomplete({
 		  source:function( request, response ) { 
@@ -33,10 +35,17 @@
 		  select: function( event, ui ) {
 		      $( "#toLogin" ).val( ui.item.label );
 		      $("#toId").val(ui.item.value);
+		      flag = false;
 		       return false;
 		    }
 		  });
+
+		 if(flag){
+			 $("#toId").val("");
+			 }
+
 	}
+	 
 	</script>
 </head>
 <body>
